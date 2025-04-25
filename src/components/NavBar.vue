@@ -25,8 +25,8 @@ const title = computed(() => {
   if (!route.meta)
     return '';
 
-  return route.meta.title || '';
+  return route.meta.title as string || '';
 });
 
-const showLeftArrow = computed(() => route.name && routeWhiteList.includes(route.name));
+const showLeftArrow = computed(() => route.name && routeWhiteList.includes(route.name as string));
 </script>
