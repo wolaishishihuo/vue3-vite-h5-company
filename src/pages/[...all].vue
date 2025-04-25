@@ -1,16 +1,5 @@
-<script setup lang="ts">
-const router = useRouter()
-
-function onBack() {
-  if (window.history.state.back)
-    history.back()
-  else
-    router.replace('/')
-}
-</script>
-
 <template>
-  <div text="center gray-300 dark:gray-200 18">
+  <div text="center gray-300 18">
     <van-icon name="warn-o" size="3em" />
     <div> Not found </div>
 
@@ -22,12 +11,22 @@ function onBack() {
   </div>
 </template>
 
+<script setup lang="ts">
+const router = useRouter();
+
+function onBack() {
+  if (window.history.state.back)
+    history.back();
+  else
+    router.replace('/');
+}
+</script>
+
 <route lang="json5">
 {
   name: '404',
   meta: {
-    title: '404',
-    i18n: 'menus.404Demo'
+    title: '404Demo'
   },
 }
 </route>
