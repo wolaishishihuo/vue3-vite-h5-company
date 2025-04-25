@@ -1,26 +1,47 @@
-import antfu from '@antfu/eslint-config'
+import antfu from '@antfu/eslint-config';
 
 export default antfu(
   {
     vue: true,
     typescript: true,
-
-    // Enable UnoCSS support
-    // https://unocss.dev/integrations/vscode
     unocss: true,
-    formatters: true,
+    formatters: {
+      css: true
+    },
+    stylistic: {
+      // 是否启用分号
+      semi: true
+    }
   },
   {
     rules: {
       'perfectionist/sort-imports': 'off',
       'perfectionist/sort-exports': 'off',
       'perfectionist/sort-named-exports': 'off',
-    },
+      'antfu/top-level-function': 'off',
+      'no-console': 'off',
+      // vue
+      'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
+      'vue/attributes-order': 'off',
+      // ts
+      'ts/no-use-before-define': 'off',
+      // node
+      'node/prefer-global/process': 'off',
+      // style
+      'style/comma-dangle': ['error', 'never'],
+      'style/brace-style': ['error', '1tbs'],
+      // regexp
+      'regexp/no-unused-capturing-group': 'off',
+      // other
+      'no-debugger': 'off',
+      'symbol-description': 'off',
+      'antfu/if-newline': 'off',
+      'unicorn/no-instanceof-builtins': 'off'
+    }
   },
   {
     ignores: [
-      '.github/**',
-      'scripts/**',
-    ],
-  },
-)
+      'scripts/**'
+    ]
+  }
+);

@@ -14,7 +14,7 @@
     "types": [
       "node",
       "unplugin-vue-router/client",
-      "vite-plugin-pwa/client"
+      "vite/client"
     ],
     "allowJs": true,
     "strictNullChecks": false,
