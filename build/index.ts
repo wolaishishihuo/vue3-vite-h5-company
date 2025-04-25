@@ -5,8 +5,6 @@ import UnoCSS from 'unocss/vite';
 import AutoImport from 'unplugin-auto-import/vite';
 import { VantResolver } from '@vant/auto-import-resolver';
 import Components from 'unplugin-vue-components/vite';
-import { VueRouterAutoImports } from 'unplugin-vue-router';
-import VueRouter from 'unplugin-vue-router/vite';
 import Sitemap from 'vite-plugin-sitemap';
 import { loadEnv } from 'vite';
 import { createViteVConsole } from './vconsole';
@@ -15,13 +13,6 @@ export function createVitePlugins(mode: string) {
   const env = loadEnv(mode, process.cwd());
 
   return [
-    // https://github.com/posva/unplugin-vue-router
-    VueRouter({
-      extensions: ['.vue'],
-      routesFolder: 'src/pages',
-      dts: 'src/types/typed-router.d.ts'
-    }),
-
     vue(),
 
     // https://github.com/jbaubree/vite-plugin-sitemap
@@ -47,9 +38,8 @@ export function createVitePlugins(mode: string) {
       imports: [
         'vue',
         '@vueuse/core',
-        VueRouterAutoImports,
         {
-          'vue-router/auto': ['useLink']
+          'vue-router': ['useRouter', 'useRoute']
         }
       ],
       dts: 'src/types/auto-imports.d.ts',

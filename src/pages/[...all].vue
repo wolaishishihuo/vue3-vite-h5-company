@@ -21,12 +21,3 @@ function onBack() {
     router.replace('/');
 }
 </script>
-
-<route lang="json5">
-{
-  name: '404',
-  meta: {
-    title: '404Demo'
-  },
-}
-</route>

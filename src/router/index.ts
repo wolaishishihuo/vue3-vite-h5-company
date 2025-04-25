@@ -1,45 +1,45 @@
-import { createRouter, createWebHistory } from 'vue-router/auto'
-import { handleHotUpdate, routes } from 'vue-router/auto-routes'
+import { createRouter, createWebHistory } from 'vue-router';
 
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
-import type { EnhancedRouteLocation } from './types'
-import useRouteCacheStore from '@/stores/modules/routeCache'
-import { useUserStore } from '@/stores'
+import useRouteCacheStore from '@/stores/modules/routeCache';
 
-import { isLogin } from '@/utils/auth'
-import setPageTitle from '@/utils/set-page-title'
+import routes from './staticRouter';
 
-NProgress.configure({ showSpinner: true, parent: '#app' })
+NProgress.configure({ showSpinner: true, parent: '#app' });
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_APP_PUBLIC_PATH),
   routes,
-})
+  scrollBehavior(to, _from, savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth'
+      };
+    }
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return { top: 0, left: 0, behavior: 'smooth' };
+  }
+});
 
-// This will update routes at runtime without reloading the page
-if (import.meta.hot)
-  handleHotUpdate(router)
+router.beforeEach(async (to) => {
+  NProgress.start();
 
-router.beforeEach(async (to: EnhancedRouteLocation) => {
-  NProgress.start()
+  // 设置页面标题
+  const pageTitle = typeof to.meta.title === 'string' ? to.meta.title : 'Default Title';
+  document.title = pageTitle;
 
-  const routeCacheStore = useRouteCacheStore()
-  const userStore = useUserStore()
-
-  // Route cache
-  routeCacheStore.addRoute(to)
-
-  // Set page title
-  setPageTitle(to.meta.title)
-
-  if (isLogin() && !userStore.userInfo?.uid)
-    await userStore.info()
-})
+  // 添加路由缓存
+  const routeCacheStore = useRouteCacheStore();
+  routeCacheStore.addRoute(to);
+});
 
 router.afterEach(() => {
-  NProgress.done()
-})
+  NProgress.done();
+});
 
-export default router
+export default router;
