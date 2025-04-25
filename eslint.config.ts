@@ -5,9 +5,7 @@ export default antfu(
     vue: true,
     typescript: true,
     unocss: true,
-    formatters: {
-      css: true
-    },
+    formatters: true,
     stylistic: {
       // 是否启用分号
       semi: true
@@ -36,7 +34,9 @@ export default antfu(
       'no-debugger': 'off',
       'symbol-description': 'off',
       'antfu/if-newline': 'off',
-      'unicorn/no-instanceof-builtins': 'off'
+      'unicorn/no-instanceof-builtins': 'off',
+      // unocss
+      'unocss/order': 'warn'
     }
   },
   {
