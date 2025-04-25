@@ -1,5 +1,3 @@
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import process from 'node:process'
 import { unheadVueComposablesImports } from '@unhead/vue'
 import legacy from '@vitejs/plugin-legacy'
@@ -10,11 +8,8 @@ import { VantResolver } from '@vant/auto-import-resolver'
 import Components from 'unplugin-vue-components/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
-import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
 import { VitePWA } from 'vite-plugin-pwa'
 import Sitemap from 'vite-plugin-sitemap'
-import VueDevTools from 'vite-plugin-vue-devtools'
-import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import { loadEnv } from 'vite'
 import { createViteVConsole } from './vconsole'
 
@@ -35,9 +30,6 @@ export function createVitePlugins(mode: string) {
     Sitemap({
       outDir: env.VITE_APP_OUT_DIR || 'dist',
     }),
-
-    // https://github.com/pengzhanbo/vite-plugin-mock-dev-server
-    mockDevServerPlugin(),
 
     // https://github.com/antfu/unplugin-vue-components
     Components({
@@ -60,8 +52,6 @@ export function createVitePlugins(mode: string) {
         VueRouterAutoImports,
         {
           'vue-router/auto': ['useLink'],
-          '@/utils/i18n': ['i18n', 'locale'],
-          'vue-i18n': ['useI18n'],
         },
         unheadVueComposablesImports,
       ],
@@ -70,12 +60,6 @@ export function createVitePlugins(mode: string) {
         'src/composables',
       ],
       resolvers: [VantResolver()],
-    }),
-
-    // https://github.com/intlify/bundle-tools/tree/main/packages/unplugin-vue-i18n
-    VueI18nPlugin({
-      // locale messages resource pre-compile option
-      include: resolve(dirname(fileURLToPath(import.meta.url)), '../../src/locales/**'),
     }),
 
     legacy({
@@ -88,9 +72,6 @@ export function createVitePlugins(mode: string) {
 
     // https://github.com/vadxq/vite-plugin-vconsole
     createViteVConsole(mode),
-
-    // https://github.com/vuejs/devtools-next
-    VueDevTools(),
 
     // https://github.com/antfu/vite-plugin-pwa
     VitePWA({
