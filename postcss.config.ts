@@ -7,9 +7,9 @@ const rootContainingBlockSelectorList = [
   '.van-popup--bottom',
   '.van-popup--top',
   '.van-popup--left',
-  '.van-popup--right',
+  '.van-popup--right'
   // 在这里添加你的选择器
-]
+];
 
 export default {
   plugins: {
@@ -17,11 +17,32 @@ export default {
 
     // https://github.com/wswmsword/postcss-mobile-forever
     'postcss-mobile-forever': {
+      // UI 设计稿宽度
+      viewportWidth: (file: string) => file.includes('vant') ? 375 : 750,
+      // 限制视图的最大宽度
+      maxDisplayWidth: 750,
+      // 页面最外层选择器
       appSelector: '#app',
-      viewportWidth: 375,
-      maxDisplayWidth: 600,
+      // 是否对「页面最外层选择器」对应的元素进行描边
       border: true,
-      rootContainingBlockSelectorList,
-    },
-  },
-}
+      // 转换单位后保留的小数点位数
+      unitPrecision: 3,
+      // 转换后的单位
+      mobileUnit: 'vw',
+      // 需要转换的属性
+      propList: ['*'],
+      // 忽略的选择器
+      selectorBlackList: ['.ignore', 'keep-px'],
+      // 忽略的属性
+      propertyBlackList: {
+        '.van-icon': 'font'
+      },
+      // 忽略的属性值
+      valueBlackList: ['1px'],
+      // 忽略的目录或文件
+      exclude: [],
+      // 包含块是根元素的选择器列表
+      rootContainingBlockSelectorList
+    }
+  }
+};

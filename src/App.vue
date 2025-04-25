@@ -2,7 +2,7 @@
   <van-config-provider :theme="mode">
     <nav-bar />
     <router-view v-slot="{ Component }">
-      <section class="app-wrapper">
+      <section class="app-wrapper h-full w-full">
         <keep-alive :include="keepAliveRouteNames">
           <component :is="Component" />
         </keep-alive>
