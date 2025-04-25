@@ -10,11 +10,6 @@ html {
   color-scheme: light;
 }
 
-html.dark {
-  background: #222;
-  color-scheme: dark;
-}
-
 #app {
   height: 100%;
   position: relative;
@@ -24,4 +19,40 @@ html.dark {
 ::-webkit-scrollbar {
   width: 0;
   background: transparent;
+}
+
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-overflow-scrolling: touch; /* 提高滚动性能 */
+  // 选择系统默认字体
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // 也可以 @font-face 自定义字体
+}
+
+/* 处理触摸事件 */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus {
+  /* 防止在获得焦点时, 出现边框 */
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+// 禁止缩放表单
+input[type='submit'],
+input[type='reset'],
+input[type='button'],
+input {
+  border: none;
+  outline: none;
+  resize: none;
 }

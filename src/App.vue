@@ -1,8 +1,8 @@
 <template>
-  <van-config-provider :theme="mode">
+  <van-config-provider theme="light">
     <nav-bar />
     <router-view v-slot="{ Component }">
-      <section class="app-wrapper h-full w-full">
+      <section class="app-wrapper">
         <keep-alive :include="keepAliveRouteNames">
           <component :is="Component" />
         </keep-alive>
@@ -17,10 +17,6 @@ import useRouteCache from '@/stores/modules/routeCache';
 
 const keepAliveRouteNames = computed(() => {
   return useRouteCache().routeCaches as string[];
-});
-
-const mode = computed(() => {
-  return isDark.value ? 'dark' : 'light';
 });
 </script>
 
