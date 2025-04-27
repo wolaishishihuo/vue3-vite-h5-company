@@ -14,9 +14,15 @@
 
 <script setup lang="ts">
 import useRouteCache from '@/stores/modules/routeCache';
+import weChatSDK from '@/plugins/weChat';
 
 const keepAliveRouteNames = computed(() => {
   return useRouteCache().routeCaches as string[];
+});
+
+onMounted(() => {
+  // 初始化微信SDK
+  weChatSDK.init();
 });
 </script>
 
