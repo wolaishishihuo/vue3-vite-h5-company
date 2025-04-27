@@ -5,8 +5,7 @@ import pinia from '@/stores';
 import 'virtual:uno.css';
 import '@/styles/app.less';
 import '@/styles/var.less';
-// 解决非被动事件监听警告，提升滚动性能
-import 'default-passive-events';
+import { TencentMap } from '@/plugins/tencentMap';
 
 // Vant 桌面端适配
 import '@vant/touch-emulator';
@@ -23,7 +22,6 @@ import 'vant/es/notify/style';
 import 'vant/es/image-preview/style';
 
 // 引入需要初始化的SDK和服务
-import tencentMap from '@/plugins/tencentMap';
 import weChatSDK from '@/plugins/weChat';
 
 /**
@@ -37,9 +35,9 @@ async function bootstrap() {
       console.warn('微信SDK初始化失败，但应用将继续运行:', err);
     });
 
-    // 初始化地图SDK - 预加载以防止首次访问地图页面时出现错误
-    await tencentMap.init().catch((err) => {
-      console.warn('腾讯地图SDK初始化失败，但应用将继续运行:', err);
+    // 初始化腾讯地图SDK
+    await TencentMap.init().catch((error) => {
+      console.error('腾讯地图SDK初始化出错', error);
     });
 
     // 可以在这里添加其他需要初始化的服务...
