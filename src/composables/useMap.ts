@@ -38,7 +38,6 @@ export function useMap(mapContainerId: string, options?: {
       try {
         // 获取地图容器元素
         const container = document.getElementById(mapContainerId);
-        console.log(container);
         if (!container) {
           const err = `找不到地图容器元素: ${mapContainerId}`;
           error.value = err;
@@ -120,7 +119,6 @@ export function useMap(mapContainerId: string, options?: {
 
   // 在组件挂载时自动初始化地图
   onMounted(async () => {
-    console.log(options?.autoInit);
     if (options?.autoInit !== false) {
       try {
         await initMap();
