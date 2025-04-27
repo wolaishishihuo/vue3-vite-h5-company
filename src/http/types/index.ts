@@ -1,4 +1,4 @@
-import type { AxiosError } from 'axios';
+import type { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 export type RequestError = AxiosError<{
   message?: string;
@@ -23,4 +23,9 @@ export interface PageResult<T = any> {
   total: number;
   pageNum: number;
   pageSize: number;
+}
+
+export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  showLoading?: boolean; // 是否显示Loading
+  showToast?: boolean; // 是否显示Toast
 }
