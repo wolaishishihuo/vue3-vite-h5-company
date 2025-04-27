@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -10,7 +10,7 @@ import routes from './staticRouter';
 NProgress.configure({ showSpinner: true, parent: '#app' });
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_APP_PUBLIC_PATH),
+  history: createWebHashHistory(import.meta.env.VITE_APP_PUBLIC_PATH),
   routes,
   scrollBehavior(to, _from, savedPosition) {
     if (to.hash) {
