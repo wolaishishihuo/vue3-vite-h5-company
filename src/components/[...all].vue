@@ -1,5 +1,5 @@
 <template>
-  <div text="center gray-300 18">
+  <div text="center gray-300">
     <van-icon name="warn-o" size="3em" />
     <div> Not found </div>
 

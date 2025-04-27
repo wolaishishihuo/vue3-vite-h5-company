@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ResultEnum } from '@/enums/httpEnum';
 import type { CustomAxiosRequestConfig, ResultData } from './types';
-import { useUserStore } from '@/stores/modules/user';
+// import { useUserStore } from '@/stores/modules/user';
 import { closeToast, showFailToast, showLoadingToast, showNotify } from 'vant';
 
 const serviceConfig = {
@@ -22,11 +22,11 @@ class HttpRequest {
      */
     this.service.interceptors.request.use(
       (config: CustomAxiosRequestConfig) => {
-        const userStore = useUserStore();
+        // const userStore = useUserStore();
 
         if (config.headers && typeof config.headers.set === 'function') {
-          config.headers.set('x-access-token', userStore.accessToken);
-          config.headers.set('Authorization', `Bearer ${userStore.accessToken}`);
+          // config.headers.set('x-access-token', userStore.accessToken);
+          // config.headers.set('Authorization', `Bearer ${userStore.accessToken}`);
         }
 
         // 自定义Loading
