@@ -8,8 +8,6 @@ import { closeToast, showFailToast, showLoadingToast, showNotify } from 'vant';
 const serviceConfig = {
   baseURL: import.meta.env.VITE_APP_API_BASE_URL,
   timeout: ResultEnum.TIMEOUT as number
-  // 跨域时候允许携带凭证
-  // withCredentials: true
 };
 
 class HttpRequest {
