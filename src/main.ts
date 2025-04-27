@@ -6,9 +6,6 @@ import 'virtual:uno.css';
 import '@/styles/app.less';
 import '@/styles/var.less';
 
-// 导入微信SDK
-import '@/plugins/weChat';
-
 // Vant 桌面端适配
 import '@vant/touch-emulator';
 
