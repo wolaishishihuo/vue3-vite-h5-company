@@ -1,5 +1,5 @@
 <template>
-  <van-tabbar v-if="show" v-model="active" route placeholder>
+  <van-tabbar v-if="show" v-model="active" placeholder route>
     <van-tabbar-item replace to="/">
       首页
       <template #icon>

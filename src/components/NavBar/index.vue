@@ -2,7 +2,7 @@
   <VanNavBar
     :title="title"
     :fixed="true"
-    placeholder clickable
+    clickable placeholder
     :left-arrow="!showLeftArrow"
     @click-left="onBack"
   />
