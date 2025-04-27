@@ -8,12 +8,16 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    '[...all]': typeof import('./../components/[...all].vue')['default']
     Chart: typeof import('./../components/Chart/index.vue')['default']
     GhostButton: typeof import('./../components/GhostButton/index.vue')['default']
     NavBar: typeof import('./../components/NavBar/index.vue')['default']
+    RefreshList: typeof import('./../components/RefreshList/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TabBar: typeof import('./../components/TabBar/index.vue')['default']
+    TencentMapComponent: typeof import('./../components/TencentMapComponent/index.vue')['default']
+    Upload: typeof import('./../components/Upload/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
@@ -32,5 +36,6 @@ declare module 'vue' {
     VanSwitch: typeof import('vant/es')['Switch']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
+    Waterfull: typeof import('./../components/Waterfull/index.vue')['default']
   }
 }
