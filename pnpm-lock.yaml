@@ -26,9 +26,6 @@ importers:
       axios:
         specifier: ^1.8.4
         version: 1.8.4
-      default-passive-events:
-        specifier: ^2.0.0
-        version: 2.0.0
       echarts:
         specifier: ^5.6.0
         version: 5.6.0
@@ -1995,9 +1992,6 @@ packages:
 
   deep-pick-omit@1.2.1:
     resolution: {integrity: sha512-2J6Kc/m3irCeqVG42T+SaUMesaK7oGWaedGnQQK/+O0gYc+2SP5bKh/KKTE7d7SJ+GCA9UUE1GRzh6oDe0EnGw==}
-
-  default-passive-events@2.0.0:
-    resolution: {integrity: sha512-eMtt76GpDVngZQ3ocgvRcNCklUMwID1PaNbCNxfpDXuiOXttSh0HzBbda1HU9SIUsDc02vb7g9+3I5tlqe/qMQ==}
 
   defu@6.1.4:
     resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
@@ -6024,8 +6018,6 @@ snapshots:
   deep-is@0.1.4: {}
 
   deep-pick-omit@1.2.1: {}
-
-  default-passive-events@2.0.0: {}
 
   defu@6.1.4: {}
 
