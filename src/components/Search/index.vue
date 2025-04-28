@@ -7,6 +7,10 @@
 </template>
 
 <script setup lang='ts'>
+defineOptions({
+  name: 'SearchComponent'
+});
+
 const props = defineProps({
   modelValue: {
     type: String,
