@@ -15,6 +15,7 @@ declare module 'vue' {
     RefreshList: typeof import('./../components/RefreshList/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Search: typeof import('./../components/Search/index.vue')['default']
     TabBar: typeof import('./../components/TabBar/index.vue')['default']
     Upload: typeof import('./../components/Upload/index.vue')['default']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']

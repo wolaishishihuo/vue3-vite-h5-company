@@ -2,6 +2,14 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: '/',
+    name: 'home',
+    component: () => import('@/views/home/index.vue'),
+    meta: {
+      title: '首页'
+    }
+  },
+  {
     path: '/map-example',
     name: 'map-example',
     component: () => import('@/views/MapExample.vue'),
@@ -18,6 +26,7 @@ const routes: Array<RouteRecordRaw> = [
       title: '404'
     }
   }
+
 ];
 
 export default routes;

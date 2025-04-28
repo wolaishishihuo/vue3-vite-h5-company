@@ -24,6 +24,6 @@ const keepAliveRouteNames = computed(() => {
 .app-wrapper {
   position: relative;
   width: 100%;
-  padding: 16px;
+  padding: 20px;
 }
 </style>
