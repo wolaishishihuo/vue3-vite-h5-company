@@ -3,9 +3,11 @@
     <nav-bar />
     <router-view v-slot="{ Component }">
       <section class="app-wrapper">
-        <keep-alive :include="keepAliveRouteNames">
-          <component :is="Component" />
-        </keep-alive>
+        <transition appear name="fade-transform" mode="out-in">
+          <keep-alive :include="keepAliveRouteNames">
+            <component :is="Component" />
+          </keep-alive>
+        </transition>
       </section>
     </router-view>
     <tab-bar />
@@ -25,5 +27,21 @@ const keepAliveRouteNames = computed(() => {
   position: relative;
   width: 100%;
   padding: 20px;
+}
+
+/* 页面切换动画 */
+.fade-transform-enter-active,
+.fade-transform-leave-active {
+  transition: all 0.5s;
+}
+
+.fade-transform-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>

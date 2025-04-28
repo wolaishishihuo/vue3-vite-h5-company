@@ -5,6 +5,7 @@ import pinia from '@/stores';
 import 'virtual:uno.css';
 import '@/styles/app.less';
 import '@/styles/var.less';
+import '@/styles/vant.less';
 import { TencentMap } from '@/plugins/tencentMap';
 
 // Vant 桌面端适配
