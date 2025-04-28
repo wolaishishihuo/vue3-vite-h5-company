@@ -1,6 +1,7 @@
 import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
 import { isSDKLoaded, TencentMap } from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
+import { mapDefaultConfig } from '@/config/tencentMap';
 
 /**
  * 地图Hook - 用于封装地图初始化和事件处理
@@ -48,14 +49,8 @@ export function useMap(mapContainerId: string, options?: {
         // 获取SDK实例
         const TMapSDK = TencentMap.getTMapSDK();
 
-        // 默认选项
-        const defaultOptions: TMap.MapOptions = {
-          center: new TMapSDK.LatLng(39.916527, 116.397128), // 默认北京中心
-          zoom: 13
-        };
-
         // 合并配置
-        const mergedOptions = { ...defaultOptions, ...options?.initOptions, ...initOptions };
+        const mergedOptions = { ...mapDefaultConfig, ...options?.initOptions, ...initOptions };
 
         // 创建地图实例
         map.value = new TMapSDK.Map(container, mergedOptions);

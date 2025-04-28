@@ -2,15 +2,6 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/map',
-    name: 'map',
-    component: () => import('@/pages/MapPage.vue'),
-    meta: {
-      title: '腾讯地图示例',
-      keepAlive: true
-    }
-  },
-  {
     path: '/map-example',
     name: 'map-example',
     component: () => import('@/views/MapExample.vue'),
