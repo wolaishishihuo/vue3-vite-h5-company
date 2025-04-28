@@ -47,26 +47,20 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       }
     },
     esbuild: {
-      pure: isProd ? ['console.log', 'debugger'] : []
+      drop: isProd ? ['console', 'debugger'] : []
     },
     build: {
       cssCodeSplit: false,
       chunkSizeWarningLimit: 2048,
       outDir: 'dist',
       minify: 'esbuild',
-      sourcemap: isProd,
+      sourcemap: !isProd,
       reportCompressedSize: false,
       rollupOptions: {
         output: {
-          // 静态资源文件名格式 默认
-          // assetFileNames: 'assets/[name]-[hash][extname]',
-          // 静态资源文件名格式 精准控制得用函数
           assetFileNames(assetInfo: PreRenderedAsset) {
             if (assetInfo.name === 'css') {
               return 'css/[name]-[hash].css';
-            }
-            if (assetInfo.name === 'js') {
-              return 'js/[name]-[hash].js';
             }
             // 图片资源打包成图片文件
             if (isImageFile(assetInfo)) {
@@ -75,9 +69,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
             // 如果以上条件都不满足，返回默认的文件名格式
             return '[ext]/[name].[hash].[ext]';
           },
-          // 输出文件名格式
           entryFileNames: 'js/[name]-[hash].js',
           chunkFileNames: 'js/[name]-[hash].js',
+
           // 代码分割配置
           manualChunks(id) {
             // 将 vue 及其相关包打包成一个文件 打包成 'vue.js'
