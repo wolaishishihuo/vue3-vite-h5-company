@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import { watchEffect } from 'vue';
-import { useMap } from '@/composables/useMap';
+import { useMap } from '@/composables/map/useMap';
 
 const {
   initialized,

@@ -11,6 +11,7 @@ declare module 'vue' {
     '[...all]': typeof import('./../components/[...all].vue')['default']
     Chart: typeof import('./../components/Chart/index.vue')['default']
     GhostButton: typeof import('./../components/GhostButton/index.vue')['default']
+    MapDemo: typeof import('./../components/MapDemo.vue')['default']
     NavBar: typeof import('./../components/NavBar/index.vue')['default']
     RefreshList: typeof import('./../components/RefreshList/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

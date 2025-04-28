@@ -39,6 +39,7 @@ class TencentMap {
 
     try {
       await loadScript(`https://map.qq.com/api/gljs?v=1.exp&key=${key}`);
+      await loadScript(`https://map.qq.com/api/gljs?v=1.exp&libraries=service&key=${key}`);
 
       isSDKLoaded.value = true;
       isSDKLoading.value = false;
