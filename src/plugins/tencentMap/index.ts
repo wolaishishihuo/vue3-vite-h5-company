@@ -6,7 +6,6 @@ import { loadScript } from '@/utils';
 // 全局状态，记录SDK是否已加载
 const isSDKLoaded: Ref<boolean> = ref(false);
 const isSDKLoading: Ref<boolean> = ref(false);
-let TMapSDK: any = null;
 
 /**
  * 腾讯地图 TMap GL 封装类
@@ -18,7 +17,7 @@ class TencentMap {
    * @param options 地图配置选项
    * @returns Promise<boolean> 初始化是否成功
    */
-  public static async init(options?: { key?: string }): Promise<boolean> {
+  public static async init(): Promise<boolean> {
     if (isSDKLoaded.value) {
       return true;
     }
@@ -35,15 +34,12 @@ class TencentMap {
     }
 
     isSDKLoading.value = true;
-    const key = options?.key || TENCENT_MAP_KEY || '';
-
     try {
-      await loadScript(`https://map.qq.com/api/gljs?v=1.exp&key=${key}`);
-      await loadScript(`https://map.qq.com/api/gljs?v=1.exp&libraries=service&key=${key}`);
+      await loadScript(`https://map.qq.com/api/gljs?v=1.exp&key=${TENCENT_MAP_KEY}`);
+      await loadScript(`https://map.qq.com/api/gljs?v=1.exp&libraries=service&key=${TENCENT_MAP_KEY}`);
 
       isSDKLoaded.value = true;
       isSDKLoading.value = false;
-      TMapSDK = window.TMap;
       console.log('腾讯地图SDK初始化成功');
       return true;
     } catch (error) {
@@ -70,7 +66,7 @@ class TencentMap {
     if (!isSDKLoaded.value) {
       throw new Error('地图SDK尚未加载，请先调用TencentMap.init()方法');
     }
-    return TMapSDK;
+    return window.TMap;
   }
 }
 
