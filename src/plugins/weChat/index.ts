@@ -1,12 +1,10 @@
 import { getWxInfo } from '@/api/wx';
 import { wxJsApiList } from '@/config/wx';
 import * as ww from '@wecom/jssdk';
-import type { ChatOptions, ConfigSignature, ContactOptions, LocationOptions, WxInitOptions } from './types';
-import type { SelectEnterpriseContactMode, SelectEnterpriseContactType } from '@wecom/jssdk';
 import { withTimeout } from '@/utils';
 
 /**
- * 企业微信JSSDK封装类
+ * 企业微信JSSDK核心类
  * @see https://developer.work.weixin.qq.com/document/path/90514
  */
 class WechatSDK {
@@ -78,7 +76,7 @@ class WechatSDK {
    * @param options 初始化选项
    * @returns Promise
    */
-  public async init(options: WxInitOptions = {}): Promise<void> {
+  public async init(options: WxAPI.WxInitOptions = {}): Promise<void> {
     // 已初始化，直接返回
     if (this.initialized) {
       return Promise.resolve();
@@ -128,7 +126,7 @@ class WechatSDK {
       ww.register({
         corpId: data.appId,
         jsApiList: this.jsApiList,
-        getConfigSignature: async (): Promise<ConfigSignature> => {
+        getConfigSignature: async (): Promise<WxAPI.ConfigSignature> => {
           return {
             timestamp: data.timestamp,
             nonceStr: data.nonceStr,
@@ -158,7 +156,7 @@ class WechatSDK {
    * 确保SDK已初始化
    * @returns Promise
    */
-  private async ensureInitialized(): Promise<void> {
+  public async ensureInitialized(): Promise<void> {
     if (!this.initialized) {
       await this.init();
     }
@@ -183,74 +181,21 @@ class WechatSDK {
   }
 
   /**
-   * 选择企业通讯录联系人
-   * @param options 配置选项
-   * @returns Promise
+   * 获取当前超时设置
    */
-  public async selectEnterpriseContact(options: Partial<ContactOptions> = {}): Promise<any> {
-    await this.ensureInitialized();
-
-    const mergedOptions = {
-      fromDepartmentId: options.fromDepartmentId || 0,
-      mode: (options.mode || 'multi') as SelectEnterpriseContactMode,
-      type: (options.type || ['department', 'user']) as SelectEnterpriseContactType[],
-      selectedDepartmentIds: options.selectedDepartmentIds || [],
-      selectedUserIds: options.selectedUserIds || [],
-      ...options
-    };
-
-    return withTimeout(
-      ww.selectEnterpriseContact(mergedOptions),
-      this.timeout,
-      `选择企业通讯录联系人操作超时(${this.timeout}ms)`
-    );
+  public getTimeout(): number {
+    return this.timeout;
   }
 
   /**
-   * 打开企业会话
-   * @param options 配置选项
-   * @returns Promise
+   * 获取ww对象
    */
-  public async openEnterpriseChat(options: ChatOptions): Promise<any> {
-    await this.ensureInitialized();
-
-    if (!options.userIds && !options.chatId) {
-      throw new Error('userIds或chatId至少需要提供一个');
-    }
-
-    return withTimeout(
-      ww.openEnterpriseChat(options),
-      this.timeout,
-      `打开企业会话操作超时(${this.timeout}ms)`
-    );
-  }
-
-  /**
-   * 获取地理位置
-   * @param options 配置选项
-   * @returns Promise
-   */
-  public async getLocation(options: LocationOptions = {}): Promise<any> {
-    await this.ensureInitialized();
-
-    return withTimeout(
-      ww.getLocation(options),
-      this.timeout,
-      `获取位置信息操作超时(${this.timeout}ms)`
-    );
-  }
-
-  /**
-   * 获取原始ww对象，用于直接调用其他API
-   * @returns ww对象
-   */
-  public async getWW() {
-    await this.ensureInitialized();
+  public getWW() {
     return ww;
   }
 }
 
-/**
- * 导出企业微信SDK单例实例
- */
+// 导出类，让使用方可以直接导入类型
+export { WechatSDK };
+// 默认导出单例实例
 export default WechatSDK.getInstance();

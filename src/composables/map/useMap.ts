@@ -3,10 +3,7 @@ import { isSDKLoaded, TencentMap } from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 import { mapDefaultConfig } from '@/config/tencentMap';
 
-// 定义支持的地图事件类型
 type MapEventType = 'click' | 'dblclick' | 'rightclick' | 'mousemove' | 'dragstart' | 'drag' | 'dragend' | 'zoom_changed';
-
-// 事件处理函数类型
 type EventHandler = (event: any) => void;
 
 /**
@@ -18,7 +15,7 @@ export function useMap(mapContainerId: string, options?: {
   initOptions?: TMap.MapOptions;
   autoInit?: boolean;
 }) {
-  // 地图实例 - 使用any替代TMap.Map以避免类型错误
+  // 地图实例
   const map = shallowRef<any>(null);
   // 点击位置
   const clickPosition = ref<TMap.LatLng>({ lat: 0, lng: 0 });
