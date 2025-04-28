@@ -3,6 +3,12 @@ import { isSDKLoaded, TencentMap } from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 import { mapDefaultConfig } from '@/config/tencentMap';
 
+// 定义支持的地图事件类型
+type MapEventType = 'click' | 'dblclick' | 'rightclick' | 'mousemove' | 'dragstart' | 'drag' | 'dragend' | 'zoom_changed';
+
+// 事件处理函数类型
+type EventHandler = (event: any) => void;
+
 /**
  * 地图Hook - 用于封装地图初始化和事件处理
  * @param mapContainerId 地图容器元素ID
@@ -12,14 +18,16 @@ export function useMap(mapContainerId: string, options?: {
   initOptions?: TMap.MapOptions;
   autoInit?: boolean;
 }) {
-  // 地图实例
+  // 地图实例 - 使用any替代TMap.Map以避免类型错误
   const map = shallowRef<any>(null);
   // 点击位置
   const clickPosition = ref<TMap.LatLng>({ lat: 0, lng: 0 });
   // 错误信息
   const error = ref<string | null>(null);
-  // 点击事件处理函数
-  let clickHandler: ((event: any) => void) | null = null;
+  // 加载状态
+  const isLoading = ref(false);
+  // 事件处理器存储
+  const eventHandlers = new Map<string, EventHandler>();
   // 初始化完成的Promise
   const initialized = ref<Promise<any> | null>(null);
 
@@ -27,8 +35,10 @@ export function useMap(mapContainerId: string, options?: {
    * 初始化地图
    */
   const initMap = (initOptions?: TMap.MapOptions): Promise<any> => {
+    isLoading.value = true;
+
     // 创建新的初始化Promise
-    const initPromise = new Promise((resolve, reject) => {
+    const initPromise = new Promise<any>((resolve, reject) => {
       if (!isSDKLoaded.value) {
         const err = '地图SDK尚未加载，请确保已调用TencentMap.init()';
         error.value = err;
@@ -49,8 +59,12 @@ export function useMap(mapContainerId: string, options?: {
         // 获取SDK实例
         const TMapSDK = TencentMap.getTMapSDK();
 
-        // 合并配置
-        const mergedOptions = { ...mapDefaultConfig, ...options?.initOptions, ...initOptions };
+        // 确保参数合并优先级：默认配置 < 组件选项 < 方法参数
+        const mergedOptions = {
+          ...mapDefaultConfig,
+          ...options?.initOptions,
+          ...initOptions
+        };
 
         // 创建地图实例
         map.value = new TMapSDK.Map(container, mergedOptions);
@@ -60,56 +74,53 @@ export function useMap(mapContainerId: string, options?: {
         error.value = err.message || '地图初始化失败';
         reject(err);
       }
+    }).finally(() => {
+      isLoading.value = false;
     });
+
     // 保存初始化Promise
     initialized.value = initPromise;
     return initPromise;
   };
 
   /**
-   * 添加点击事件监听
-   * @param callback 点击事件回调函数，不传则使用默认处理逻辑
+   * 添加事件监听
+   * @param eventType 事件类型
+   * @param callback 事件回调函数
    */
-  const addClickListener = (callback?: (position: TMap.LatLng, event: any) => void) => {
+  const addEventListener = <T extends MapEventType>(
+    eventType: T,
+    callback: EventHandler
+  ): void => {
     if (!map.value) {
       error.value = '地图尚未初始化，请先调用initMap()';
       return;
     }
 
-    // 移除已有的点击事件
-    removeClickListener();
+    // 移除已有的同类型事件
+    removeEventListener(eventType);
 
-    // 创建点击事件处理函数
-    clickHandler = (evt: any) => {
-      const position = {
-        lat: evt.latLng.lat,
-        lng: evt.latLng.lng
-      };
+    // 保存处理函数引用
+    eventHandlers.set(eventType, callback);
 
-      // 更新点击位置
-      clickPosition.value = position;
-
-      // 如果有自定义回调，则调用
-      if (callback) {
-        callback(position, evt);
-      }
-    };
-
-    // 添加点击事件监听
-    map.value.on('click', clickHandler);
+    // 添加事件监听
+    map.value.on(eventType, callback);
   };
 
   /**
-   * 移除点击事件监听
+   * 移除事件监听
+   * @param eventType 事件类型
    */
-  const removeClickListener = () => {
-    if (!map.value || !clickHandler) {
+  const removeEventListener = (eventType: string): void => {
+    if (!map.value || !eventHandlers.has(eventType)) {
       return;
     }
 
-    // 移除点击事件监听
-    map.value.off('click', clickHandler);
-    clickHandler = null;
+    const handler = eventHandlers.get(eventType);
+    if (handler) {
+      map.value.off(eventType, handler);
+      eventHandlers.delete(eventType);
+    }
   };
 
   // 在组件挂载时自动初始化地图
@@ -125,7 +136,12 @@ export function useMap(mapContainerId: string, options?: {
 
   // 在组件卸载时清理资源
   onUnmounted(() => {
-    removeClickListener();
+    // 清理所有事件
+    eventHandlers.forEach((handler, eventType) => {
+      map.value?.off(eventType, handler);
+    });
+    eventHandlers.clear();
+
     // 腾讯地图没有提供destroy方法，置空引用
     map.value = null;
   });
@@ -134,9 +150,10 @@ export function useMap(mapContainerId: string, options?: {
     map,
     clickPosition,
     error,
+    isLoading,
     initMap,
-    addClickListener,
-    removeClickListener,
+    addEventListener,
+    removeEventListener,
     initialized
   };
 }

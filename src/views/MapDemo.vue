@@ -55,7 +55,7 @@ import { useGeocoder } from '@/composables/map/useGeocoder';
 import type { TMap } from '@/types/TMap';
 
 // 初始化地图
-const { map, addClickListener } = useMap('map');
+const { map, addEventListener } = useMap('map');
 
 // 初始化各功能模块
 const { addMarker, removeAllMarkers } = useMarker(map);
@@ -138,7 +138,7 @@ const clearAll = () => {
 onMounted(async () => {
   if (map.value) {
     // 添加点击监听
-    addClickListener((pos) => {
+    addEventListener('click', (pos) => {
       handleMapClick(pos);
     });
   }
