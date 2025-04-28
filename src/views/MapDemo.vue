@@ -1,36 +1,45 @@
 <template>
-  <div class="map-container">
-    <div id="map" class="map" />
-    <div class="control-panel">
-      <div class="search-box">
-        <input v-model="searchKeyword" placeholder="搜索地点" @keyup.enter="searchPlaces">
-        <button @click="searchPlaces" :disabled="isSearching">
-          {{ isSearching ? '搜索中...' : '搜索' }}
-        </button>
+  <div class="map-page">
+    <div class="layout-container">
+      <div class="map-section">
+        <div id="map" class="map" />
       </div>
+      <div class="control-section">
+        <div class="panel-card">
+          <h3 class="panel-title">
+            地图工具
+          </h3>
+          <div class="search-box">
+            <input v-model="searchKeyword" placeholder="搜索地点" @keyup.enter="searchPlaces">
+            <button @click.stop="searchPlaces" :disabled="isSearching">
+              {{ isSearching ? '搜索中...' : '搜索' }}
+            </button>
+          </div>
 
-      <div v-if="places.length > 0" class="search-results">
-        <div
-          v-for="(place, index) in places"
-          :key="index"
-          class="search-item"
-          @click="selectPlace(place)"
-        >
-          {{ place.title }}
+          <div v-if="places.length > 0" class="search-results">
+            <div
+              v-for="(place, index) in places"
+              :key="index"
+              class="search-item"
+              @click="selectPlace(place)"
+            >
+              {{ place.title }}
+            </div>
+          </div>
+
+          <div class="tool-panel">
+            <button @click.stop="drawMode = 'marker'" :class="{ active: drawMode === 'marker' }">
+              标记点
+            </button>
+            <button @click.stop="clearAll">
+              清除所有
+            </button>
+          </div>
+
+          <div v-if="drawMode === 'polyline' || drawMode === 'polygon'" class="drawing-hint">
+            点击地图添加点，双击结束绘制
+          </div>
         </div>
-      </div>
-
-      <div class="tool-panel">
-        <button @click="drawMode = 'marker'" :class="{ active: drawMode === 'marker' }">
-          标记点
-        </button>
-        <button @click="clearAll">
-          清除所有
-        </button>
-      </div>
-
-      <div v-if="drawMode === 'polyline' || drawMode === 'polygon'" class="drawing-hint">
-        点击地图添加点，双击结束绘制
       </div>
     </div>
   </div>
@@ -65,7 +74,7 @@ const searchPlaces = async () => {
   if (!searchKeyword.value || isSearching.value) return;
 
   try {
-    await searchPlacesApi(searchKeyword.value);
+    await searchPlacesApi(searchKeyword.value, map.value.getBounds());
     places.value = searchResults.value;
   } catch (err) {
     console.error('搜索失败:', err);
@@ -141,10 +150,25 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.map-container {
-  position: relative;
+.map-page {
   width: 100%;
-  height: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.layout-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  height: 600px;
+}
+
+.map-section {
+  flex: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .map {
@@ -152,36 +176,54 @@ onMounted(async () => {
   height: 100%;
 }
 
-.control-panel {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.control-section {
   width: 300px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 4px;
-  padding: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.panel-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
 }
 
 .search-box {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .search-box input {
   flex: 1;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px 0 0 4px;
+  font-size: 14px;
 }
 
 .search-box button {
-  padding: 8px 12px;
+  padding: 10px 15px;
   background-color: #3777ff;
   color: white;
   border: none;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.search-box button:hover {
+  background-color: #2a60d6;
 }
 
 .search-box button:disabled {
@@ -192,15 +234,20 @@ onMounted(async () => {
 .search-results {
   max-height: 200px;
   overflow-y: auto;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border: 1px solid #eee;
   border-radius: 4px;
 }
 
 .search-item {
-  padding: 8px 10px;
+  padding: 10px;
   border-bottom: 1px solid #eee;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-item:last-child {
+  border-bottom: none;
 }
 
 .search-item:hover {
@@ -210,17 +257,23 @@ onMounted(async () => {
 .tool-panel {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-bottom: 10px;
-  z-index: 1000;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .tool-panel button {
-  padding: 6px 10px;
+  padding: 8px 12px;
   background-color: #f5f5f5;
   border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+  min-width: 80px;
+}
+
+.tool-panel button:hover {
+  background-color: #e8e8e8;
 }
 
 .tool-panel button.active {
@@ -230,12 +283,28 @@ onMounted(async () => {
 }
 
 .drawing-hint {
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
-  margin-top: 5px;
-  padding: 5px;
+  margin-top: 10px;
+  padding: 10px;
   background-color: #f0f0f0;
   border-radius: 4px;
   text-align: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .layout-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .map-section {
+    height: 400px;
+  }
+
+  .control-section {
+    width: 100%;
+  }
 }
 </style>
