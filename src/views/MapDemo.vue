@@ -48,10 +48,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { TencentMap } from '@/plugins/tencentMap';
-import { useMap } from '@/composables/map/useMap';
-import { useMarker } from '@/composables/map/useMarker';
-import { usePlaceSearch } from '@/composables/map/usePlaceSearch';
-import { useGeocoder } from '@/composables/map/useGeocoder';
 import type { TMap } from '@/types/TMap';
 
 // 初始化地图
