@@ -6,7 +6,7 @@ import 'virtual:uno.css';
 import '@/styles/app.less';
 import '@/styles/var.less';
 import '@/styles/vant.less';
-import { TencentMap } from '@/plugins/tencentMap';
+import '@/assets/iconfont/iconfont.css';
 
 // Vant 桌面端适配
 import '@vant/touch-emulator';
@@ -24,6 +24,7 @@ import 'vant/es/image-preview/style';
 
 // 引入需要初始化的SDK和服务
 import weChatSDK from '@/plugins/weChat';
+import { TencentMap } from '@/plugins/tencentMap';
 
 /**
  * 异步初始化各种SDK和服务
