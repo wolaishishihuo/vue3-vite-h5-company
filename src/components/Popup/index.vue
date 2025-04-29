@@ -26,12 +26,10 @@ import type { VNode } from 'vue';
 import type { PopupProps } from 'vant';
 
 interface Props extends Partial<PopupProps> {
-  title?: string;
   content?: string | (() => VNode);
-  onOk?: () => void;
-  onBeforeOk?: () => Promise<boolean>;
   onCancel?: () => void;
 }
+
 defineOptions({ name: 'CecwPopup' });
 
 const props = withDefaults(defineProps<Props>(), {
@@ -45,24 +43,14 @@ const props = withDefaults(defineProps<Props>(), {
   teleport: 'body'
 });
 
-defineSlots<{
-  title: () => VNode;
-  default: () => VNode;
-}>();
-
 const visible = defineModel('modelValue', {
   type: Boolean,
   default: false
 });
 
 const popupProps = computed(() => {
-  return {
-    ...props,
-    content: undefined,
-    onOk: undefined,
-    onBeforeOk: undefined,
-    onCancel: undefined
-  };
+  const { content, onCancel, ...rest } = props;
+  return rest;
 });
 
 const handleClose = () => {
