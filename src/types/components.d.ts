@@ -9,13 +9,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     '[...all]': typeof import('./../components/[...all].vue')['default']
-    BasePopup: typeof import('./../components/BasePopup.vue')['default']
     Chart: typeof import('./../components/Chart/index.vue')['default']
-    FormContent: typeof import('./../components/popups/FormContent.vue')['default']
-    FormPopup: typeof import('./../components/popups/FormPopup.vue')['default']
     GhostButton: typeof import('./../components/GhostButton/index.vue')['default']
-    MessageContent: typeof import('./../components/popups/MessageContent.vue')['default']
-    MessagePopup: typeof import('./../components/popups/MessagePopup.vue')['default']
     NavBar: typeof import('./../components/NavBar/index.vue')['default']
     Popup: typeof import('./../components/Popup/index.vue')['default']
     RefreshList: typeof import('./../components/RefreshList/index.vue')['default']
@@ -27,8 +22,6 @@ declare module 'vue' {
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']
-    VanField: typeof import('vant/es')['Field']
-    VanForm: typeof import('vant/es')['Form']
     VanIcon: typeof import('vant/es')['Icon']
     VanNavBar: typeof import('vant/es')['NavBar']
     VanPicker: typeof import('vant/es')['Picker']

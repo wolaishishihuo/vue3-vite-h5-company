@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import MapDemo from '@/views/MapDemo.vue';
+import MapDemo from '@/views/mapDemo/mapDemo.vue';
 </script>
 
 <style scoped>

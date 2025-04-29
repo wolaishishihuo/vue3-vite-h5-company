@@ -32,7 +32,7 @@ export interface PopupInstance {
   id: string;
 }
 
-export function createPopup() {
+const createPopup = () => {
   let currentInstance: PopupInstance | null = null;
 
   const popup = {
@@ -137,7 +137,7 @@ export function createPopup() {
   };
 
   return popup;
-}
+};
 
 // 默认导出实例
-export const PopupManager = createPopup();
+export const popupManager = createPopup();

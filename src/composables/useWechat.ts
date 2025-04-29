@@ -71,5 +71,4 @@ export function useWechat() {
   };
 }
 
-export const wxApi = useWechat();
 export default useWechat;

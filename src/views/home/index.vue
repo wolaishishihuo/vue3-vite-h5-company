@@ -9,12 +9,13 @@
       title="标题"
       :columns="columns"
     />
+    <van-cell title="地图功能" is-link :inset="true" @click="toMapExample" />
   </div>
 </template>
 
 <script setup lang='tsx'>
 import { Picker } from 'vant';
-import { PopupManager } from '@/composables/usePopup';
+import { popupManager } from '@/composables/usePopup';
 
 defineOptions({
   name: 'Home'
@@ -29,7 +30,7 @@ const columns = ref([
 ]);
 
 const showPickerPopup = () => {
-  const popup = PopupManager.open({
+  const popup = popupManager.open({
     position: 'bottom',
     content: () => (
       <Picker
@@ -43,5 +44,10 @@ const showPickerPopup = () => {
       />
     )
   });
+};
+
+const router = useRouter();
+const toMapExample = () => {
+  router.push('/mapExample');
 };
 </script>

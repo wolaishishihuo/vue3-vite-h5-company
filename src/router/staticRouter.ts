@@ -10,12 +10,11 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/map-example',
-    name: 'map-example',
-    component: () => import('@/views/MapExample.vue'),
+    path: '/mapExample',
+    name: 'mapExample',
+    component: () => import('@/views/mapDemo/mapExample.vue'),
     meta: {
-      title: '地图功能示例',
-      keepAlive: true
+      title: '地图功能示例'
     }
   },
   {
