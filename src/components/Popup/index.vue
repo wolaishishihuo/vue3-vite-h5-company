@@ -8,7 +8,6 @@
     :close-icon="closeIcon"
     :close-on-click-overlay="closeOnClickOverlay"
     @close="handleClose"
-    class="p-[30px] h-[30vh] max-h-[100vh]"
   >
     <slot>
       <template v-if="typeof props.content === 'string'">
