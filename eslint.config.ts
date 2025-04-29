@@ -41,7 +41,8 @@ export default antfu(
   },
   {
     ignores: [
-      'scripts/**'
+      'scripts/**',
+      'src/assets/iconfont/**'
     ]
   }
 );

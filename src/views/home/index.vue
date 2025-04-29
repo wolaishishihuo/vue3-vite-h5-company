@@ -10,6 +10,7 @@
       :columns="columns"
     />
     <van-cell title="地图功能" is-link :inset="true" @click="toMapExample" />
+    <i class="iconfont icon-yuyueliebiao" />
   </div>
 </template>
 
