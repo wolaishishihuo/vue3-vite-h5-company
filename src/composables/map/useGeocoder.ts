@@ -67,8 +67,6 @@ export function useGeocoder() {
    * @param location 坐标位置
    */
   const reverseGeocode = async (location: TMap.LatLng): Promise<any | null> => {
-    console.log(location);
-
     if (!location.lat || !location.lng) {
       error.value = '坐标不能为空';
       return null;
@@ -82,9 +80,7 @@ export function useGeocoder() {
       const TMapSDK = TencentMap.getTMapSDK();
 
       const geocoder = new TMapSDK.service.Geocoder();
-      console.log(
-        geocoder
-      );
+
       return new Promise((resolve, reject) => {
         geocoder.getAddress({
           location: new TMapSDK.LatLng(location.lat, location.lng),

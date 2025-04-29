@@ -36,9 +36,6 @@ export function createVitePlugins(mode: string) {
         }
       ],
       dts: 'src/types/auto-imports.d.ts',
-      dirs: [
-        'src/composables'
-      ],
       resolvers: [VantResolver()]
     }),
 

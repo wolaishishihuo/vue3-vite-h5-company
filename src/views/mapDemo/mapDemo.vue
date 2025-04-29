@@ -49,6 +49,7 @@
 import { onMounted, ref } from 'vue';
 import { TencentMap } from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
+import { useGeocoder, useMap, useMarker, usePlaceSearch } from '@/composables/map';
 
 // 初始化地图
 const { map, addEventListener } = useMap('map');
@@ -106,20 +107,16 @@ const selectPlace = (place: any) => {
 
 // 处理地图点击事件
 const handleMapClick = async (position: TMap.LatLng) => {
-  if (!drawMode.value) return;
-
-  if (drawMode.value === 'marker') {
-    // 添加标记点
-    addMarker({ position });
-    // 显示地址信息
-    try {
-      const addressInfo = await reverseGeocode(position);
-      if (addressInfo) {
-        console.log('点击位置地址:', addressInfo.address);
-      }
-    } catch (err) {
-      console.error('获取地址信息失败:', err);
+  // 添加标记点
+  addMarker({ position });
+  // 显示地址信息
+  try {
+    const addressInfo = await reverseGeocode(position);
+    if (addressInfo) {
+      console.log('点击位置地址:', addressInfo.address);
     }
+  } catch (err) {
+    console.error('获取地址信息失败:', err);
   }
 };
 
@@ -135,7 +132,7 @@ onMounted(async () => {
   if (map.value) {
     // 添加点击监听
     addEventListener('click', (pos) => {
-      handleMapClick(pos);
+      handleMapClick(pos.latLng);
     });
   }
 });
