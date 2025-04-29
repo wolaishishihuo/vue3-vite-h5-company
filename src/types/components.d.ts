@@ -28,7 +28,6 @@ declare module 'vue' {
     VanPopup: typeof import('vant/es')['Popup']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
-    VanTimePicker: typeof import('vant/es')['TimePicker']
     Waterfull: typeof import('./../components/Waterfull/index.vue')['default']
   }
 }
