@@ -20,7 +20,6 @@ import { popupManager } from '@/composables/usePopup';
 defineOptions({
   name: 'Home'
 });
-
 const columns = ref([
   { text: '杭州', value: 'Hangzhou' },
   { text: '宁波', value: 'Ningbo' },

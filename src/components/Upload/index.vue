@@ -1,11 +1,3 @@
-<!--
- * @Descripttion: 上传组件 最简调用 <Upload v-model="files" />
- * @version:
- * @Author: lhl
- * @Date: 2024-09-05 10:08:11
- * @LastEditors: lhl
- * @LastEditTime: 2024-09-05 23:09:31
--->
 <template>
   <van-uploader
     v-model="fileList"

@@ -1,11 +1,3 @@
-<!--
- * @Descripttion: 瀑布流组件
- * @version:
- * @Author: lhl
- * @Date: 2024-09-05 10:08:06
- * @LastEditors: lhl
- * @LastEditTime: 2024-09-05 21:49:41
--->
 <template>
   <div
     class="waterfall-container"
