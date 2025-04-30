@@ -5,10 +5,10 @@
     <van-button round block type="primary" native-type="submit">
       提交
     </van-button>
-    <van-picker
+    <!-- <van-picker
       title="标题"
       :columns="columns"
-    />
+    /> -->
     <van-cell title="地图功能" is-link :inset="true" @click="toMapExample" />
     <i class="iconfont icon-yuyueliebiao" />
   </div>
@@ -16,6 +16,7 @@
 
 <script setup lang='tsx'>
 import { Picker } from 'vant';
+import 'vant/es/picker/style';
 import { popupManager } from '@/composables/usePopup';
 
 defineOptions({
