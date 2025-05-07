@@ -26,7 +26,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
   return {
     base: env.VITE_APP_PUBLIC_PATH,
     plugins: createVitePlugins(mode),
-
     server: {
       host: true,
       port: 3000,
@@ -38,7 +37,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         }
       }
     },
-
     resolve: {
       alias: {
         '@': path.join(__dirname, './src'),

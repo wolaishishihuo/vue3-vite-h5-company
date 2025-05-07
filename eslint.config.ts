@@ -33,10 +33,7 @@ export default antfu(
       // other
       'no-debugger': 'off',
       'symbol-description': 'off',
-      'antfu/if-newline': 'off',
-      'unicorn/no-instanceof-builtins': 'off',
-      // unocss
-      'unocss/order': 'warn'
+      'antfu/if-newline': 'off'
     }
   },
   {
