@@ -1,11 +1,14 @@
 <template>
   <van-config-provider theme="light">
     <nav-bar />
-    <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component, route }">
       <section class="app-wrapper">
-        <transition appear name="fade-transform" mode="out-in">
-          <keep-alive :include="keepAliveRouteNames">
-            <component :is="Component" />
+        <transition
+          appear name="fade-transform" mode="out-in" @after-enter="onTransitionFinished"
+          @after-leave="onTransitionFinished"
+        >
+          <keep-alive :include="cacheNames">
+            <component :is="Component" :key="route.path" />
           </keep-alive>
         </transition>
       </section>
@@ -15,11 +18,17 @@
 </template>
 
 <script setup lang="ts">
-import useRouteCache from '@/stores/modules/routeCache';
+import { computed } from 'vue';
+import useRouteCacheStore from '@/stores/modules/routeCache';
+import { useRouteTransition } from '@/composables/useRouteTransition';
 
-const keepAliveRouteNames = computed(() => {
-  return useRouteCache().routeCaches as string[];
-});
+const routeCacheStore = useRouteCacheStore();
+const cacheNames = computed(() => routeCacheStore.routeCaches as string[]);
+
+const { completeTransition } = useRouteTransition();
+const onTransitionFinished = () => {
+  completeTransition();
+};
 </script>
 
 <style scoped>
