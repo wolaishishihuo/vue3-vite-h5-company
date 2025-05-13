@@ -2,8 +2,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { loadEnv } from 'vite';
 import type { ConfigEnv, UserConfig } from 'vite';
-import { createVitePlugins } from './build';
-import { exclude, include } from './build/optimize';
+import { createProxy, createVitePlugins, exclude, include, wrapperEnv } from './build';
 
 interface PreRenderedAsset {
   name: string | undefined;
@@ -21,21 +20,17 @@ const isImageFile = (assetInfo: { name?: string }) => {
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
-  const isProd = mode === 'production';
+  const viteEnv = wrapperEnv(env);
 
   return {
-    base: env.VITE_APP_PUBLIC_PATH,
+    base: viteEnv.VITE_PUBLIC_PATH,
     plugins: createVitePlugins(mode),
     server: {
-      host: true,
-      port: 3000,
-      proxy: {
-        '/api': {
-          target: '',
-          ws: false,
-          changeOrigin: true
-        }
-      }
+      host: '0.0.0.0',
+      port: viteEnv.VITE_PORT,
+      open: viteEnv.VITE_OPEN,
+      cors: true,
+      proxy: createProxy(viteEnv.VITE_PROXY)
     },
     resolve: {
       alias: {
@@ -45,14 +40,14 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       }
     },
     esbuild: {
-      drop: isProd ? ['console', 'debugger'] : []
+      drop: viteEnv.VITE_DROP_CONSOLE ? ['console', 'debugger'] : []
     },
     build: {
       cssCodeSplit: false,
       chunkSizeWarningLimit: 2048,
       outDir: 'dist',
       minify: 'esbuild',
-      sourcemap: !isProd,
+      sourcemap: viteEnv.VITE_BUILD_SOURCEMAP,
       reportCompressedSize: false,
       rollupOptions: {
         output: {
