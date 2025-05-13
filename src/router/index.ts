@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import { nextTick } from 'vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -7,12 +7,18 @@ import routes from './staticRouter';
 import { useRouteTransition } from '@/composables/useRouteTransition';
 
 NProgress.configure({ showSpinner: true, parent: '#app' });
+const mode = import.meta.env.VITE_ROUTER_MODE;
 
 // 创建过渡动画管理实例
 const { waitForTransition, startTransition } = useRouteTransition();
 
+const routerMode = {
+  hash: () => createWebHashHistory(),
+  history: () => createWebHistory()
+};
+
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.VITE_APP_PUBLIC_PATH),
+  history: routerMode[mode](),
   routes,
   async scrollBehavior(to, _from, savedPosition) {
     await nextTick();

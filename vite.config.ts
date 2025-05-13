@@ -23,6 +23,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
   const viteEnv = wrapperEnv(env);
 
   return {
+    root,
     base: viteEnv.VITE_PUBLIC_PATH,
     plugins: createVitePlugins(mode),
     server: {
@@ -43,10 +44,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       drop: viteEnv.VITE_DROP_CONSOLE ? ['console', 'debugger'] : []
     },
     build: {
-      cssCodeSplit: false,
-      chunkSizeWarningLimit: 2048,
       outDir: 'dist',
       minify: 'esbuild',
+      cssCodeSplit: false,
+      chunkSizeWarningLimit: 2048,
       sourcemap: viteEnv.VITE_BUILD_SOURCEMAP,
       reportCompressedSize: false,
       rollupOptions: {
@@ -84,7 +85,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         }
       }
     },
-
     optimizeDeps: { include, exclude }
   };
 };
