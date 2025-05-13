@@ -28,12 +28,12 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/App.vue",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "src/types/components.d.ts",
-    "src/types/auto-imports.d.ts",
-    "src/types/typed-router.d.ts"
+    "src/**/*.d.ts",
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+    "vite.config.ts"
   ]
 }
