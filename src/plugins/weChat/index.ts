@@ -117,7 +117,7 @@ class WechatSDK {
     try {
       // 获取微信配置信息，带超时
       const { data } = await withTimeout(
-        getWxInfo(window.location.href),
+        getWxInfo(window.location.href.split('#')[0]),
         this.timeout,
         `获取微信配置信息超时(${this.timeout}ms)`
       );
