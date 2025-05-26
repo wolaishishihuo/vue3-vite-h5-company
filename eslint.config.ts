@@ -7,7 +7,6 @@ export default antfu(
     unocss: true,
     formatters: true,
     stylistic: {
-      // 是否启用分号
       semi: true
     }
   },

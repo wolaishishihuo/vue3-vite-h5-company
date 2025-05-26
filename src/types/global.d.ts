@@ -16,4 +16,5 @@ declare interface ViteEnv {
   VITE_API_URL: string;
   VITE_PROXY: [string, string][];
   VITE_BUILD_SOURCEMAP: boolean;
+  VITE_APP_VCONSOLE: string;
 }

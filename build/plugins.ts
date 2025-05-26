@@ -6,10 +6,11 @@ import { VantResolver } from '@vant/auto-import-resolver';
 import Components from 'unplugin-vue-components/vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vitePluginImp from 'vite-plugin-imp';
-
+import viteCompression from 'vite-plugin-compression';
 import { createViteVConsole } from './vconsole';
+import type { PluginOption } from 'vite';
 
-export function createVitePlugins(mode: string) {
+export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
   return [
     vue(),
     vueJsx(),
@@ -77,12 +78,42 @@ export function createVitePlugins(mode: string) {
     legacy({
       targets: ['defaults', 'not IE 11']
     }),
-
+    // 创建打包压缩配置
+    createCompression(viteEnv),
     // https://github.com/antfu/unocss
     // see uno.config.ts for config
     UnoCSS(),
 
     // https://github.com/vadxq/vite-plugin-vconsole
-    createViteVConsole(mode)
+    createViteVConsole(viteEnv)
   ];
-}
+};
+
+/**
+ * @description 根据 compress 配置，生成不同的压缩规则
+ * @param viteEnv
+ */
+const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
+  const { VITE_BUILD_COMPRESS = 'none', VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv;
+  const compressList = VITE_BUILD_COMPRESS.split(',');
+  const plugins: PluginOption[] = [];
+  if (compressList.includes('gzip')) {
+    plugins.push(
+      viteCompression({
+        ext: '.gz',
+        algorithm: 'gzip',
+        deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+      })
+    );
+  }
+  if (compressList.includes('brotli')) {
+    plugins.push(
+      viteCompression({
+        ext: '.br',
+        algorithm: 'brotliCompress',
+        deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+      })
+    );
+  }
+  return plugins;
+};
