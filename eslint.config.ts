@@ -22,6 +22,7 @@ export default antfu(
       'vue/attributes-order': 'off',
       // ts
       'ts/no-use-before-define': 'off',
+      'no-new': 'off',
       // node
       'node/prefer-global/process': 'off',
       // style

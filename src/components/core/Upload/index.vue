@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
+import { useImageCompress } from '@/composables/useImageCompress';
 import type { UploaderBeforeRead } from 'vant'; // 导入 UploaderBeforeRead 类型
-import { showToast } from 'vant';
 
 interface FileItem {
   name: string;
@@ -33,6 +33,12 @@ interface Props {
   accept?: string;
   multiple?: boolean;
   maxSize?: number;
+  compressOptions?: {
+    quality?: number; // 压缩质量
+    maxWidth?: number; // 压缩最大宽度
+    maxHeight?: number; // 压缩最大高度
+    showToast?: boolean; // 是否显示压缩结果提示
+  };
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -40,7 +46,13 @@ const props = withDefaults(defineProps<Props>(), {
   maxCount: 1,
   accept: 'image/*',
   multiple: true,
-  maxSize: 1024 * 1024 * 1 // 默认最大文件大小为1MB
+  maxSize: 1024 * 1024 * 1, // 默认最大文件大小为1MB
+  compressOptions: () => ({
+    quality: 0.8,
+    maxWidth: 800,
+    maxHeight: 800,
+    showToast: false
+  })
 });
 
 const emit = defineEmits<{
@@ -56,16 +68,23 @@ watch(
     fileList.value = newValue;
   }
 );
+// 图片压缩
+const { compressImage, compressImages } = useImageCompress();
 
-const beforeRead: UploaderBeforeRead = (fileOrFiles) => {
-  const files = Array.isArray(fileOrFiles) ? fileOrFiles : [fileOrFiles];
-  for (const file of files) {
-    if (file.size > props.maxSize) {
-      showToast(`文件 ${file.name} 大小超过限制 ${props.maxSize / 1024 / 1024}MB`);
-      return false; // 阻止文件上传
+const beforeRead: UploaderBeforeRead = async (fileOrFiles) => {
+  try {
+    if (Array.isArray(fileOrFiles)) {
+      // 多文件处理
+      return await compressImages(fileOrFiles, props.compressOptions);
+    } else {
+      // 单文件处理
+      return await compressImage(fileOrFiles, props.compressOptions);
     }
+  } catch (error) {
+    console.error('图片压缩失败:', error);
+    // 压缩失败时返回原始文件
+    return fileOrFiles;
   }
-  return true; // 允许文件上传
 };
 
 const handleDelete = (file: File) => {
