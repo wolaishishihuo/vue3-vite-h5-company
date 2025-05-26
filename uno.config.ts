@@ -9,7 +9,7 @@ import {
   transformerVariantGroup
 } from 'unocss';
 
-const BASE_FONT_SIZE = 8;
+const BASE_FONT_SIZE = 4;
 
 export default defineConfig({
   // 自定义类样式

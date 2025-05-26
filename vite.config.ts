@@ -25,7 +25,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
   return {
     root,
     base: viteEnv.VITE_PUBLIC_PATH,
-    plugins: createVitePlugins(mode),
+    plugins: createVitePlugins(viteEnv),
     server: {
       host: '0.0.0.0',
       port: viteEnv.VITE_PORT,
