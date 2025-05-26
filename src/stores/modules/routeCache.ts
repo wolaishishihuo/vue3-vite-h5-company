@@ -1,15 +1,17 @@
 import { defineStore } from 'pinia';
-import type { RouteRecordName } from 'vue-router';
 
 const useRouteCacheStore = defineStore('route-cache', () => {
-  const routeCaches = ref<RouteRecordName[]>([]);
+  const routeCaches = ref<string[]>([]);
 
   const addRoute = (route) => {
+    if (!route.name) return;
+
     if (routeCaches.value.includes(route.name))
       return;
 
-    if (route?.meta?.keepAlive)
+    if (route?.meta?.keepAlive) {
       routeCaches.value.push(route.name);
+    }
   };
 
   return {
