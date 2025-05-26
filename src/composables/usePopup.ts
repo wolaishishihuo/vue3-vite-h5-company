@@ -1,5 +1,5 @@
 import type { PopupProps } from 'vant';
-import Popup from '@/components/Popup/index.vue';
+import Popup from '@/components/core/Popup/index.vue';
 
 // 错误处理函数
 const handleError = (error: Error, context: string) => {
