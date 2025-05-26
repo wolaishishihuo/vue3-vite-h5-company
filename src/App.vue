@@ -1,43 +1,56 @@
 <template>
-  <van-config-provider theme="light">
-    <nav-bar />
-    <router-view v-slot="{ Component, route }">
-      <section class="app-wrapper">
-        <transition
-          appear name="fade-transform" mode="out-in" @after-enter="onTransitionFinished"
-          @after-leave="onTransitionFinished"
-        >
-          <keep-alive :include="cacheNames">
-            <component :is="Component" :key="route.path" />
-          </keep-alive>
-        </transition>
-      </section>
-    </router-view>
-    <tab-bar />
-  </van-config-provider>
+  <router-view v-slot="{ Component, route }">
+    <div class="app-wrapper bg-white">
+      <transition
+        appear name="fade-transform" mode="out-in" @after-enter="onTransitionFinished"
+        @after-leave="onTransitionFinished"
+      >
+        <keep-alive :include="routeCaches">
+          <component :is="createComponentWrapper(Component, route)" :key="route.fullPath" />
+        </keep-alive>
+      </transition>
+    </div>
+  </router-view>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import useRouteCacheStore from '@/stores/modules/routeCache';
 import { useRouteTransition } from '@/composables/useRouteTransition';
+import { storeToRefs } from 'pinia';
 
 const routeCacheStore = useRouteCacheStore();
-const cacheNames = computed(() => routeCacheStore.routeCaches as string[]);
+const { routeCaches } = storeToRefs(routeCacheStore);
 
 const { completeTransition } = useRouteTransition();
 const onTransitionFinished = () => {
   completeTransition();
 };
+
+const wrapperMap = new Map();
+function createComponentWrapper(component, route) {
+  if (!component) return;
+  const wrapperName = route.name;
+  let wrapper = wrapperMap.get(wrapperName);
+  if (!wrapper) {
+    wrapper = { name: wrapperName, render: () => h(component) };
+    wrapperMap.set(wrapperName, wrapper);
+  }
+  return h(wrapper);
+}
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .app-wrapper {
-  position: relative;
-  width: 100%;
-  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  > div {
+    height: 100%;
+  }
 }
-
 /* 页面切换动画 */
 .fade-transform-enter-active,
 .fade-transform-leave-active {
@@ -46,11 +59,11 @@ const onTransitionFinished = () => {
 
 .fade-transform-enter-from {
   opacity: 0;
-  transform: translateX(-30px);
+  transform: translateX(-0.3rem);
 }
 
 .fade-transform-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(0.3rem);
 }
 </style>
