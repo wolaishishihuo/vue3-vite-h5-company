@@ -9,16 +9,17 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     '[...all]': typeof import('./../components/[...all].vue')['default']
-    Chart: typeof import('./../components/Chart/index.vue')['default']
+    Chart: typeof import('./../components/core/Chart/index.vue')['default']
     GhostButton: typeof import('./../components/GhostButton/index.vue')['default']
-    NavBar: typeof import('./../components/NavBar/index.vue')['default']
-    Popup: typeof import('./../components/Popup/index.vue')['default']
-    RefreshList: typeof import('./../components/RefreshList/index.vue')['default']
+    NavBar: typeof import('./../components/base/NavBar/index.vue')['default']
+    Organization: typeof import('./../components/business/Organization/index.vue')['default']
+    Popup: typeof import('./../components/core/Popup/index.vue')['default']
+    RefreshList: typeof import('./../components/core/RefreshList/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Search: typeof import('./../components/Search/index.vue')['default']
-    TabBar: typeof import('./../components/TabBar/index.vue')['default']
-    Upload: typeof import('./../components/Upload/index.vue')['default']
+    Search: typeof import('./../components/base/Search/index.vue')['default']
+    TabBar: typeof import('./../components/base/TabBar/index.vue')['default']
+    Upload: typeof import('./../components/core/Upload/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']
@@ -28,6 +29,6 @@ declare module 'vue' {
     VanPopup: typeof import('vant/es')['Popup']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
-    Waterfull: typeof import('./../components/Waterfull/index.vue')['default']
+    Waterfull: typeof import('./../components/core/Waterfull/index.vue')['default']
   }
 }
