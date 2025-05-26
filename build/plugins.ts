@@ -7,6 +7,7 @@ import Components from 'unplugin-vue-components/vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vitePluginImp from 'vite-plugin-imp';
 import viteCompression from 'vite-plugin-compression';
+// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import { createViteVConsole } from './vconsole';
 import type { PluginOption } from 'vite';
 
@@ -39,6 +40,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
             return `vant/es/${name}/style/index`;
           }
         }
+        // element-plus
         // {
         //   libName: 'element-plus',
         //   replaceOldImport: false,
@@ -51,9 +53,10 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
     }),
     // https://github.com/antfu/unplugin-vue-components
     Components({
-      extensions: ['vue'],
+      extensions: ['tsx', 'vue'],
+      // resolvers: [VantResolver(), ElementPlusResolver()],
       resolvers: [VantResolver()],
-      include: [/\.vue$/, /\.vue\?vue/],
+      include: [/\.vue$/, /\.vue\?vue/, /\.tsx$/],
       dts: 'src/types/components.d.ts'
     }),
 
@@ -72,6 +75,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
         }
       ],
       dts: 'src/types/auto-imports.d.ts',
+      // resolvers: [VantResolver(), ElementPlusResolver()]
       resolvers: [VantResolver()]
     }),
 
