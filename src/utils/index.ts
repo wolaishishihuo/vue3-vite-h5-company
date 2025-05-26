@@ -154,17 +154,6 @@ export const sortArray = <T>(arr: T[], order: 'asc' | 'desc' = 'asc'): T[] => {
 };
 
 /**
- * 获取当前 URL 中指定参数的值
- * @param key 要获取的参数名
- * @returns 返回指定参数的值，如果没有找到则返回 null
- */
-export const getQueryParams = (key: string): string | null => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const value = urlParams.get(key);
-  return value !== null ? decodeURIComponent(value) : null;
-};
-
-/**
  * 深拷贝函数
  * @param obj 要拷贝的对象
  * @param hash 用于存储已克隆对象的 WeakMap 处理循环引用的问题
@@ -219,4 +208,117 @@ export function deepClone<T>(obj: T, hash = new WeakMap()): T {
   }
 
   return cloneObj as T;
+}
+
+/**
+ * 将树形结构转换为扁平数组
+ * @param tree 树形结构数组
+ * @param childrenKey 子节点的属性名，默认为 'children'
+ * @param parentKey 父节点引用的属性名，如果提供则会添加该属性
+ * @param hasChildrenKey 标识是否有子节点的属性名，默认为 'hasChildren'
+ * @returns 扁平化后的数组
+ */
+export const treeToArray = (
+  tree: Record<string, any>[],
+  childrenKey: string = 'children',
+  parentKey?: string,
+  hasChildrenKey: string = 'hasChildren'
+): Record<string, any>[] => {
+  const result: Record<string, any>[] = [];
+  const stack: Array<{ node: Record<string, any>; parent?: Record<string, any> }> = tree.map(node => ({
+    node,
+    parent: undefined
+  }));
+
+  while (stack.length > 0) {
+    // 非空断言因为 while 判断保证了数组非空
+    const { node, parent } = stack.pop()!;
+
+    // 创建节点副本，避免修改原始数据
+    const copy: Record<string, any> = { ...node };
+
+    // 如果需要保留父节点引用
+    if (parentKey && parent) {
+      copy[parentKey] = parent;
+    }
+
+    // 判断是否有子节点并设置标识
+    const hasChildren = Array.isArray(node[childrenKey]) && node[childrenKey].length > 0;
+    // 始终添加是否有子节点的标识
+    copy[hasChildrenKey] = hasChildren;
+
+    // 处理子节点
+    if (hasChildren) {
+      // 将子节点加入栈中，以便处理
+      for (let i = node[childrenKey].length - 1; i >= 0; i--) {
+        stack.push({
+          node: node[childrenKey][i],
+          parent: node
+        });
+      }
+    }
+
+    // 移除子节点属性，保持数组元素扁平
+    delete copy[childrenKey];
+
+    result.push(copy);
+  }
+
+  return result;
+};
+// 判断设备类型
+export const isIOS = (): boolean => {
+  const u = navigator.userAgent;
+  return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+};
+
+// 判断是否在企业微信环境中
+export const isWxWork = (): boolean => {
+  return navigator.userAgent.toLowerCase().includes('wxwork');
+};
+
+// 判断是否是移动端
+export const isMobile = (): boolean => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
+/**
+ * 解析URL中的所有参数
+ * @param url 要解析的URL，默认为当前页面URL
+ * @returns 包含所有参数的对象
+ */
+export function parseUrlParams(url = window.location.href): Record<string, string> {
+  const result: Record<string, string> = {};
+
+  try {
+    // 处理查询参数部分
+    const queryString = url.split('?')[1]?.split('#')[0];
+    if (queryString) {
+      new URLSearchParams(queryString).forEach((value, key) => {
+        result[key] = value;
+      });
+    }
+
+    // 处理哈希部分的参数
+    const hashParts = url.split('#')[1];
+    if (hashParts) {
+      // 保存哈希路径
+      const hashPath = hashParts.split('?')[0];
+      if (hashPath) {
+        result.hash = hashPath;
+      }
+
+      // 解析哈希后的查询参数
+      const hashQuery = hashParts.includes('?') ? hashParts.split('?')[1] : '';
+      if (hashQuery) {
+        new URLSearchParams(hashQuery).forEach((value, key) => {
+          result[key] = value;
+        });
+      }
+    }
+  } catch (error) {
+    console.error('解析URL参数时出错:', error);
+  }
+
+  return result;
 }
