@@ -193,7 +193,7 @@ export function deepClone<T>(obj: T, hash = new WeakMap()): T {
     cloneObj = new Map();
   } else if (obj instanceof Set) {
     cloneObj = new Set();
-  } else if (obj instanceof Function) {
+  } else if (typeof obj === 'function') {
     cloneObj = obj; // 函数通常是不可变的，直接返回
   } else {
     cloneObj = {} as { [key: string]: any };
