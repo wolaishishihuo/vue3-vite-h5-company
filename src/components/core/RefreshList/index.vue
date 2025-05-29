@@ -1,7 +1,4 @@
 <template>
-  <!-- 默认情况下，下拉区域的高度是和内容高度保持一致的，如果需要让下拉区域始终为全屏，可以给 PullRefresh 设置一个与屏幕大小相等的最小高度 -->
-  <!-- style="min-height: 100vh;" -->
-  <!-- 如果在 html 和 body 标签上设置了 overflow-x: hidden 样式，会导致 List 一直触发加载 -->
   <van-pull-refresh
     v-model="isLoading"
     @refresh="onRefresh"
@@ -21,9 +18,6 @@
     <div class="search-container">
       <slot name="search" />
     </div>
-    <!-- immediate-check 是否在初始化时立即执行滚动位置检查 默认true :immediate-check="false" -->
-    <!-- 如果一次请求加载的数据条数较少，导致列表内容无法铺满当前屏幕，List 会继续触发 load 事件，直到内容铺满屏幕或数据全部加载完成 -->
-    <!-- 因此你需要调整每次获取的数据条数，理想情况下每次请求获取的数据条数应能够填满一屏高度 调整pageSize可解决此问题占满一屏有下一页时候 -->
     <van-list
       v-model:loading="loading"
       :finished="finished"
