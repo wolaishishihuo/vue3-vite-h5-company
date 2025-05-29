@@ -4,27 +4,33 @@
     :max-count="maxCount"
     :accept="accept"
     :multiple="multiple"
-    :max-size="maxSize"
     :before-read="beforeRead"
+    :preview-image="showPreview"
     @delete="handleDelete"
     v-bind="$attrs"
   >
+    <!-- default插槽：自定义上传按钮 -->
+    <template v-if="$slots.default" #default="slotProps">
+      <slot name="default" v-bind="slotProps || {}" />
+    </template>
+
     <template #preview-cover="{ file }">
       <div class="preview-cover">
-        {{ file.name }}
+        {{ file?.name }}
       </div>
     </template>
   </van-uploader>
 </template>
 
 <script setup lang="ts">
+import type { UploaderBeforeRead } from 'vant';
 import { useImageCompress } from '@/composables/useImageCompress';
-import type { UploaderBeforeRead } from 'vant'; // 导入 UploaderBeforeRead 类型
 
 interface FileItem {
   name: string;
   url: string;
   size: number;
+  file: File;
 }
 
 interface Props {
@@ -32,7 +38,7 @@ interface Props {
   maxCount?: number;
   accept?: string;
   multiple?: boolean;
-  maxSize?: number;
+  showPreview?: boolean;
   compressOptions?: {
     quality?: number; // 压缩质量
     maxWidth?: number; // 压缩最大宽度
@@ -45,13 +51,13 @@ const props = withDefaults(defineProps<Props>(), {
   modelValue: () => [],
   maxCount: 1,
   accept: 'image/*',
-  multiple: true,
-  maxSize: 1024 * 1024 * 1, // 默认最大文件大小为1MB
+  multiple: false,
+  showPreview: true,
   compressOptions: () => ({
-    quality: 0.8,
-    maxWidth: 800,
-    maxHeight: 800,
-    showToast: false
+    quality: 0.8, // 提高默认压缩质量，保证图片清晰度
+    maxWidth: 800, // 适合移动端的图片宽度
+    maxHeight: 800, // 适合移动端的图片高度
+    showToast: false // 默认不显示压缩提示
   })
 });
 
@@ -62,15 +68,17 @@ const emit = defineEmits<{
 
 const fileList = ref<FileItem[]>(props.modelValue);
 
+// 图片压缩
+const { compressImage, compressImages } = useImageCompress();
+
 watch(
   () => props.modelValue,
   (newValue) => {
     fileList.value = newValue;
   }
 );
-// 图片压缩
-const { compressImage, compressImages } = useImageCompress();
 
+// 文件上传前的处理
 const beforeRead: UploaderBeforeRead = async (fileOrFiles) => {
   try {
     if (Array.isArray(fileOrFiles)) {
@@ -94,6 +102,22 @@ const handleDelete = (file: File) => {
 </script>
 
 <style lang="less" scoped>
+:deep(.van-uploader__wrapper) {
+  width: 100%;
+  height: 100%;
+  .van-uploader__preview {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 30px;
+  }
+  .van-uploader__preview-image,
+  .van-uploader__upload {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+}
 .preview-cover {
   position: absolute;
   bottom: 0;
