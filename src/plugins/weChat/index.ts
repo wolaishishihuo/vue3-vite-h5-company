@@ -1,4 +1,4 @@
-import { getWxInfo } from '@/api/wx';
+import { getWxInfo } from '@/api/modules/common/wx';
 import { wxJsApiList } from '@/config/wx';
 import * as ww from '@wecom/jssdk';
 import { withTimeout } from '@/utils';
