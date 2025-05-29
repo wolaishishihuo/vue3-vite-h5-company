@@ -6,6 +6,7 @@ import useRouteCacheStore from '@/stores/modules/routeCache';
 import routes from './staticRouter';
 import { useRouteTransition } from '@/composables/useRouteTransition';
 import { popupManager } from '@/composables/usePopup';
+import useUserStore from '@/stores/modules/user';
 
 NProgress.configure({ showSpinner: true, parent: '#app' });
 const mode = import.meta.env.VITE_ROUTER_MODE;
@@ -58,6 +59,11 @@ router.beforeEach(async (to) => {
   const pageTitle = typeof to.meta.title === 'string' ? to.meta.title : 'Default Title';
   document.title = pageTitle;
 
+  // 获取用户信息和缓存路由
+  const userStore = useUserStore();
+  if (!userStore.token) {
+    await userStore.userInit();
+  }
   // 添加路由缓存
   const routeCacheStore = useRouteCacheStore();
   routeCacheStore.addRoute(to);
