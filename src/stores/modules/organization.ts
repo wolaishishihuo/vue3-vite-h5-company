@@ -12,15 +12,10 @@ const useOrganizationStore = defineStore('organization', () => {
     checkPersonList.value = [];
   };
 
-  const clearAll = () => {
-    clearCheckPerson();
-  };
-
   return {
     checkPersonList,
     setCheckPersonList,
-    clearCheckPerson,
-    clearAll
+    clearCheckPerson
 
   };
 });
