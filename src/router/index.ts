@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css';
 import useRouteCacheStore from '@/stores/modules/routeCache';
 import routes from './staticRouter';
 import { useRouteTransition } from '@/composables/useRouteTransition';
+import { popupManager } from '@/composables/usePopup';
 
 NProgress.configure({ showSpinner: true, parent: '#app' });
 const mode = import.meta.env.VITE_ROUTER_MODE;
@@ -50,6 +51,8 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   NProgress.start();
+  // 关闭所有弹窗
+  popupManager.closeAll();
 
   // 设置页面标题
   const pageTitle = typeof to.meta.title === 'string' ? to.meta.title : 'Default Title';
