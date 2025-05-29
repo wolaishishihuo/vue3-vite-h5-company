@@ -10,11 +10,11 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/mapExample',
-    name: 'mapExample',
-    component: () => import('@/views/mapDemo/mapExample.vue'),
+    path: '/tableTree',
+    name: 'tableTree',
+    component: () => import('@/views/tableTree/index.vue'),
     meta: {
-      title: '地图功能示例'
+      title: '表格树'
     }
   },
   {

@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     '[...all]': typeof import('./../components/[...all].vue')['default']
     Chart: typeof import('./../components/core/Chart/index.vue')['default']
+    ElTree: typeof import('element-plus/es')['ElTree']
     NavBar: typeof import('./../components/base/NavBar/index.vue')['default']
     Popup: typeof import('./../components/core/Popup/index.vue')['default']
     RefreshList: typeof import('./../components/core/RefreshList/index.vue')['default']
@@ -19,6 +20,7 @@ declare module 'vue' {
     StepsCard: typeof import('./../components/base/StepsCard/index.vue')['default']
     Tab: typeof import('./../components/base/Tab/index.vue')['default']
     TabBar: typeof import('./../components/base/TabBar/index.vue')['default']
+    TableTree: typeof import('./../components/core/TableTree/index.vue')['default']
     Upload: typeof import('./../components/core/Upload/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
