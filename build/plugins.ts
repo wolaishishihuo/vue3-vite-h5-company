@@ -7,7 +7,7 @@ import Components from 'unplugin-vue-components/vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vitePluginImp from 'vite-plugin-imp';
 import viteCompression from 'vite-plugin-compression';
-// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import { createViteVConsole } from './vconsole';
 import type { PluginOption } from 'vite';
 
@@ -39,23 +39,23 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
 
             return `vant/es/${name}/style/index`;
           }
-        }
+        },
         // element-plus
-        // {
-        //   libName: 'element-plus',
-        //   replaceOldImport: false,
-        //   style: (name) => {
-        //     if (['el-config-provider', 'effect'].includes(name)) return false;
-        //     return `element-plus/es/components/${name.replace('el-', '')}/style/css`;
-        //   }
-        // }
+        {
+          libName: 'element-plus',
+          replaceOldImport: false,
+          style: (name) => {
+            if (['el-config-provider', 'effect'].includes(name)) return false;
+            return `element-plus/es/components/${name.replace('el-', '')}/style/css`;
+          }
+        }
       ]
     }),
     // https://github.com/antfu/unplugin-vue-components
     Components({
       extensions: ['tsx', 'vue'],
       // resolvers: [VantResolver(), ElementPlusResolver()],
-      resolvers: [VantResolver()],
+      resolvers: [VantResolver(), ElementPlusResolver()],
       include: [/\.vue$/, /\.vue\?vue/, /\.tsx$/],
       dts: 'src/types/components.d.ts'
     }),
@@ -76,7 +76,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
       ],
       dts: 'src/types/auto-imports.d.ts',
       // resolvers: [VantResolver(), ElementPlusResolver()]
-      resolvers: [VantResolver()]
+      resolvers: [VantResolver(), ElementPlusResolver()]
     }),
 
     legacy({

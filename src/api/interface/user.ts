@@ -2,6 +2,12 @@ export interface UserInfo {
   xgh: string;
   xm: string;
   avatar: string;
+  roles: any[];
   permissions: string[];
-  [key: string]: any;
+  identityType: IdentityType[];
+}
+
+export interface IdentityType {
+  name: string;
+  value: any;
 }

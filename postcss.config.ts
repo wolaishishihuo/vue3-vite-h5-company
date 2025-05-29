@@ -8,13 +8,11 @@ const rootContainingBlockSelectorList = [
   '.van-popup--top',
   '.van-popup--left',
   '.van-popup--right'
-  // 在这里添加你的选择器
 ];
 
 export default {
   plugins: {
     'autoprefixer': {},
-
     // https://github.com/wswmsword/postcss-mobile-forever
     'postcss-mobile-forever': {
       // UI 设计稿宽度
@@ -32,7 +30,7 @@ export default {
       // 需要转换的属性
       propList: ['*'],
       // 忽略的选择器
-      selectorBlackList: ['.ignore', 'keep-px'],
+      selectorBlackList: ['.ignore', 'keep-px', 'el-'],
       // 忽略的属性
       propertyBlackList: {
         '.van-icon': 'font'
@@ -40,7 +38,7 @@ export default {
       // 忽略的属性值
       valueBlackList: ['1px'],
       // 忽略的目录或文件
-      exclude: [],
+      exclude: [/node_modules\/element-plus/],
       // 包含块是根元素的选择器列表
       rootContainingBlockSelectorList
     }

@@ -15,3 +15,9 @@ export const getPersonnelList = (params) => {
 export const getOrganizationsSubNodes = (params: { dwh: string }) => {
   return request.get<Organization[]>(`/personBySfzt/dept/subNodes`, params);
 };
+
+// 测试
+// 获取区域树
+export const getAreaTree = () => {
+  return request.get('/school/area/tree');
+};

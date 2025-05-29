@@ -97,6 +97,7 @@ const handleBlur = () => {
   align-items: center;
   width: 100%;
   font-size: 30px;
+  padding: 30px;
 
   .search-input-container {
     position: relative;

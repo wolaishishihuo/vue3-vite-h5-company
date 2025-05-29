@@ -29,10 +29,18 @@ const generateSafeList = () => {
   }
 };
 export default defineConfig({
+  theme: {
+    colors: {
+      // 主色
+      primary: '#3875c6',
+      // 次要颜色
+      secondary: '#F6F7F8'
+    }
+  },
   // 自定义类样式
   shortcuts: [
-    ['btn', 'px-6 py-3 rounded-[50px] border-none w-90% inline-block bg-[#3875C6] text-white cursor-pointer outline-hidden hover:bg-[#2d5d9e] disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50 shadow-[0px_21px_38px_0px_rgba(56,117,198,0.32)]'],
     ['fixed-bottom-btns', 'fixed bottom-0 left-0 right-0 flex flex-col justify-center px-0 py-15px bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]'],
+    ['btn', 'px-6 py-3 rounded-[50px] border-none w-90% inline-block bg-[#3875C6] text-white cursor-pointer outline-hidden hover:bg-[#2d5d9e] disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50 shadow-[0px_21px_38px_0px_rgba(56,117,198,0.32)]'],
     // flex布局
     ['flex-center', 'flex justify-center items-center'],
     ['flex-between', 'flex justify-between items-center'],
