@@ -1,6 +1,6 @@
 <template>
   <!-- 自定义search组件 -->
-  <div class="search-component" :class="{ 'is-focused': isFocused }">
+  <div class="search-wrapper" :class="{ 'is-focused': isFocused }">
     <div class="search-input-container">
       <input
         v-model="searchValue"
@@ -13,19 +13,22 @@
         ref="inputRef"
       >
       <van-icon
+        v-if="searchValue"
+        name="clear"
+        class="clear-icon"
+        @click="handleClear"
+      />
+      <van-icon
         name="search"
         class="search-icon-inner"
         @click="handleInnerSearch"
       />
     </div>
-
-    <div class="search-icon-outer">
-      <van-icon
-        name="search"
-        @click="handleSearch"
-        class="cursor-pointer"
-      />
-    </div>
+    <van-icon
+      name="search"
+      class="search-icon-outer"
+      @click="handleSearch"
+    />
   </div>
 </template>
 
@@ -58,6 +61,12 @@ const searchValue = computed({
   }
 });
 
+const handleClear = () => {
+  searchValue.value = '';
+  emit('search', '');
+  inputRef.value?.focus();
+};
+
 const handleSearch = () => {
   emit('search', searchValue.value);
   inputRef.value?.focus();
@@ -82,85 +91,88 @@ const handleBlur = () => {
 </script>
 
 <style lang="less" scoped>
-.search-component {
+.search-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
   font-size: 30px;
 
-  &.is-focused {
-    .search-input-container {
-      .search-input {
-        padding-right: 0;
-        margin-left: 0;
-      }
-
-      .search-icon-inner {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateX(20px);
-      }
-    }
-
-    .search-icon-outer {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(0) scale(1.5);
-    }
-  }
-
   .search-input-container {
-    flex: 1;
-    display: flex;
-    align-items: center;
     position: relative;
+    width: 100%;
     height: 86px;
-    padding: 0 30px;
     background-color: #f6f7f8;
     border-radius: 43px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    padding: 0 30px;
+    transition: width 0.3s ease;
 
     .search-input {
       width: 100%;
       height: 100%;
       border: none;
       background-color: transparent;
-      transition: all 0.3s ease-in-out;
       padding-right: 40px;
-      margin-left: 10px;
+      color: #333;
 
       &::placeholder {
         color: #999;
       }
 
-      &.has-value {
-        color: #333;
+      &:focus {
+        outline: none;
       }
+    }
 
-      &:not(.has-value) {
-        color: #666;
-      }
+    .clear-icon {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+      cursor: pointer;
+      z-index: 2;
     }
 
     .search-icon-inner {
       position: absolute;
       right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition:
+        opacity 0.3s,
+        visibility 0.3s;
       cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(0);
     }
   }
 
   .search-icon-outer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px;
-    transition: all 0.3s ease-in-out;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(20px);
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-20px) scale(0.9);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  &.is-focused {
+    .search-input-container {
+      width: calc(100% - 60px);
+
+      .search-icon-inner {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    .search-icon-outer {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) translateX(0) scale(1.5);
+    }
   }
 }
 </style>
