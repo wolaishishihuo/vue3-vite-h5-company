@@ -1,5 +1,5 @@
 import type { PopupProps } from 'vant';
-import Popup from '@/components/core/Popup/index.vue';
+import Popup from '@/components/Popup/index.vue';
 
 // 错误处理函数
 const handleError = (error: Error, context: string) => {
@@ -33,6 +33,7 @@ export interface PopupInstance {
 }
 
 const createPopup = () => {
+  let instances: PopupInstance[] = [];
   let currentInstance: PopupInstance | null = null;
 
   const popup = {
@@ -124,6 +125,7 @@ const createPopup = () => {
         };
 
         currentInstance = instance;
+        instances.push(instance);
         return instance;
       } catch (error) {
         handleError(error as Error, '弹窗创建');
@@ -133,9 +135,12 @@ const createPopup = () => {
 
     open(options: PopupOptions) {
       return this.create(options);
+    },
+    closeAll() {
+      instances.forEach(instance => instance.close());
+      instances = [];
     }
   };
-
   return popup;
 };
 
