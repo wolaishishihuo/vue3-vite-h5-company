@@ -10,14 +10,6 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/tableTree',
-    name: 'tableTree',
-    component: () => import('@/views/tableTree/index.vue'),
-    meta: {
-      title: '表格树'
-    }
-  },
-  {
     path: '/:pathMatch(.*)*',
     name: '404',
     component: () => import('@/components/[...all].vue'),
@@ -27,4 +19,16 @@ const routes: Array<RouteRecordRaw> = [
   }
 
 ];
-export default routes;
+
+const demoRoutes = [
+  {
+    path: '/demo/tableTree',
+    name: 'tableTree',
+    component: () => import('@/views/demo/tableTree/index.vue'),
+    meta: {
+      title: '表格树'
+    }
+  }
+];
+
+export default [...routes, ...demoRoutes];
