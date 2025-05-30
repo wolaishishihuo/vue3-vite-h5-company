@@ -36,6 +36,14 @@ const demoRoutes = [
     meta: {
       title: '定位按钮'
     }
+  },
+  {
+    path: '/demo/organization',
+    name: 'organization',
+    component: () => import('@/views/demo/organization/index.vue'),
+    meta: {
+      title: '人员组织'
+    }
   }
 ];
 
