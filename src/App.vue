@@ -1,7 +1,7 @@
 <template>
   <div class="flex-col h-full">
     <nav-bar />
-    <div class="flex-1 overflow-auto">
+    <div class="flex-1 relative overflow-auto">
       <router-view v-slot="{ Component, route }">
         <keep-alive :include="routeCaches">
           <component :is="createComponentWrapper(Component, route)" :key="route.fullPath" />
