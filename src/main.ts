@@ -5,7 +5,6 @@ import pinia from '@/stores';
 import 'virtual:uno.css';
 import '@/styles/app.less';
 import '@/styles/var.less';
-import '@/styles/vant.less';
 import '@/assets/iconfont/iconfont.css';
 import directives from '@/directives/index';
 import registerPlugins from '@/plugins/index';

@@ -8,16 +8,14 @@ export const mapDefaultConfig = {
   // 缩放级别设置
   zoom: 14,
   minZoom: 10,
-  maxZoom: 18,
-  // 显示控制
-  viewMode: '2D',
-  pitch: 0,
+  maxZoom: 20,
+  pitch: 30,
   rotation: 0,
   scale: 1,
   // 偏移设置
   offset: { x: 0, y: 0 },
   // 交互控制
-  cursor: 'pointer', // 建议移动端使用pointer更友好
+  cursor: 'pointer',
   draggable: true,
   scrollable: true,
   rotatable: false,
