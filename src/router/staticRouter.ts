@@ -28,6 +28,14 @@ const demoRoutes = [
     meta: {
       title: '表格树'
     }
+  },
+  {
+    path: '/demo/locationButton',
+    name: 'locationButton',
+    component: () => import('@/views/demo/locationButton/index.vue'),
+    meta: {
+      title: '定位按钮'
+    }
   }
 ];
 
