@@ -10,6 +10,7 @@ const serviceConfig = {
   timeout: ResultEnum.TIMEOUT as number
 };
 
+// TODO: 添加请求计数器
 // 添加请求计数器
 let loadingCount = 0;
 let loadingTimer: NodeJS.Timeout | null = null;
