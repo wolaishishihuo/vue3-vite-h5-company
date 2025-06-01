@@ -24,6 +24,7 @@ declare module 'vue' {
     Upload: typeof import('./../components/core/Upload/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
+    VanCheckbox: typeof import('vant/es')['Checkbox']
     VanIcon: typeof import('vant/es')['Icon']
     VanNavBar: typeof import('vant/es')['NavBar']
     VanPopup: typeof import('vant/es')['Popup']
