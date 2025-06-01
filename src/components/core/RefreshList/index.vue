@@ -19,7 +19,7 @@
       <slot name="search" />
     </div>
     <van-list
-      v-model:loading="state.Loading"
+      v-model:loading="state.loading"
       :finished="state.finished"
       :immediate-check="false"
       :offset="50"
@@ -50,11 +50,13 @@ import useRefreshList from '@/composables/useRefreshList';
 interface Props {
   extraParams?: Record<string, unknown>;
   apiFn: (params: any) => Promise<any>;
+  immediate?: boolean;
   [key: string]: any;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  extraParams: () => ({})
+  extraParams: () => ({}),
+  immediate: true
 });
 
 const slots = useSlots();
@@ -63,6 +65,20 @@ const filteredSlots = computed(() => Object.keys(slots).filter(slot => slot !== 
 const { state, onRefresh, onLoad, onSearch, onReset } = useRefreshList({
   api: props.apiFn,
   extraParams: props.extraParams
+});
+
+watch(
+  () => props.extraParams,
+  (newVal, oldVal) => {
+    if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+      onReset();
+    }
+  },
+  { deep: true }
+);
+
+onMounted(() => {
+  props.immediate && onLoad();
 });
 
 defineExpose({
