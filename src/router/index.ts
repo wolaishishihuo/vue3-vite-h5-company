@@ -38,6 +38,7 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   NProgress.start();
+
   // 关闭所有弹窗
   popupManager.closeAll();
 

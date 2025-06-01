@@ -16,8 +16,18 @@ const useUserStore = defineStore('user', () => {
   const token = ref<string>('');
 
   const userInit = async () => {
+    userInfo.value = {
+      xgh: 'j',
+      xm: '',
+      avatar: '',
+      roles: ['admin', 'fire_hydrant', 'fire_extinguisher', 'fire_pump'],
+      permissions: [],
+      identityType: []
+    };
+    token.value = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJqIiwiZGV2aWNlIjoiZGVmYXVsdC1kZXZpY2UiLCJlZmYiOjE3NDk2NDA2OTM5NTEsInJuU3RyIjoic1M5aHZwZ3pXS3Y0a3lOcEptVmhKSTJSeVdkYWc5OWYifQ.Y6OxkXLnJP9x-8ZIjA6QPXHZqKwzEG0Mr0XFSx58iVg';
+    return;
     await login();
-    await getUserInfo();
+    getUserInfo();
   };
 
   const getUserInfo = async () => {
