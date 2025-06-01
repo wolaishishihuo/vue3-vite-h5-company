@@ -1,9 +1,10 @@
 const useRefreshList = ({
   api,
-  extraParams
+  extraParams = {}
 }: {
   api: (params: any) => Promise<any>;
   extraParams?: Record<string, unknown>;
+  immediate?: boolean;
 }) => {
   // 状态
   const state = reactive({
@@ -14,7 +15,7 @@ const useRefreshList = ({
     error: false,
     pageable: {
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 20,
       totalRow: 0
     },
     // 总参数(包含分页和查询参数)
@@ -64,38 +65,33 @@ const useRefreshList = ({
       state.finished = true;
       state.error = true;
     } finally {
+      // 完成后重置loading状态
       state.loading = false;
     }
   };
 
   // 上拉加载
   const onLoad = async () => {
-    if (state.loading) return;
+    if (state.isLoading) {
+      state.dataSource = [];
+      state.isLoading = false;
+    }
 
-    state.loading = true;
     try {
       await getList();
     } finally {
-      // 只重置上拉加载状态
       state.loading = false;
     }
   };
 
   // 下拉刷新
   const onRefresh = async () => {
-    if (state.isLoading) return;
-
-    state.isLoading = true;
     state.pageable.pageNum = 1;
     state.dataSource = [];
     state.finished = false;
     state.error = false;
-
-    try {
-      await getList();
-    } finally {
-      state.isLoading = false;
-    }
+    state.loading = true;
+    onLoad();
   };
 
   // 搜索
@@ -112,15 +108,16 @@ const useRefreshList = ({
 
   // 重置
   const onReset = () => {
-    state.searchParam = {};
-
-    state.pageable.pageNum = 1;
-    state.dataSource = [];
-    state.finished = false;
-    state.error = false;
-
-    onLoad();
+    onSearch({});
   };
+
+  watch(
+    () => extraParams,
+    (val) => {
+      Object.assign(initialExtraParams, val || {});
+    },
+    { deep: true }
+  );
 
   return {
     state,

@@ -36,7 +36,7 @@ const list = [
   },
   {
     title: '人员组织',
-    path: '/demo/organization'
+    path: '/organization'
   }
 ];
 </script>
