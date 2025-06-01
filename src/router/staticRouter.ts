@@ -38,9 +38,9 @@ const demoRoutes = [
     }
   },
   {
-    path: '/demo/organization',
+    path: '/organization',
     name: 'organization',
-    component: () => import('@/views/demo/organization/index.vue'),
+    component: () => import('@/modules/organization/index.vue'),
     meta: {
       title: '人员组织'
     }

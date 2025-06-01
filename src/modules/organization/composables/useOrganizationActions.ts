@@ -36,6 +36,7 @@ const useOrganizationActions = ({
 
   // 处理下拉刷新事件
   const handleRefreshChange = ({ status, distance }: { status: string; distance: number }) => {
+    console.log(status, distance);
     if (status === 'pulling' && distance !== 100) {
       organizationCatch.value.clear();
     }
@@ -76,7 +77,9 @@ const useOrganizationActions = ({
     if (!searchState.value.xm) {
       organizationCatch.value.clear();
     }
-    refreshListRef.value?.onSearch();
+    refreshListRef.value?.onSearch({
+      xm: searchState.value.xm
+    });
   };
 
   const handleClear = () => {

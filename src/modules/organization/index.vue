@@ -15,7 +15,7 @@
       <RefreshList
         ref="refreshListRef"
         :api-fn="getOrganizationList"
-        :extra="searchState"
+        :extra-params="searchState"
         @change="handleRefreshChange"
       >
         <template #default="{ data }">

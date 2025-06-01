@@ -67,16 +67,6 @@ const { state, onRefresh, onLoad, onSearch, onReset } = useRefreshList({
   extraParams: props.extraParams
 });
 
-watch(
-  () => props.extraParams,
-  (newVal, oldVal) => {
-    if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-      onReset();
-    }
-  },
-  { deep: true }
-);
-
 onMounted(() => {
   props.immediate && onLoad();
 });
