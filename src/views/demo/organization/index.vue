@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-col h-100vh relative overflow-hidden">
+  <div class="bg-white flex-col h-full relative">
     <!-- 吸顶搜索区域 -->
-    <div class="bg-white top-0 sticky z-20 p-30_30_15">
+    <div class="p-15 top-0 sticky z-20">
       <Search
         v-model="searchState.xm"
         placeholder="请输入姓名"
@@ -11,7 +11,7 @@
     </div>
 
     <!-- 内容区域 -->
-    <div class="mb-100px flex-1 overflow-y-auto p-0_30">
+    <div class="flex-1 overflow-y-auto p-0_30">
       <RefreshList
         ref="refreshListRef"
         :api-fn="getOrganizationList"
@@ -22,24 +22,24 @@
           <TransitionGroup name="list" tag="div" class="pb-20px">
             <template v-for="item in data" :key="item.id">
               <!-- 组织机构项 -->
-              <Cell
+              <div
                 v-if="item.isParent"
                 @click="handleCellClick(item as PersonnelItem)"
-                class="transition-all duration-300 ease-in-out active:bg-[#f5f5f5]"
+                class="py-15 border-b border-hex-e9e9e9 border-solid transition-all duration-300 ease-in-out active:bg-[#f5f5f5]"
               >
-                <div class="flex-x-between w-full">
-                  <div class="flex-y-center text-36px text-[#333]">
-                    <img src="@/assets/images/org.png" class="mr-10px wh-48">
+                <div class="flex-between w-full">
+                  <div class="text-36px text-[#333] flex-between">
+                    <img src="@/assets/images/org.png" class="mr-15px wh-48">
                     {{ item.name }}
                   </div>
                   <van-icon name="arrow" class="text-gray" />
                 </div>
-              </Cell>
+              </div>
 
               <!-- 人员项 -->
-              <Cell v-else class="transition-all duration-300 ease-in-out active:bg-[#f5f5f5]">
-                <div class="flex-x-between w-full">
-                  <div class="flex-y-center text-36px text-[#333]">
+              <div v-else class="py-15 border-b border-hex-e9e9e9 border-solid transition-all duration-300 ease-in-out active:bg-[#f5f5f5]">
+                <div class="flex-between w-full">
+                  <div class="text-36px text-[#333] flex-center">
                     <van-icon name="contact" class="text-[#666] mr-10px" />
                     {{ item.xm }}
                   </div>
@@ -48,7 +48,7 @@
                     @click="handleCheckChange(item as PersonnelItem)"
                   />
                 </div>
-              </Cell>
+              </div>
             </template>
           </TransitionGroup>
         </template>
@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import RefreshList from '@/components/RefreshList/index.vue';
+import RefreshList from '@/components/core/RefreshList/index.vue';
 import useOrganizationApi from './composables/useOrganizationApi';
 import useOrganizationActions from './composables/useOrganizationActions';
 import useOrganizationState from './composables/useOrganizationState';

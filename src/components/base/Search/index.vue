@@ -97,7 +97,7 @@ const handleBlur = () => {
   align-items: center;
   width: 100%;
   font-size: 30px;
-  padding: 30px;
+  padding: 15px;
 
   .search-input-container {
     position: relative;
@@ -161,7 +161,7 @@ const handleBlur = () => {
 
   &.is-focused {
     .search-input-container {
-      width: calc(100% - 60px);
+      width: calc(100% - 70px);
 
       .search-icon-inner {
         opacity: 0;
@@ -172,7 +172,7 @@ const handleBlur = () => {
     .search-icon-outer {
       opacity: 1;
       visibility: visible;
-      transform: translateY(-50%) translateX(0) scale(1.5);
+      transform: translateY(-50%) translateX(-20px) scale(1.5);
     }
   }
 }
