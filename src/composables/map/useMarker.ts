@@ -1,5 +1,3 @@
-import { ref, shallowRef } from 'vue';
-import type { Ref } from 'vue';
 import TencentMapSDK from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 
@@ -10,13 +8,10 @@ interface MarkerOptions {
   title?: string;
   draggable?: boolean;
   zIndex?: number;
-  map?: any;
 }
 
-const useMarker = (mapInstance?: Ref<any>) => {
+export function useMarker(mapInstance: Ref<any>) {
   const markers = shallowRef<any[]>([]);
-  const error = ref<string | null>(null);
-
   const TMapSDK = TencentMapSDK.getTMapSDK();
 
   // 默认样式
@@ -46,15 +41,13 @@ const useMarker = (mapInstance?: Ref<any>) => {
    */
   const addMarker = (options: MarkerOptions) => {
     try {
-      const map = options.map || mapInstance?.value;
-      if (!map) {
-        error.value = '地图实例未提供';
+      if (!mapInstance.value) {
         return null;
       }
 
       const marker = new TMapSDK.MultiMarker({
         id: `marker_${Date.now()}`,
-        map,
+        map: mapInstance.value,
         zIndex: options.zIndex || 100,
         styles: {
           default: createDefaultStyle(options.icon)
@@ -64,8 +57,7 @@ const useMarker = (mapInstance?: Ref<any>) => {
 
       markers.value.push(marker);
       return marker;
-    } catch (err: any) {
-      error.value = err.message || '创建标记点失败';
+    } catch {
       return null;
     }
   };
@@ -73,11 +65,9 @@ const useMarker = (mapInstance?: Ref<any>) => {
   /**
    * 批量添加标记点
    */
-  const addMarkers = (markersList: MarkerOptions[], map?: any) => {
+  const addMarkers = (markersList: MarkerOptions[]) => {
     try {
-      const targetMap = map || mapInstance?.value;
-      if (!targetMap) {
-        error.value = '地图实例未提供';
+      if (!mapInstance.value) {
         return null;
       }
 
@@ -89,7 +79,7 @@ const useMarker = (mapInstance?: Ref<any>) => {
       // 创建一个 MultiMarker 实例
       const marker = new TMapSDK.MultiMarker({
         id: `marker_group_${Date.now()}`,
-        map: targetMap,
+        map: mapInstance.value,
         zIndex: markersList[0]?.zIndex || 100,
         styles: {
           default: createDefaultStyle(markersList[0]?.icon)
@@ -99,8 +89,7 @@ const useMarker = (mapInstance?: Ref<any>) => {
 
       markers.value.push(marker);
       return marker;
-    } catch (err: any) {
-      error.value = err.message || '批量创建标记点失败';
+    } catch {
       return null;
     }
   };
@@ -124,12 +113,9 @@ const useMarker = (mapInstance?: Ref<any>) => {
 
   return {
     markers,
-    error,
     addMarker,
     addMarkers,
     removeMarker,
     removeAllMarkers
   };
-};
-
-export default useMarker;
+}
