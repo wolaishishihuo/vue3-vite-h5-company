@@ -16,8 +16,10 @@ export class TencentMapSDK extends BaseSDK {
    * @returns Promise<void>
    */
   protected async loadSDK(): Promise<void> {
+    // 加载地图SDK
     await loadScript(`https://map.qq.com/api/gljs?v=1.exp&key=${TENCENT_MAP_KEY}`);
-    await loadScript(`https://map.qq.com/api/gljs?v=1.exp&libraries=service&key=${TENCENT_MAP_KEY}`);
+    // 加载地图服务SDK
+    // await loadScript(`https://map.qq.com/api/gljs?v=1.exp&libraries=service&key=${TENCENT_MAP_KEY}`);
 
     console.log('腾讯地图SDK初始化成功');
   }
