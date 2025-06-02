@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { TencentMap } from '@/plugins/tencentMap';
+import TencentMapSDK from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 
 export function useGeocoder() {
@@ -22,7 +22,7 @@ export function useGeocoder() {
     result.value = null;
 
     try {
-      const TMapSDK = TencentMap.getTMapSDK();
+      const TMapSDK = TencentMapSDK.getTMapSDK();
       const geocoder = new TMapSDK.service.Geocoder();
       console.log(
         geocoder
@@ -77,7 +77,7 @@ export function useGeocoder() {
     result.value = null;
 
     try {
-      const TMapSDK = TencentMap.getTMapSDK();
+      const TMapSDK = TencentMapSDK.getTMapSDK();
 
       const geocoder = new TMapSDK.service.Geocoder();
 

@@ -1,6 +1,6 @@
 import { ref, shallowRef } from 'vue';
 import type { Ref } from 'vue';
-import { TencentMap } from '@/plugins/tencentMap';
+import TencentMapSDK from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 
 export function useMarker(mapInstance?: Ref<any>) {
@@ -24,7 +24,7 @@ export function useMarker(mapInstance?: Ref<any>) {
     }
 
     try {
-      const TMapSDK = TencentMap.getTMapSDK();
+      const TMapSDK = TencentMapSDK.getTMapSDK();
       const uniqueId = `marker_${Date.now()}`;
 
       const marker = new TMapSDK.MultiMarker({
@@ -76,7 +76,7 @@ export function useMarker(mapInstance?: Ref<any>) {
     }
 
     try {
-      const TMapSDK = TencentMap.getTMapSDK();
+      const TMapSDK = TencentMapSDK.getTMapSDK();
 
       // 创建几何点数据数组
       const geometries = markersList.map((item, index) => ({

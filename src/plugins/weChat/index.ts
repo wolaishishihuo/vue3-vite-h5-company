@@ -1,6 +1,7 @@
 import { getWxInfo } from '@/api/modules/common/wx';
 import { wxJsApiList } from '@/config/wx';
 import * as ww from '@wecom/jssdk';
+import type { SignatureData } from '@wecom/jssdk';
 import { isWxWork, withTimeout } from '@/utils';
 import { BaseSDK } from '../base/BaseSDK';
 
@@ -38,7 +39,7 @@ export class WechatSDK extends BaseSDK {
     ww.register({
       corpId: data.appId,
       jsApiList: this.jsApiList,
-      getConfigSignature: async (): Promise<WxAPI.ConfigSignature> => {
+      getConfigSignature: async (): Promise<SignatureData> => {
         return {
           timestamp: data.timestamp,
           nonceStr: data.nonceStr,
