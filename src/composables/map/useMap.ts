@@ -1,4 +1,3 @@
-import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
 import TencentMapSDK from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 import { mapDefaultConfig } from '@/config/tencentMap';
