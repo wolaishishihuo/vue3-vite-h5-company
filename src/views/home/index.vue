@@ -23,10 +23,6 @@ const list = [
     path: '/demo/locationButton'
   },
   {
-    title: '地图定位',
-    path: '/demo/mapLocation'
-  },
-  {
     title: '表格滚动列表',
     path: '/demo/tableScrollList'
   },
