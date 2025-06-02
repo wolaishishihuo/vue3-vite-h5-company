@@ -65,7 +65,7 @@ const useOrganizationActions = ({
   const handleCellClick = (item: PersonnelItem) => {
     if (!item.isParent) return;
     router.push({
-      path: '/organization',
+      path: routeState.path,
       query: {
         dwh: item.dwh,
         depth: (routeState.depth + 1).toString()
