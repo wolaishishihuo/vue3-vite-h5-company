@@ -16,6 +16,7 @@ interface MarkerOptions {
 const useMarker = (mapInstance?: Ref<any>) => {
   const markers = shallowRef<any[]>([]);
   const error = ref<string | null>(null);
+
   const TMapSDK = TencentMapSDK.getTMapSDK();
 
   // 默认样式
@@ -40,21 +41,16 @@ const useMarker = (mapInstance?: Ref<any>) => {
     };
   };
 
-  // 获取地图实例
-  const getMap = (options?: { map?: any }) => {
-    const map = options?.map || mapInstance?.value;
-    if (!map) {
-      throw new Error('地图实例未提供');
-    }
-    return map;
-  };
-
   /**
    * 添加标记点
    */
   const addMarker = (options: MarkerOptions) => {
     try {
-      const map = getMap(options);
+      const map = options.map || mapInstance?.value;
+      if (!map) {
+        error.value = '地图实例未提供';
+        return null;
+      }
 
       const marker = new TMapSDK.MultiMarker({
         id: `marker_${Date.now()}`,
@@ -79,7 +75,11 @@ const useMarker = (mapInstance?: Ref<any>) => {
    */
   const addMarkers = (markersList: MarkerOptions[], map?: any) => {
     try {
-      const targetMap = getMap({ map });
+      const targetMap = map || mapInstance?.value;
+      if (!targetMap) {
+        error.value = '地图实例未提供';
+        return null;
+      }
 
       // 创建几何点数据数组
       const geometries = markersList.map((item, index) =>
