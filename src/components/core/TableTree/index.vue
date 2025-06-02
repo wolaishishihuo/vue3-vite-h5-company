@@ -49,7 +49,15 @@
 import type { ElTree } from 'element-plus';
 import type { TableTreeProps } from './interface';
 
-defineProps<TableTreeProps>();
+withDefaults(defineProps<TableTreeProps>(), {
+  headerCellStyle: () => ({}),
+  rowCellStyle: () => ({}),
+  treeProps: () => ({
+    label: 'name',
+    children: 'children'
+  }),
+  nodeKey: () => 'id'
+});
 
 // 对齐方式处理
 const transformAlign = (align: string) => {

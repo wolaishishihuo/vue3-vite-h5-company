@@ -2,7 +2,6 @@
   <div class="table-tree">
     <TableTree
       :columns="columns"
-      :header-cell-style="headerCellStyle"
       :data="treeData"
       :tree-props="treeProps"
       node-key="id"
@@ -13,8 +12,9 @@
 
 <script setup lang='ts'>
 import { getAreaTree } from '@/api/modules/organization';
+import type { TableColumn } from '@/components/core/TableTree/interface';
 
-const columns = ref([
+const columns: TableColumn[] = [
   {
     label: '姓名',
     prop: 'name',
@@ -28,12 +28,12 @@ const columns = ref([
     label: '操作',
     prop: 'operation'
   }
-]);
-const headerCellStyle = ref({});
-const treeProps = ref({
+];
+
+const treeProps = {
   children: 'children',
   label: 'name'
-});
+};
 
 const treeData = ref<any[]>([]);
 const getAreaTreeApi = async () => {

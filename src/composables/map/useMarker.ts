@@ -10,7 +10,7 @@ interface MarkerOptions {
   zIndex?: number;
 }
 
-export function useMarker(mapInstance: Ref<any>) {
+const useMarker = (mapInstance: Ref<any>) => {
   const markers = shallowRef<any[]>([]);
   const TMapSDK = TencentMapSDK.getTMapSDK();
 
@@ -118,4 +118,5 @@ export function useMarker(mapInstance: Ref<any>) {
     removeMarker,
     removeAllMarkers
   };
-}
+};
+export default useMarker;
