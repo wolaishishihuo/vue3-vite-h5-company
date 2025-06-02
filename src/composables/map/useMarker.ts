@@ -3,53 +3,67 @@ import type { Ref } from 'vue';
 import TencentMapSDK from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 
+// 标记点选项接口
+interface MarkerOptions {
+  position: TMap.LatLng;
+  icon?: string;
+  title?: string;
+  draggable?: boolean;
+  zIndex?: number;
+  map?: any;
+}
+
 export function useMarker(mapInstance?: Ref<any>) {
   const markers = shallowRef<any[]>([]);
   const error = ref<string | null>(null);
+  const TMapSDK = TencentMapSDK.getTMapSDK();
+
+  // 默认样式
+  const createDefaultStyle = (icon?: string) => {
+    return new TMapSDK.MarkerStyle({
+      width: 25,
+      height: 35,
+      anchor: { x: 12, y: 35 },
+      src: icon || 'https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/markerDefault.png'
+    });
+  };
+
+  // 几何点
+  const createGeometry = (position: TMap.LatLng, title?: string, index: number = 0) => {
+    return {
+      id: `point_${Date.now()}_${index}`,
+      styleId: 'default',
+      position: new TMapSDK.LatLng(position.lat, position.lng),
+      properties: {
+        title: title || ''
+      }
+    };
+  };
+
+  // 获取地图实例
+  const getMap = (options?: { map?: any }) => {
+    const map = options?.map || mapInstance?.value;
+    if (!map) {
+      throw new Error('地图实例未提供');
+    }
+    return map;
+  };
 
   /**
    * 添加标记点
    */
-  const addMarker = (options: {
-    position: TMap.LatLng;
-    icon?: string;
-    title?: string;
-    draggable?: boolean;
-    zIndex?: number;
-    map?: any;
-  }) => {
-    if (!mapInstance?.value && !options.map) {
-      error.value = '地图实例未提供';
-      return null;
-    }
-
+  const addMarker = (options: MarkerOptions) => {
     try {
-      const TMapSDK = TencentMapSDK.getTMapSDK();
-      const uniqueId = `marker_${Date.now()}`;
+      const map = getMap(options);
 
       const marker = new TMapSDK.MultiMarker({
-        id: uniqueId,
-        map: options.map || mapInstance?.value,
+        id: `marker_${Date.now()}`,
+        map,
         zIndex: options.zIndex || 100,
         styles: {
-          // 定义样式
-          default: new TMapSDK.MarkerStyle({
-            width: 25,
-            height: 35,
-            anchor: { x: 12, y: 35 },
-            src: options.icon || 'https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/markerDefault.png'
-          })
+          default: createDefaultStyle(options.icon)
         },
-        geometries: [
-          {
-            id: `point_${Date.now()}`,
-            styleId: 'default',
-            position: new TMapSDK.LatLng(options.position.lat, options.position.lng),
-            properties: {
-              title: options.title || ''
-            }
-          }
-        ]
+        geometries: [createGeometry(options.position, options.title)]
       });
 
       markers.value.push(marker);
@@ -63,43 +77,22 @@ export function useMarker(mapInstance?: Ref<any>) {
   /**
    * 批量添加标记点
    */
-  const addMarkers = (markersList: Array<{
-    position: TMap.LatLng;
-    icon?: string;
-    title?: string;
-    draggable?: boolean;
-    zIndex?: number;
-  }>, map?: any) => {
-    if (!mapInstance?.value && !map) {
-      error.value = '地图实例未提供';
-      return null;
-    }
-
+  const addMarkers = (markersList: MarkerOptions[], map?: any) => {
     try {
-      const TMapSDK = TencentMapSDK.getTMapSDK();
+      const targetMap = getMap({ map });
 
       // 创建几何点数据数组
-      const geometries = markersList.map((item, index) => ({
-        id: `point_${Date.now()}_${index}`,
-        styleId: 'default',
-        position: new TMapSDK.LatLng(item.position.lat, item.position.lng),
-        properties: {
-          title: item.title || ''
-        }
-      }));
+      const geometries = markersList.map((item, index) =>
+        createGeometry(item.position, item.title, index)
+      );
 
       // 创建一个 MultiMarker 实例
       const marker = new TMapSDK.MultiMarker({
         id: `marker_group_${Date.now()}`,
-        map: map || mapInstance?.value,
+        map: targetMap,
         zIndex: markersList[0]?.zIndex || 100,
         styles: {
-          default: new TMapSDK.MarkerStyle({
-            width: 25,
-            height: 35,
-            anchor: { x: 12, y: 35 },
-            src: markersList[0]?.icon || 'https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/markerDefault.png'
-          })
+          default: createDefaultStyle(markersList[0]?.icon)
         },
         geometries
       });
@@ -117,7 +110,6 @@ export function useMarker(mapInstance?: Ref<any>) {
    */
   const removeMarker = (marker: any) => {
     if (!marker) return;
-
     marker.setMap(null);
     markers.value = markers.value.filter(m => m !== marker);
   };
