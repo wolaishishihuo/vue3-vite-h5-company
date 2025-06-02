@@ -17,26 +17,16 @@ export class WechatSDK extends BaseSDK {
   }
 
   /**
-   * 初始化SDK
-   * @param options 初始化选项
-   * @returns Promise<boolean>
-   */
-  public async init(): Promise<boolean> {
-    // 检查环境
-    if (!isWxWork()) {
-      console.warn('当前环境不是企业微信或微信');
-      return false;
-    }
-
-    return await super.init();
-  }
-
-  /**
    * 加载SDK具体实现
    * @param options 加载选项
    * @returns Promise<void>
    */
   protected async loadSDK(): Promise<void> {
+    // 检查环境
+    if (!isWxWork()) {
+      console.warn('当前环境不是企业微信或微信');
+      return;
+    }
     // 获取微信配置信息，带超时
     const { data } = await withTimeout(
       getWxInfo(window.location.href.split('#')[0]),
