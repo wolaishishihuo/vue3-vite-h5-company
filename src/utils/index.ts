@@ -266,6 +266,7 @@ export const treeToArray = (
 
   return result;
 };
+
 // 判断设备类型
 export const isIOS = (): boolean => {
   const u = navigator.userAgent;

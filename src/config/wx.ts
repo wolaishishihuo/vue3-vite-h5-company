@@ -1,1 +1,1 @@
-export const wxJsApiList = ['selectEnterpriseContact', 'openEnterpriseChat'];
+export const wxJsApiList = ['selectEnterpriseContact', 'openEnterpriseChat', 'getLocation'];
