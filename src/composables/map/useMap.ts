@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
-import { isSDKLoaded, TencentMap } from '@/plugins/tencentMap';
+import TencentMapSDK from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 import { mapDefaultConfig } from '@/config/tencentMap';
 
@@ -36,7 +36,7 @@ export function useMap(mapContainerId: string, options?: {
 
     // 创建新的初始化Promise
     const initPromise = new Promise<any>((resolve, reject) => {
-      if (!isSDKLoaded.value) {
+      if (!TencentMapSDK.isInitialized()) {
         const err = '地图SDK尚未加载，请确保已调用TencentMap.init()';
         error.value = err;
         reject(new Error(err));
@@ -54,7 +54,7 @@ export function useMap(mapContainerId: string, options?: {
         }
 
         // 获取SDK实例
-        const TMapSDK = TencentMap.getTMapSDK();
+        const TMapSDK = TencentMapSDK.getTMapSDK();
 
         // 确保参数合并优先级：默认配置 < 组件选项 < 方法参数
         const mergedOptions = {

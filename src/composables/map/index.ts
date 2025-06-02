@@ -10,4 +10,3 @@ export { useMarker } from './useMarker';
 
 // 搜索服务
 export { useGeocoder } from './useGeocoder';
-export { usePlaceSearch } from './usePlaceSearch';
