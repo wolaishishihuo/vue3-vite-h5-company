@@ -9,11 +9,12 @@ import { mapDefaultConfig } from '@/config/tencentMap';
  * @param initOptions 地图初始化选项
  * @param autoInit 是否自动初始化地图
  */
-export function useMap(
+
+const useMap = (
   mapContainerId: string,
   initOptions?: TMap.MapOptions,
   autoInit = true
-) {
+) => {
   // 地图实例
   const map = shallowRef<any>(null);
   // 加载状态
@@ -76,4 +77,6 @@ export function useMap(
     isLoading,
     initMap
   };
-}
+};
+
+export default useMap;
