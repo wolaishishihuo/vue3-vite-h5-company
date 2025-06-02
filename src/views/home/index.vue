@@ -19,10 +19,6 @@ const list = [
     path: '/demo/tableTree'
   },
   {
-    title: '下拉刷新',
-    path: '/demo/pullDownRefresh'
-  },
-  {
     title: '定位按钮',
     path: '/demo/locationButton'
   },

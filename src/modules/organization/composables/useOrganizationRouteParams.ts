@@ -4,6 +4,7 @@ export interface RouteState {
   multiple: boolean;
   maxSelected: number;
   roleType: string;
+  path: string;
 }
 
 const useOrganizationRouteParams = () => {
@@ -13,7 +14,8 @@ const useOrganizationRouteParams = () => {
     depth: 1,
     multiple: false,
     maxSelected: 10,
-    roleType: ''
+    roleType: '',
+    path: ''
   });
 
   watchEffect(() => {
@@ -22,6 +24,7 @@ const useOrganizationRouteParams = () => {
     routeState.multiple = route.query.multiple === 'true';
     routeState.maxSelected = Number(route.query.maxSelected) || 10;
     routeState.roleType = route.query.roleType as string;
+    routeState.path = route.path;
   });
   return {
     routeState
