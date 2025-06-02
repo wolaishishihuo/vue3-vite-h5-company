@@ -21,5 +21,4 @@ export interface TableTreeProps {
   rowCellStyle?: Record<string, any>;
   treeProps?: TreeProps;
   nodeKey?: string;
-  loading?: boolean;
 }
