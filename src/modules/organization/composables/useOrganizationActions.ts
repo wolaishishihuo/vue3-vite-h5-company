@@ -1,5 +1,5 @@
-import type { PersonnelItem } from '@/api/interface/organization';
 import type { RouteState } from './useOrganizationRouteParams';
+import type { PersonnelItem } from '@/api/interface/organization';
 import type RefreshList from '@/components/RefreshList/index.vue';
 import useOrganizationStore from '@/stores/modules/organization';
 

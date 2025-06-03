@@ -1,10 +1,10 @@
 <template>
   <div class="rounded-8px bg-white w-full relative">
     <!-- 固定表头 -->
-    <div class="text-28px text-primary font-500 leading-80px pl-42px bg-secondary flex h-80px top-0 sticky z-10" :style="headerCellStyle">
+    <div class="text-28px text-primary leading-80px font-500 pl-42px bg-secondary flex h-80px top-0 sticky z-10" :style="headerCellStyle">
       <template v-for="column in columns" :key="column.prop">
         <div
-          class="flex-1" v-if="column.show?.() ?? true" :class="[transformAlign(column.align), column.class ? column.class : '']"
+          v-if="column.show?.() ?? true" class="flex-1" :class="[transformAlign(column.align), column.class ? column.class : '']"
           :style="column.width ? { flex: `0 0 ${column.width}px` } : {}"
         >
           {{ column.label }}
@@ -24,12 +24,12 @@
           <div class="text-28px flex w-full" :style="rowCellStyle">
             <template v-for="column in columns" :key="column.prop">
               <div
-                class="flex-1" v-if="column.show?.() ?? true" :class="[transformAlign(column.align), column.class ? column.class : '']"
+                v-if="column.show?.() ?? true" class="flex-1" :class="[transformAlign(column.align), column.class ? column.class : '']"
                 :style="column.width ? { flex: `0 0 ${column.width}px` } : {}"
               >
                 <component
-                  v-if="column.render"
                   :is="column.render"
+                  v-if="column.render"
                   v-bind="rowData"
                 />
                 <template v-else>
