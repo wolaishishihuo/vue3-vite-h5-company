@@ -16,7 +16,6 @@ export interface TreeProps {
 
 export interface TableTreeProps {
   columns: TableColumn[];
-  data: any[];
   headerCellStyle?: Record<string, any>;
   rowCellStyle?: Record<string, any>;
   treeProps?: TreeProps;

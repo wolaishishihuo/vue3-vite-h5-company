@@ -9,7 +9,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     '[...all]': typeof import('./../components/[...all].vue')['default']
-    Cell: typeof import('./../components/base/Cell/index.vue')['default']
     Chart: typeof import('./../components/core/Chart/index.vue')['default']
     ElTree: typeof import('element-plus/es')['ElTree']
     NavBar: typeof import('./../components/base/NavBar/index.vue')['default']
@@ -24,7 +23,6 @@ declare module 'vue' {
     TableTree: typeof import('./../components/core/TableTree/index.vue')['default']
     Upload: typeof import('./../components/core/Upload/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
-    VanCell: typeof import('vant/es')['Cell']
     VanCheckbox: typeof import('vant/es')['Checkbox']
     VanIcon: typeof import('vant/es')['Icon']
     VanList: typeof import('vant/es')['List']
