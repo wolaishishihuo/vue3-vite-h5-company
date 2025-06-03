@@ -18,7 +18,6 @@
         ref="treeRef"
         :props="treeProps"
         :node-key="nodeKey"
-        :data="data"
         v-bind="$attrs"
       >
         <template #default="{ data: rowData }">
