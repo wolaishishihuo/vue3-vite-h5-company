@@ -5,8 +5,8 @@
       <Search
         v-model="searchState.xm"
         placeholder="请输入姓名"
-        @search="handleSearch"
         clearable
+        @search="handleSearch"
       />
     </div>
 
@@ -24,8 +24,8 @@
               <!-- 组织机构项 -->
               <div
                 v-if="item.isParent"
-                @click="handleCellClick(item as PersonnelItem)"
                 class="py-15 border-b border-hex-e9e9e9 border-solid transition-all duration-300 ease-in-out active:bg-[#f5f5f5]"
+                @click="handleCellClick(item as PersonnelItem)"
               >
                 <div class="flex-between w-full">
                   <div class="text-36px text-[#333] flex-between">
@@ -62,10 +62,10 @@
       </div>
       <div class="flex gap-20px justify-end">
         <slot name="footer-left" />
-        <van-button @click="handleClear" size="small">
+        <van-button size="small" @click="handleClear">
           清空
         </van-button>
-        <van-button type="primary" @click="handleConfirm" size="small">
+        <van-button type="primary" size="small" @click="handleConfirm">
           确定
         </van-button>
         <slot name="footer-right" />
@@ -75,13 +75,10 @@
 </template>
 
 <script setup lang="ts">
-import RefreshList from '@/components/core/RefreshList/index.vue';
-import useOrganizationApi from './composables/useOrganizationApi';
-import useOrganizationActions from './composables/useOrganizationActions';
-import useOrganizationState from './composables/useOrganizationState';
-import useOrganizationRouteParams from './composables/useOrganizationRouteParams';
 import type { PersonnelItem } from '@/api/interface/organization';
+import RefreshList from '@/components/core/RefreshList/index.vue';
 import useOrganizationStore from '@/stores/modules/organization';
+import { useOrganizationActions, useOrganizationApi, useOrganizationRouteParams, useOrganizationState } from './composables';
 
 const refreshListRef = ref<InstanceType<typeof RefreshList>>();
 const organizationStore = useOrganizationStore();
