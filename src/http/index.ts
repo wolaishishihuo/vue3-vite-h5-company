@@ -1,59 +1,16 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { CustomAxiosRequestConfig, ResultData } from './interface';
 import axios from 'axios';
-import { closeToast, showFailToast, showLoadingToast, showNotify } from 'vant';
+import { showFailToast, showNotify } from 'vant';
+import { useHttpLoading } from '@/composables/useHttpLoading';
 import { ResultEnum } from '@/enums/httpEnum';
 import useUserStore from '@/stores/modules/user';
+
+const { showLoading, hideLoading } = useHttpLoading();
 
 const serviceConfig = {
   baseURL: import.meta.env.VITE_API_URL as string,
   timeout: ResultEnum.TIMEOUT as number
-};
-
-// TODO: 添加请求计数器
-// 添加请求计数器
-let loadingCount = 0;
-let loadingTimer: NodeJS.Timeout | null = null;
-const MIN_LOADING_TIME = 300; // 最小loading显示时间(ms)
-let loadingStartTime = 0;
-
-// 显示Loading
-const showLoading = () => {
-  if (loadingTimer) {
-    clearTimeout(loadingTimer);
-    loadingTimer = null;
-  }
-
-  loadingCount++;
-
-  if (loadingCount === 1) {
-    loadingStartTime = Date.now();
-    showLoadingToast({
-      message: '加载中...',
-      forbidClick: true,
-      duration: 0 // 持续显示，直到请求结束
-    });
-  }
-};
-
-// 隐藏Loading
-const hideLoading = () => {
-  loadingCount = Math.max(0, loadingCount - 1);
-
-  if (loadingCount === 0) {
-    const elapsedTime = Date.now() - loadingStartTime;
-    const remainTime = Math.max(0, MIN_LOADING_TIME - elapsedTime);
-
-    // 如果loading显示时间不足最小时间，则延迟关闭
-    if (remainTime > 0) {
-      loadingTimer = setTimeout(() => {
-        closeToast();
-        loadingTimer = null;
-      }, remainTime);
-    } else {
-      closeToast();
-    }
-  }
 };
 
 class HttpRequest {
