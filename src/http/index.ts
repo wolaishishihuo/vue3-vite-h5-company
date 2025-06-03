@@ -1,8 +1,8 @@
-import axios from 'axios';
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { ResultEnum } from '@/enums/httpEnum';
 import type { CustomAxiosRequestConfig, ResultData } from './interface';
+import axios from 'axios';
 import { closeToast, showFailToast, showLoadingToast, showNotify } from 'vant';
+import { ResultEnum } from '@/enums/httpEnum';
 import useUserStore from '@/stores/modules/user';
 
 const serviceConfig = {
