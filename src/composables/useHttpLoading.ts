@@ -1,7 +1,7 @@
 import { useDebounceFn } from '@vueuse/core';
 import { closeToast, showLoadingToast } from 'vant';
 
-export function useHttpLoading(options = {}) {
+const useHttpLoading = (options = {}) => {
   const config = {
     message: '加载中...',
     minTime: 300,
@@ -61,4 +61,6 @@ export function useHttpLoading(options = {}) {
     showLoading,
     hideLoading
   };
-}
+};
+
+export default useHttpLoading;
