@@ -2,7 +2,7 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import type { CustomAxiosRequestConfig, ResultData } from './interface';
 import axios from 'axios';
 import { showFailToast, showNotify } from 'vant';
-import { useHttpLoading } from '@/composables/useHttpLoading';
+import useHttpLoading from '@/composables/useHttpLoading';
 import { ResultEnum } from '@/enums/httpEnum';
 import useUserStore from '@/stores/modules/user';
 
