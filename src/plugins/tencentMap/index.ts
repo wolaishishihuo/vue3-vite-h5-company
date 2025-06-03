@@ -1,4 +1,4 @@
-import { TENCENT_MAP_KEY } from '@/constants';
+import { TENCENT_MAP_KEY, TENCENT_MAP_LIBRARY } from '@/constants';
 import { loadScript } from '@/utils';
 import { BaseSDK } from '../base/BaseSDK';
 
@@ -17,7 +17,7 @@ export class TencentMapSDK extends BaseSDK {
    */
   protected async loadSDK(): Promise<void> {
     // 加载地图SDK
-    await loadScript(`https://map.qq.com/api/gljs?v=1.exp&key=${TENCENT_MAP_KEY}`);
+    await loadScript(`https://map.qq.com/api/gljs?v=1.exp&key=${TENCENT_MAP_KEY}&libraries=${TENCENT_MAP_LIBRARY}`);
     // 加载地图服务SDK
     // await loadScript(`https://map.qq.com/api/gljs?v=1.exp&libraries=service&key=${TENCENT_MAP_KEY}`);
 
