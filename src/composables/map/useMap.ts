@@ -1,6 +1,6 @@
-import TencentMapSDK from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
 import { mapDefaultConfig } from '@/config/tencentMap';
+import TencentMapSDK from '@/plugins/tencentMap';
 
 /**
  * 地图Hook - 封装地图初始化
