@@ -1,5 +1,5 @@
-import { getOrganizations, getOrganizationsSubNodes, getPersonnelList } from '@/api/modules/organization';
 import type { RouteState } from './useOrganizationRouteParams';
+import { getOrganizations, getOrganizationsSubNodes, getPersonnelList } from '@/api/modules/organization';
 
 const useOrganizationApi = ({
   routeState
