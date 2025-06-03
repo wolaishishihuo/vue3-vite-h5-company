@@ -18,14 +18,6 @@
   display: none !important;
 }
 
-/* 隐藏滚动条 */
-*::-webkit-scrollbar {
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-  display: none !important;
-}
-
 :root {
   overflow: hidden;
 }
@@ -40,6 +32,8 @@ html {
 
 #app {
   height: 100% !important;
+  position: relative;
+  overflow-x: hidden;
 }
 
 body {
