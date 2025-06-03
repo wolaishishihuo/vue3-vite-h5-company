@@ -12,14 +12,13 @@ export default antfu(
   },
   {
     rules: {
-      'perfectionist/sort-imports': 'off',
-      'perfectionist/sort-exports': 'off',
-      'perfectionist/sort-named-exports': 'off',
+      // 'perfectionist/sort-imports': 'off',
+      // 'perfectionist/sort-exports': 'off',
+      // 'perfectionist/sort-named-exports': 'off',
       'antfu/top-level-function': 'off',
       'no-console': 'off',
       // vue
       'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
-      'vue/attributes-order': 'off',
       // ts
       'ts/no-use-before-define': 'off',
       'no-new': 'off',
