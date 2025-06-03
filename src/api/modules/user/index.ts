@@ -1,5 +1,5 @@
-import request from '@/http';
 import type { IdentityType, UserInfo } from '@/api/interface/user';
+import request from '@/http';
 
 // 微信登录
 export const loginApi = (code: string) => {

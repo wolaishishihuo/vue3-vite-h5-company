@@ -1,14 +1,14 @@
+import { Lazyload } from 'vant';
 import { createApp } from 'vue';
 import App from '@/App.vue';
+import directives from '@/directives/index';
+import registerPlugins from '@/plugins/index';
 import router from '@/router';
 import pinia from '@/stores';
 import 'virtual:uno.css';
 import '@/styles/app.less';
 import '@/styles/var.less';
 import '@/assets/iconfont/iconfont.css';
-import directives from '@/directives/index';
-import registerPlugins from '@/plugins/index';
-import { Lazyload } from 'vant';
 // Vant 桌面端适配
 import '@vant/touch-emulator';
 // 创建Vue应用实例

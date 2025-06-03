@@ -1,5 +1,5 @@
-import request from '@/http';
 import type { Organization, Personnel } from '@/api/interface/organization';
+import request from '@/http';
 
 // 获取组织架构接口
 export const getOrganizations = () => {

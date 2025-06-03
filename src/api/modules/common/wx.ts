@@ -7,6 +7,6 @@ interface WxInfo {
   signature: string;
 }
 
-export function getWxInfo(url: string) {
+export const getWxInfo = (url: string) => {
   return request.get<WxInfo>(`/api/wx/cp/getJsapiSignature?url=${encodeURIComponent(url)}`);
-}
+};
