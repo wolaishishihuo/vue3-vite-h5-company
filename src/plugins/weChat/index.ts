@@ -1,7 +1,7 @@
+import type { SignatureData } from '@wecom/jssdk';
+import * as ww from '@wecom/jssdk';
 import { getWxInfo } from '@/api/modules/common/wx';
 import { wxJsApiList } from '@/config/wx';
-import * as ww from '@wecom/jssdk';
-import type { SignatureData } from '@wecom/jssdk';
 import { isWxWork, withTimeout } from '@/utils';
 import { BaseSDK } from '../base/BaseSDK';
 
@@ -19,7 +19,6 @@ export class WechatSDK extends BaseSDK {
 
   /**
    * 加载SDK具体实现
-   * @param options 加载选项
    * @returns Promise<void>
    */
   protected async loadSDK(): Promise<void> {

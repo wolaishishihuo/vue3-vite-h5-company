@@ -1,6 +1,6 @@
+import type { UserInfo } from '@/api/interface/user';
 import { defineStore } from 'pinia';
 import { getUserInfoApi, loginApi, loginFromSft } from '@/api/modules/user/index';
-import type { UserInfo } from '@/api/interface/user';
 import { parseUrlParams } from '@/utils';
 
 const useUserStore = defineStore('user', () => {

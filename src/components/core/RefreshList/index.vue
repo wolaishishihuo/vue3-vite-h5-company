@@ -1,11 +1,11 @@
 <template>
   <van-pull-refresh
     v-model="state.isLoading"
-    @refresh="onRefresh"
     pulling-text="下拉释放刷新"
     loosing-text="下拉释放刷新"
     loading-text="刷新中..."
     v-bind="$attrs"
+    @refresh="onRefresh"
   >
     <!-- 额外插槽 -->
     <template
@@ -20,12 +20,12 @@
     </div>
     <van-list
       v-model:loading="state.loading"
+      v-model:error="state.error"
       :finished="state.finished"
       :immediate-check="false"
       :offset="50"
       finished-text="没有更多了"
       loading-text="加载中..."
-      v-model:error="state.error"
       error-text="请求失败，点击重新加载"
       v-bind="$attrs"
       @load="onLoad"

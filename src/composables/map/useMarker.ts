@@ -1,5 +1,5 @@
-import TencentMapSDK from '@/plugins/tencentMap';
 import type { TMap } from '@/types/TMap';
+import TencentMapSDK from '@/plugins/tencentMap';
 
 // 标记点选项接口
 interface MarkerOptions {

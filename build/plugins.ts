@@ -1,15 +1,15 @@
+import type { PluginOption } from 'vite';
+import { VantResolver } from '@vant/auto-import-resolver';
 import legacy from '@vitejs/plugin-legacy';
 import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import UnoCSS from 'unocss/vite';
 import AutoImport from 'unplugin-auto-import/vite';
-import { VantResolver } from '@vant/auto-import-resolver';
-import Components from 'unplugin-vue-components/vite';
-import vueJsx from '@vitejs/plugin-vue-jsx';
-import vitePluginImp from 'vite-plugin-imp';
-import viteCompression from 'vite-plugin-compression';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite';
+import viteCompression from 'vite-plugin-compression';
+import vitePluginImp from 'vite-plugin-imp';
 import { createViteVConsole } from './vconsole';
-import type { PluginOption } from 'vite';
 
 export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
   return [

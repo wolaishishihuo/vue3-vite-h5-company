@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
-import useRouteCacheStore from '@/stores/modules/routeCache';
-import routes from './staticRouter';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import { popupManager } from '@/composables/usePopup';
+import useRouteCacheStore from '@/stores/modules/routeCache';
 import useUserStore from '@/stores/modules/user';
+import routes from './staticRouter';
+import 'nprogress/nprogress.css';
 
 NProgress.configure({ showSpinner: true, parent: '#app' });
 const mode = import.meta.env.VITE_ROUTER_MODE;

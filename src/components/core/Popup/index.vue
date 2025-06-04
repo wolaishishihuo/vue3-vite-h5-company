@@ -21,9 +21,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-import type { VNode } from 'vue';
 import type { PopupProps } from 'vant';
+import type { VNode } from 'vue';
+import { computed } from 'vue';
 
 interface Props extends Partial<PopupProps> {
   content?: string | (() => VNode);

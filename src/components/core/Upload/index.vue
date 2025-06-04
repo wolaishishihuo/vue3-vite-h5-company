@@ -6,8 +6,8 @@
     :multiple="multiple"
     :before-read="beforeRead"
     :preview-image="showPreview"
-    @delete="handleDelete"
     v-bind="$attrs"
+    @delete="handleDelete"
   >
     <!-- default插槽：自定义上传按钮 -->
     <template v-if="$slots.default" #default="slotProps">
