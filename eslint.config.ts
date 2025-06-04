@@ -12,11 +12,9 @@ export default antfu(
   },
   {
     rules: {
-      // 'perfectionist/sort-imports': 'off',
-      // 'perfectionist/sort-exports': 'off',
-      // 'perfectionist/sort-named-exports': 'off',
       'antfu/top-level-function': 'off',
       'no-console': 'off',
+      'jsdoc/require-returns-description': 'off',
       // vue
       'vue/block-order': ['error', { order: ['template', 'script', 'style'] }],
       // ts

@@ -1,6 +1,6 @@
-import useUserStore from '@/stores/modules/user';
 import type { Directive } from 'vue';
 import { isArray } from 'lodash-es';
+import useUserStore from '@/stores/modules/user';
 /**
  * @name 权限指令
  * @description 和权限判断函数 checkPermission 功能类似

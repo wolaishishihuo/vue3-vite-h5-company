@@ -3,6 +3,7 @@
   <div class="search-wrapper" :class="{ 'is-focused': isFocused }">
     <div class="search-input-container">
       <input
+        ref="inputRef"
         v-model="searchValue"
         type="text"
         :placeholder="placeholder"
@@ -10,7 +11,6 @@
         :class="{ 'has-value': searchValue }"
         @focus="handleFocus"
         @blur="handleBlur"
-        ref="inputRef"
       >
       <van-icon
         v-if="searchValue"

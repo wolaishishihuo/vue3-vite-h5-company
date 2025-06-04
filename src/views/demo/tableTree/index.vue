@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang='ts'>
-import { getAreaTree } from '@/api/modules/organization';
 import type { TableColumn } from '@/components/core/TableTree/interface';
+import { getAreaTree } from '@/api/modules/organization';
 
 const columns: TableColumn[] = [
   {

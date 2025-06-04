@@ -1,5 +1,5 @@
-import type { UserConfig } from '@commitlint/types'
-import { RuleConfigSeverity } from '@commitlint/types'
+import type { UserConfig } from '@commitlint/types';
+import { RuleConfigSeverity } from '@commitlint/types';
 
 const Configuration: UserConfig = {
   extends: ['@commitlint/config-conventional'],
@@ -23,10 +23,10 @@ const Configuration: UserConfig = {
         'wip',
         'workflow',
         'types',
-        'release',
-      ],
-    ],
-  },
-}
+        'release'
+      ]
+    ]
+  }
+};
 
-export default Configuration
+export default Configuration;

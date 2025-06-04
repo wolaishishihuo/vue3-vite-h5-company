@@ -8,7 +8,7 @@
       @click="handleClick(item.value)"
     >
       {{ item.text }}
-      <span class="ml-4px" v-if="!!item.count">({{ item.count }})</span>
+      <span v-if="!!item.count" class="ml-4px">({{ item.count }})</span>
       <div
         class="rounded-7px bg-[#3875c6] opacity-0 h-13px w-full transition-all duration-300 ease-in-out bottom-10px left-0 right-0 absolute"
         :class="{ 'opacity-23': modelValue === item.value }"

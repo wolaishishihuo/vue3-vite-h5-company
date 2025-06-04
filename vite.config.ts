@@ -1,7 +1,7 @@
+import type { ConfigEnv, UserConfig } from 'vite';
 import path from 'node:path';
 import process from 'node:process';
 import { loadEnv } from 'vite';
-import type { ConfigEnv, UserConfig } from 'vite';
 import { createProxy, createVitePlugins, exclude, include, wrapperEnv } from './build';
 
 interface PreRenderedAsset {

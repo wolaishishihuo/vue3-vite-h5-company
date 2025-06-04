@@ -1,5 +1,5 @@
-import * as ww from '@wecom/jssdk';
 import type { getLocation, openEnterpriseChat, scanQRCode, selectEnterpriseContact } from '@wecom/jssdk';
+import * as ww from '@wecom/jssdk';
 import { SelectEnterpriseContactMode, SelectEnterpriseContactType } from '@wecom/jssdk';
 import wechatSDK from '@/plugins/weChat';
 

@@ -1,5 +1,5 @@
-import { showToast } from 'vant';
 import Compressor from 'compressorjs';
+import { showToast } from 'vant';
 
 // 自定义压缩选项接口
 interface CompressOptions {

@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import useRouteCacheStore from '@/stores/modules/routeCache';
 import { storeToRefs } from 'pinia';
+import useRouteCacheStore from '@/stores/modules/routeCache';
 
 const routeCacheStore = useRouteCacheStore();
 const { routeCaches } = storeToRefs(routeCacheStore);
