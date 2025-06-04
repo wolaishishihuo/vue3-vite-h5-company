@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-y-center pb-30px">
+  <div class="flex-x-center mb-10px pb-30px">
     <!-- 左侧时间轴 -->
-    <div class="mb-10px flex w-30px justify-center relative">
+    <div class="mt-15px flex w-30px justify-center relative">
       <!-- 点和线的容器 -->
       <div class="flex flex-col items-center">
         <!-- 双点结构 -->
@@ -16,7 +16,7 @@
         <div
           v-if="hasBodyContent"
           class="mt-0 border-l border-#4873C1 border-dashed w-1px"
-          :style="{ height: `${bodyHeight}px` }"
+          :class="[bodyHeight > 0 ? 'h-full' : 'h-0']"
         />
       </div>
     </div>
@@ -46,11 +46,9 @@ defineOptions({
 const slots = useSlots();
 const hasBodyContent = computed(() => !!slots.default);
 
-// 用于测量内容高度
 const bodyRef = ref<HTMLElement | null>(null);
 const bodyHeight = ref(0);
 
-// 更新内容高度
 const updateHeight = () => {
   if (bodyRef.value) {
     bodyHeight.value = bodyRef.value.offsetHeight;
