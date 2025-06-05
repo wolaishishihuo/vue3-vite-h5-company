@@ -38,6 +38,14 @@ const demoRoutes = [
     }
   },
   {
+    path: '/demo/faceCamera',
+    name: 'FaceCameraDemo',
+    component: () => import('@/views/demo/faceCamera/index.vue'),
+    meta: {
+      title: '人脸拍照Demo'
+    }
+  },
+  {
     path: '/organization',
     name: 'organization',
     component: () => import('@/modules/organization/index.vue'),

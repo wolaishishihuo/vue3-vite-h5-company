@@ -7,6 +7,12 @@ interface WxInfo {
   signature: string;
 }
 
-export const getWxInfo = (url: string) => {
-  return request.get<WxInfo>(`/api/wx/cp/getJsapiSignature?url=${encodeURIComponent(url)}`);
-};
+/**
+ * 获取企业微信JS-SDK配置信息
+ * @param url 当前页面完整URL（不包含hash部分）
+ * @returns 包含签名等信息的响应
+ */
+export function getWxInfo(url: string) {
+  const encodedUrl = encodeURIComponent(url);
+  return request.get<WxInfo>(`/wx/cp/getJsapiSignature?url=${encodedUrl}`);
+}
