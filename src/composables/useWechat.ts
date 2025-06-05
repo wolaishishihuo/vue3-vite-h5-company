@@ -1,6 +1,6 @@
-import type { getLocation, openEnterpriseChat, scanQRCode, selectEnterpriseContact } from '@wecom/jssdk';
+import type { chooseImage, getLocation, openEnterpriseChat, scanQRCode, selectEnterpriseContact } from '@wecom/jssdk';
 import * as ww from '@wecom/jssdk';
-import { SelectEnterpriseContactMode, SelectEnterpriseContactType } from '@wecom/jssdk';
+import { SelectEnterpriseContactMode, SelectEnterpriseContactType, SizeType, SourceType } from '@wecom/jssdk';
 import wechatSDK from '@/plugins/weChat';
 
 /**
@@ -49,8 +49,19 @@ const useWechat = () => {
       await sdk.ensureInitialized();
 
       return ww.scanQRCode(options);
-    }
+    },
 
+    // 选择图片
+    chooseImage: async (options: Parameters<typeof chooseImage>[0]) => {
+      await sdk.ensureInitialized();
+      const mergedOptions = {
+        count: options.count || 1,
+        sizeType: options.sizeType || [SizeType.compressed, SizeType.original],
+        sourceType: options.sourceType || [SourceType.album, SourceType.camera],
+        ...options
+      };
+      return ww.chooseImage(mergedOptions);
+    }
   };
 };
 

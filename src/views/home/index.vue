@@ -29,6 +29,10 @@ const list = [
   {
     title: '人员组织',
     path: '/organization'
+  },
+  {
+    title: '人像抓拍',
+    path: '/demo/faceCamera'
   }
 ];
 </script>
