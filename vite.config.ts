@@ -68,15 +68,17 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
           // 代码分割配置
           manualChunks(id) {
-            // 将 vue 及其相关包打包成一个文件 打包成 'vue.js'
-            if (id.includes('vue')) {
-              return 'vue';
+            // Vue核心库
+            if (/[\\/]node_modules[\\/](vue|vue-router|pinia)[\\/]/.test(id)) {
+              return 'vueChunk';
             }
-            // 将 axios 单独打包成一个文件 打包成 'axios.js'
-            if (id.includes('node_modules/axios')) {
-              return 'axios';
+
+            // 工具库
+            if (/[\\/]node_modules[\\/](axios|dayjs|nprogress)[\\/]/.test(id)) {
+              return 'utilsChunk';
             }
-            // 其他 node_modules 中的包按照名称进行分组
+
+            // 其他node_modules模块
             if (id.includes('node_modules')) {
               const moduleName = id.split('node_modules/')[1].split('/')[0];
               return moduleName;
