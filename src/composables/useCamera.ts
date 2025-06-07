@@ -1,4 +1,5 @@
-import { onMounted, onUnmounted, ref } from 'vue';
+import { useUserMedia } from '@vueuse/core';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 
 export interface CameraOptions {
   width?: number;
@@ -8,9 +9,9 @@ export interface CameraOptions {
 
 export function useCamera(defaultOptions: CameraOptions = {}) {
   const {
-    width = 1280, // 更高的默认分辨率
-    height = 720, // 更高的默认分辨率
-    quality = 0.8 // 更高的默认图像质量
+    width = 1280,
+    height = 720,
+    quality = 0.8
   } = defaultOptions;
 
   const videoRef = ref<HTMLVideoElement | null>(null);
@@ -19,87 +20,91 @@ export function useCamera(defaultOptions: CameraOptions = {}) {
   const isLoading = ref<boolean>(false);
   const hasError = ref<boolean>(false);
   const errorMessage = ref<string>('');
-  const stream = ref<MediaStream | null>(null);
 
-  // 检查浏览器兼容性
-  const checkBrowserSupport = (): boolean => {
-    if (!navigator.mediaDevices?.getUserMedia) {
-      errorMessage.value = '您的浏览器不支持摄像头功能，请使用最新版Chrome或Safari浏览器';
-      hasError.value = true;
-      return false;
+  // https://github.com/vueuse/vueuse/blob/main/packages/core/useUserMedia/index.ts
+  const {
+    stream,
+    isSupported,
+    start: startMedia,
+    stop: stopMedia
+  } = useUserMedia({
+    constraints: {
+      video: {
+        width: { ideal: width },
+        height: { ideal: height }
+      },
+      audio: false
+    },
+    autoSwitch: false // 不自动启动，由我们控制启动时机
+  });
+
+  // 监听流的变化，自动设置到视频元素上
+  watch(stream, (newStream) => {
+    if (newStream && videoRef.value) {
+      videoRef.value.srcObject = newStream;
+      videoRef.value.play().catch((err) => {
+        console.warn('视频播放失败', err);
+        handleCameraError(err);
+      });
     }
-    return true;
-  };
+  });
 
   // 停止摄像头
   const stopCamera = () => {
-    if (stream.value) {
-      stream.value.getTracks().forEach(track => track.stop());
-      stream.value = null;
+    stopMedia();
+  };
+
+  // 处理摄像头错误
+  const handleCameraError = (err: unknown) => {
+    isLoading.value = false;
+    hasError.value = true;
+
+    if (!(err instanceof Error)) {
+      errorMessage.value = '摄像头初始化失败';
+      return;
     }
-    if (videoRef.value) {
-      videoRef.value.srcObject = null;
-    }
+
+    const errorMap: Record<string, string> = {
+      NotAllowedError: '摄像头访问被拒绝，请在浏览器设置中允许访问摄像头',
+      PermissionDeniedError: '摄像头访问被拒绝，请在浏览器设置中允许访问摄像头',
+      NotFoundError: '找不到摄像头设备',
+      NotReadableError: '摄像头被其他应用占用，请关闭其他可能使用摄像头的应用',
+      AbortError: '摄像头被其他应用占用，请关闭其他可能使用摄像头的应用'
+    };
+
+    errorMessage.value = errorMap[err.name] || `摄像头初始化失败: ${err.message}`;
   };
 
   // 初始化摄像头
-  const initCamera = async (options?: CameraOptions) => {
-    // 先停止可能存在的相机流
-    stopCamera();
-
-    if (!checkBrowserSupport()) return;
-
+  const initCamera = async () => {
+    // 重置状态
     isLoading.value = true;
     hasError.value = false;
     errorMessage.value = '';
 
+    // 检查浏览器支持
+    if (!isSupported.value) {
+      errorMessage.value = '您的浏览器不支持摄像头功能，请使用最新版Chrome或Safari浏览器';
+      hasError.value = true;
+      isLoading.value = false;
+      return;
+    }
+
     try {
-      // 合并选项
-      const mergedOptions = {
-        width: options?.width ?? width,
-        height: options?.height ?? height,
-        quality: options?.quality ?? quality
-      };
+      // 停止现有摄像头并启动新的
+      stopCamera();
 
-      const constraints = {
-        audio: false,
-        video: {
-          width: { ideal: mergedOptions.width },
-          height: { ideal: mergedOptions.height }
-        }
-      };
+      // 启动媒体流（这是异步操作）
+      const mediaStream = await startMedia();
 
-      // 获取媒体流
-      stream.value = await navigator.mediaDevices.getUserMedia(constraints);
-
-      // 设置视频源
-      if (videoRef.value) {
-        videoRef.value.srcObject = stream.value;
-        await videoRef.value.play().catch((err) => {
-          // iOS Safari 可能需要用户交互才能播放视频，捕获可能的错误
-          console.warn('视频播放失败', err);
-          throw new Error('视频播放失败，可能需要用户交互');
-        });
+      // 如果没有获取到流，抛出错误
+      if (!mediaStream) {
+        throw new Error('无法获取摄像头流');
       }
 
       isLoading.value = false;
     } catch (err) {
-      isLoading.value = false;
-      hasError.value = true;
-
-      if (err instanceof Error) {
-        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-          errorMessage.value = '摄像头访问被拒绝，请在浏览器设置中允许访问摄像头';
-        } else if (err.name === 'NotFoundError') {
-          errorMessage.value = '找不到摄像头设备';
-        } else if (err.name === 'NotReadableError' || err.name === 'AbortError') {
-          errorMessage.value = '摄像头被其他应用占用，请关闭其他可能使用摄像头的应用';
-        } else {
-          errorMessage.value = `摄像头初始化失败: ${err.message}`;
-        }
-      } else {
-        errorMessage.value = '摄像头初始化失败';
-      }
+      handleCameraError(err);
     }
   };
 
@@ -128,21 +133,6 @@ export function useCamera(defaultOptions: CameraOptions = {}) {
     return imageSrc.value;
   };
 
-  // 将Base64转为文件对象
-  const dataURLtoFile = (dataURL: string, fileName = 'photo.jpg'): File => {
-    const arr = dataURL.split(',');
-    const mime = arr[0].match(/:(.*?);/)![1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new File([u8arr], fileName, { type: mime });
-  };
-
   // 重新拍照
   const retake = () => {
     imageSrc.value = '';
@@ -163,9 +153,10 @@ export function useCamera(defaultOptions: CameraOptions = {}) {
     isLoading,
     hasError,
     errorMessage,
+    stream,
+    isSupported,
     capture,
     retake,
-    dataURLtoFile,
     initCamera,
     stopCamera
   };

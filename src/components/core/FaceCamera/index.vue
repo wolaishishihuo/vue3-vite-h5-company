@@ -1,12 +1,10 @@
 <template>
-  <div class="face-camera-container text-white bg-black">
-    <!-- 顶部导航栏 -->
-    <div class="px-32px flex-between h-100px">
-      <div class="i-svg:close text-48px" @click="cancel" />
+  <div class="text-white bg-black flex-col bottom-0 left-0 right-0 top-0 fixed z-100">
+    <!-- 标题 -->
+    <div class="flex-center h-100px">
       <div class="text-32px font-medium">
         人脸采集
       </div>
-      <div class="w-48px" />
     </div>
 
     <!-- 主要内容区 -->
@@ -29,13 +27,13 @@
         <!-- 取景框遮罩层 - 使用纯CSS实现 -->
         <div v-if="!imageSrc" class="camera-overlay bg-black/30 flex-col-center abs-full">
           <!-- 透明的取景区域 -->
-          <div class="viewfinder mb-120px relative">
+          <div class="viewfinder-container mb-120px relative">
             <!-- 辅助线 -->
             <div class="viewfinder-border">
-              <div class="corner top-left" />
-              <div class="corner top-right" />
-              <div class="corner bottom-left" />
-              <div class="corner bottom-right" />
+              <div class="corner-tl" />
+              <div class="corner-tr" />
+              <div class="corner-bl" />
+              <div class="corner-br" />
             </div>
           </div>
 
@@ -73,9 +71,19 @@
     <!-- 底部控制区 -->
     <div class="flex-center h-240px relative">
       <template v-if="!imageSrc">
-        <!-- 拍照按钮 -->
-        <div class="p-6px rounded-full bg-white/30 flex-center h-140px w-140px" @click="takePhoto">
-          <div class="rounded-full bg-white wh-full shadow-lg" />
+        <div class="px-64px flex-between w-full">
+          <!-- 取消按钮 -->
+          <div class="text-30px font-medium flex-center cursor-pointer" @click="cancel">
+            取消
+          </div>
+
+          <!-- 拍照按钮 -->
+          <div class="p-6px rounded-full bg-white/30 flex-center h-140px w-140px cursor-pointer" @click="takePhoto">
+            <div class="rounded-full bg-white wh-full shadow-lg" />
+          </div>
+
+          <!-- 空白占位 -->
+          <div class="w-60px" />
         </div>
       </template>
 
@@ -97,12 +105,12 @@
 <script setup lang="ts">
 import { showToast } from 'vant';
 import { useCamera } from '@/composables/useCamera';
+import { dataURLtoFile } from '@/utils';
 
 defineOptions({
   name: 'FaceCamera'
 });
 
-// Props 定义
 const props = defineProps({
   promptText: {
     type: String,
@@ -114,13 +122,11 @@ const props = defineProps({
   }
 });
 
-// Emits 定义
 const emit = defineEmits<{
   (e: 'cancel'): void;
   (e: 'capture', photoData: string, photoFile: File): void;
 }>();
 
-// 使用相机composable
 const {
   videoRef,
   canvasRef,
@@ -130,7 +136,6 @@ const {
   errorMessage,
   capture,
   retake,
-  dataURLtoFile,
   initCamera,
   stopCamera
 } = useCamera({
@@ -166,27 +171,13 @@ const cancel = () => {
 
 // 重试初始化相机
 const retryCamera = async () => {
-  stopCamera(); // 先停止当前相机
-  await initCamera({
-    quality: props.quality
-  });
+  stopCamera();
+  await initCamera();
 };
 </script>
 
-<style scoped>
-.face-camera-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-}
-
-/* 取景框样式 */
-.viewfinder {
+<style scoped lang="less">
+.viewfinder-container {
   width: min(450px, 80vw);
   height: min(450px, 80vw);
   position: relative;
@@ -203,49 +194,47 @@ const retryCamera = async () => {
   border: 4px dashed rgba(255, 255, 255, 0.5);
 }
 
-/* 四角辅助线 */
-.corner {
+.corner-tl {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  border-color: #fff;
-  border-style: solid;
-  border-width: 0;
-}
-
-.top-left {
   top: -4px;
   left: -4px;
-  border-top-width: 4px;
-  border-left-width: 4px;
+  width: 40px;
+  height: 40px;
+  border-top: 4px solid white;
+  border-left: 4px solid white;
   border-top-left-radius: 16px;
 }
 
-.top-right {
+.corner-tr {
+  position: absolute;
   top: -4px;
   right: -4px;
-  border-top-width: 4px;
-  border-right-width: 4px;
+  width: 40px;
+  height: 40px;
+  border-top: 4px solid white;
+  border-right: 4px solid white;
   border-top-right-radius: 16px;
 }
 
-.bottom-left {
+.corner-bl {
+  position: absolute;
   bottom: -4px;
   left: -4px;
-  border-bottom-width: 4px;
-  border-left-width: 4px;
+  width: 40px;
+  height: 40px;
+  border-bottom: 4px solid white;
+  border-left: 4px solid white;
   border-bottom-left-radius: 16px;
 }
 
-.bottom-right {
+.corner-br {
+  position: absolute;
   bottom: -4px;
   right: -4px;
-  border-bottom-width: 4px;
-  border-right-width: 4px;
+  width: 40px;
+  height: 40px;
+  border-bottom: 4px solid white;
+  border-right: 4px solid white;
   border-bottom-right-radius: 16px;
-}
-
-.hidden {
-  display: none;
 }
 </style>

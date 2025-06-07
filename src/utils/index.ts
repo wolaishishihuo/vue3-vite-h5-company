@@ -323,3 +323,23 @@ export function parseUrlParams(url = window.location.href): Record<string, strin
 
   return result;
 }
+
+/**
+ * 将Base64转为文件对象
+ * @param dataURL 要转换的Base64字符串
+ * @param fileName 文件名，默认为 'photo.jpg'
+ * @returns 转换后的File对象
+ */
+export const dataURLtoFile = (dataURL: string, fileName = 'photo.jpg'): File => {
+  const arr = dataURL.split(',');
+  const mime = arr[0].match(/:(.*?);/)![1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+
+  return new File([u8arr], fileName, { type: mime });
+};
