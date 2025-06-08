@@ -1,4 +1,3 @@
-import type { TMap } from '@/types/TMap';
 import { mapDefaultConfig } from '@/config/tencentMap';
 import TencentMapSDK from '@/plugins/tencentMap';
 

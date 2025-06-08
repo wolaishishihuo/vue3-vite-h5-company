@@ -1,6 +1,5 @@
 <template>
   <div class="flex-col h-full">
-    <nav-bar />
     <div class="flex-1 relative overflow-auto">
       <router-view v-slot="{ Component, route }">
         <keep-alive :include="routeCaches">

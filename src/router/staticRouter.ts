@@ -20,31 +20,4 @@ const routes: Array<RouteRecordRaw> = [
 
 ];
 
-const demoRoutes = [
-  {
-    path: '/demo/tableTree',
-    name: 'tableTree',
-    component: () => import('@/views/demo/tableTree/index.vue'),
-    meta: {
-      title: '表格树'
-    }
-  },
-  {
-    path: '/demo/locationButton',
-    name: 'locationButton',
-    component: () => import('@/views/demo/locationButton/index.vue'),
-    meta: {
-      title: '定位按钮'
-    }
-  },
-  {
-    path: '/organization',
-    name: 'organization',
-    component: () => import('@/modules/organization/index.vue'),
-    meta: {
-      title: '人员组织'
-    }
-  }
-];
-
-export default [...routes, ...demoRoutes];
+export default [...routes];
