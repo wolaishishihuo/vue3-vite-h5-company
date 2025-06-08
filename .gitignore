@@ -25,3 +25,4 @@ stats.html
 .DS_Store
 .history
 .cursor
+pnpm-lock.yaml

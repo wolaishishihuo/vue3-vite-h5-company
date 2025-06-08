@@ -99,7 +99,6 @@
 
 <script setup lang="ts">
 import { showDialog, showToast } from 'vant';
-import { ref } from 'vue';
 import FaceCamera from '@/components/core/FaceCamera/index.vue';
 
 defineOptions({
