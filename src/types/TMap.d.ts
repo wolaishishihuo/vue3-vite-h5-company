@@ -12,13 +12,16 @@ declare namespace TMap {
     [key: string]: any;
   }
 
+  class Map {
+    constructor(container: HTMLElement, options?: any);
+  }
 }
 
 // 全局扩展Window接口
 declare global {
   interface Window {
-    TMap: {
-      Map: new (container: HTMLElement, options?: any) => any;
+    TMap: typeof TMap & {
+      Map: typeof TMap.Map;
       [key: string]: any;
     };
     qq: {
@@ -28,5 +31,3 @@ declare global {
     };
   }
 }
-
-export { TMap };
