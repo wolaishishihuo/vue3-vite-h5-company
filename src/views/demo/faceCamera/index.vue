@@ -39,7 +39,7 @@
       <!-- 无照片时显示拍照按钮 -->
       <template v-else>
         <div
-          class="camera-placeholder wh-300px mx-auto border-4px border-gray-300 rounded-16px border-dashed bg-white flex-col-center cursor-pointer transition-all duration-300 hover:(border-primary bg-primary/5)"
+          class="camera-placeholder mx-auto border-4px border-gray-300 rounded-16px border-dashed bg-white flex-col-center cursor-pointer wh-300"
           @click="openCamera"
         >
           <i class="i-svg:camera text-80px text-gray-400 mb-32px" />
