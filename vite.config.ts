@@ -33,6 +33,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       cors: true,
       proxy: createProxy(viteEnv.VITE_PROXY)
     },
+    clearScreen: true,
     resolve: {
       alias: {
         '@': path.join(__dirname, './src'),
