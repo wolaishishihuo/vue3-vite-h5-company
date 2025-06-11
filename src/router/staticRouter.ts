@@ -52,6 +52,14 @@ const demoRoutes = [
     meta: {
       title: '人员组织'
     }
+  },
+  {
+    path: '/demo/faceRecognition',
+    name: 'faceRecognition',
+    component: () => import('@/modules/faceRecognition/index.vue'),
+    meta: {
+      title: '人脸识别'
+    }
   }
 ];
 
