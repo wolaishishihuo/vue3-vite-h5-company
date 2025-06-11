@@ -12,6 +12,7 @@ declare module 'vue' {
     Chart: typeof import('./../components/core/Chart/index.vue')['default']
     ElTree: typeof import('element-plus/es')['ElTree']
     FaceCamera: typeof import('./../components/core/FaceCamera/index.vue')['default']
+    FaceRecognition: typeof import('./../components/core/FaceRecognition/index.vue')['default']
     NavBar: typeof import('./../components/base/NavBar/index.vue')['default']
     Popup: typeof import('./../components/core/Popup/index.vue')['default']
     RefreshList: typeof import('./../components/core/RefreshList/index.vue')['default']

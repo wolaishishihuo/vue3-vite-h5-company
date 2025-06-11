@@ -22,7 +22,10 @@ const include = [
   'vant/es/nav-bar/style/index',
   'vant/es/tabbar/style/index',
   'vant/es/tabbar-item/style/index',
-  'vant/es/list/style/index'
+  'vant/es/list/style/index',
+  'vant/es/overlay/style/index',
+  'vant/es/loading/style/index',
+  'vant/es/dialog/style/index'
 ];
 
 const exclude = [

@@ -33,6 +33,10 @@ const list = [
   {
     title: '人像抓拍',
     path: '/demo/faceCamera'
+  },
+  {
+    title: '人脸识别',
+    path: '/demo/faceRecognition'
   }
 ];
 </script>
