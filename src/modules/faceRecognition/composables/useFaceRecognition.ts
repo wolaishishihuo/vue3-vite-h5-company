@@ -1,5 +1,5 @@
 import { useRafFn, useUserMedia } from '@vueuse/core';
-import { CONFIG, RecognitionStatus, STATUS_CONFIG } from '../config.tsx';
+import { CONFIG, RecognitionStatus, STATUS_CONFIG } from '@/modules/faceRecognition/config.tsx';
 
 /**
  * 人脸识别逻辑复合函数
