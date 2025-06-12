@@ -24,7 +24,7 @@
       <!-- 人脸识别扫描圆环 -->
       <div
         class="scan-frame border-2px border-primary rounded-full border-dashed abs-full"
-        :class="recognitionStatus === 'scanning' ? 'scan-active' : ''"
+        :class="recognitionStatus === RecognitionStatus.SCANNING ? 'scan-active' : ''"
       />
     </div>
 
@@ -54,72 +54,36 @@
         </p>
       </div>
     </div>
+
+    <!-- 错误重试按钮 -->
+    <van-button
+      v-if="recognitionStatus === RecognitionStatus.FAILED"
+      type="primary"
+      class="text-32px rounded-12px h-88px w-80%"
+      @click="retry"
+    >
+      重新尝试
+    </van-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useFaceRecognition } from './composables/useFaceRecognition';
+import { RecognitionStatus } from './config.tsx';
 
 defineOptions({
   name: 'FaceRecognition'
 });
 
-const { videoRef, recognitionStatus, tipMessage } = useFaceRecognition();
-
-// 根据识别状态获取对应文本
-const getStatusText = computed(() => {
-  switch (recognitionStatus.value) {
-    case 'idle':
-      return '准备就绪';
-    case 'loading':
-      return '初始化中...';
-    case 'scanning':
-      return '识别中...';
-    case 'success':
-      return '识别成功';
-    case 'failed':
-      return '识别失败';
-    default:
-      return '准备就绪';
-  }
-});
-
-// 根据识别状态获取状态点样式
-const getStatusDotClass = computed(() => {
-  switch (recognitionStatus.value) {
-    case 'idle':
-      return 'bg-gray-400';
-    case 'loading':
-      return 'bg-blue-400 pulse-animation';
-    case 'scanning':
-      return 'bg-primary pulse-animation';
-    case 'success':
-      return 'bg-green-500';
-    case 'failed':
-      return 'bg-red-500';
-    default:
-      return 'bg-gray-400';
-  }
-});
-
-// 根据识别状态获取文本样式
-const getStatusTextClass = computed(() => {
-  switch (recognitionStatus.value) {
-    case 'idle':
-      return 'text-gray-400';
-    case 'loading':
-      return 'text-blue-400';
-    case 'scanning':
-      return 'text-primary';
-    case 'success':
-      return 'text-green-500';
-    case 'failed':
-      return 'text-red-500';
-    default:
-      return 'text-gray-400';
-  }
-});
+const {
+  videoRef,
+  recognitionStatus,
+  tipMessage,
+  getStatusDotClass,
+  getStatusTextClass,
+  getStatusText,
+  retry
+} = useFaceRecognition();
 </script>
 
 <style scoped lang="less">
