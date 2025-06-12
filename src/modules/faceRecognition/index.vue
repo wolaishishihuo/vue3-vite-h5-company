@@ -68,8 +68,8 @@
 </template>
 
 <script setup lang="ts">
-import { useFaceRecognition } from './composables/useFaceRecognition';
-import { RecognitionStatus } from './config.tsx';
+import { useFaceRecognition } from '@/modules/faceRecognition/composables/useFaceRecognition';
+import { RecognitionStatus } from '@/modules/faceRecognition/config.tsx';
 
 defineOptions({
   name: 'FaceRecognition'
