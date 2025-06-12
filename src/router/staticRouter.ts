@@ -10,6 +10,14 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('@/views/profile/index.vue'),
+    meta: {
+      title: '我的'
+    }
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: '404',
     component: () => import('@/components/[...all].vue'),
