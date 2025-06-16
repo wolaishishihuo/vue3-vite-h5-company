@@ -68,6 +68,14 @@ const demoRoutes = [
     meta: {
       title: '人脸识别'
     }
+  },
+  {
+    path: '/demo/chart',
+    name: 'chart',
+    component: () => import('@/views/demo/chart/index.vue'),
+    meta: {
+      title: '图表'
+    }
   }
 ];
 

@@ -37,6 +37,10 @@ const list = [
   {
     title: '人脸识别',
     path: '/demo/faceRecognition'
+  },
+  {
+    title: '图表',
+    path: '/demo/chart'
   }
 ];
 </script>
