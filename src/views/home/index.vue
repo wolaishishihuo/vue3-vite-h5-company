@@ -15,6 +15,10 @@ import Cell from './components/Cell.vue';
 
 const list = [
   {
+    title: '宽高比示例',
+    path: '/demo/aspectRatio'
+  },
+  {
     title: '树形表格',
     path: '/demo/tableTree'
   },
