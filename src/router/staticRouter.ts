@@ -30,6 +30,14 @@ const routes: Array<RouteRecordRaw> = [
 
 const demoRoutes = [
   {
+    path: '/demo/aspectRatio',
+    name: 'aspectRatio',
+    component: () => import('@/views/demo/aspectRatio/index.vue'),
+    meta: {
+      title: '宽高比示例'
+    }
+  },
+  {
     path: '/demo/tableTree',
     name: 'tableTree',
     component: () => import('@/views/demo/tableTree/index.vue'),

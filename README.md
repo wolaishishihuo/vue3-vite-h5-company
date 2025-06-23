@@ -116,6 +116,70 @@ pnpm typecheck
 - 合理使用 keep-alive
 - 避免不必要的重渲染
 
+## 宽高比(Aspect Ratio)兼容性解决方案
+
+项目提供了基于Less的宽高比兼容性解决方案，同时支持现代浏览器和低版本浏览器，通过padding-bottom技术模拟固定宽高比。
+
+### 预设宽高比类
+
+```html
+<!-- 16:9 视频容器 -->
+<div class="aspect-video">
+  <img src="./video-cover.jpg" class="aspect-content-cover" />
+</div>
+
+<!-- 1:1 正方形容器 -->
+<div class="aspect-square">
+  <div class="aspect-content-center">居中内容</div>
+</div>
+
+<!-- 4:3 容器 -->
+<div class="aspect-4-3">
+  <div>内容</div>
+</div>
+
+<!-- 手机屏幕比例 -->
+<div class="aspect-iphoneX">
+  <div>模拟iPhone屏幕</div>
+</div>
+```
+
+### 自定义宽高比
+
+1. 在aspect-ratio.less中添加自定义类:
+
+```less
+.aspect-custom {
+  .aspect-ratio(5, 3); // 5:3比例
+}
+```
+
+2. 在组件中使用:
+
+```html
+<div class="aspect-custom">
+  <div>5:3比例内容</div>
+</div>
+```
+
+### 支持的预设类
+
+- **容器宽高比**：
+
+  - `.aspect-video` (16:9)
+  - `.aspect-square` (1:1)
+  - `.aspect-portrait` (9:16)
+  - `.aspect-4-3` (4:3)
+  - `.aspect-3-2` (3:2)
+  - `.aspect-iphoneX` (375:812)
+  - `.aspect-16-10` (16:10)
+  - `.aspect-2-1` (2:1)
+
+- **内容样式**：
+  - `.aspect-content-cover`（填充）
+  - `.aspect-content-contain`（包含）
+  - `.aspect-content-center`（居中）
+
 ## 部署
 
 1. 构建生产环境代码
