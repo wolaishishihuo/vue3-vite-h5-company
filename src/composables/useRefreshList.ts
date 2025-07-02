@@ -1,14 +1,16 @@
-const useRefreshList = ({
+import type { PageResult, ResultData } from '@/http/interface';
+
+const useRefreshList = <T extends object>({
   api,
   extraParams = {}
 }: {
-  api: (params: any) => Promise<any>;
+  api: (params: any) => Promise<ResultData<PageResult<T>>>;
   extraParams?: Record<string, unknown>;
   immediate?: boolean;
 }) => {
+  const dataSource = ref<T[]>([]);
   // 状态
   const state = reactive({
-    dataSource: [],
     finished: false,
     isLoading: false,
     loading: false,
@@ -39,17 +41,17 @@ const useRefreshList = ({
       Object.assign(state.totalParam, initialExtraParams, state.searchParam, pageParam.value);
 
       const { data } = await api(state.totalParam);
-      const { records, totalRow } = data;
-      state.pageable.totalRow = totalRow;
+      const { records, total } = data;
+      state.pageable.totalRow = total;
 
       // 判断是否还有下一页
       const currentPageNum = state.pageable.pageNum;
-      const noMoreData = records.length < state.pageable.pageSize || currentPageNum * state.pageable.pageSize >= totalRow;
+      const noMoreData = records.length < state.pageable.pageSize || currentPageNum * state.pageable.pageSize >= total;
 
       if (currentPageNum === 1) {
-        state.dataSource = records;
+        dataSource.value = records;
       } else {
-        state.dataSource = [...state.dataSource, ...records];
+        dataSource.value = [...dataSource.value, ...records] as T[];
       }
 
       // 设置完成状态
@@ -73,7 +75,7 @@ const useRefreshList = ({
   // 上拉加载
   const onLoad = async () => {
     if (state.isLoading) {
-      state.dataSource = [];
+      dataSource.value = [];
       state.isLoading = false;
     }
 
@@ -87,7 +89,7 @@ const useRefreshList = ({
   // 下拉刷新
   const onRefresh = async () => {
     state.pageable.pageNum = 1;
-    state.dataSource = [];
+    dataSource.value = [];
     state.finished = false;
     state.error = false;
     state.loading = true;
@@ -99,7 +101,7 @@ const useRefreshList = ({
     state.searchParam = searchParams;
 
     state.pageable.pageNum = 1;
-    state.dataSource = [];
+    dataSource.value = [];
     state.finished = false;
     state.error = false;
 
@@ -120,6 +122,7 @@ const useRefreshList = ({
   );
 
   return {
+    dataSource,
     state,
     onLoad,
     onRefresh,
