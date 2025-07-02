@@ -1,4 +1,3 @@
-import { useDebounceFn } from '@vueuse/core';
 import { closeToast, showLoadingToast } from 'vant';
 
 const useHttpLoading = (options = {}) => {
@@ -39,7 +38,6 @@ const useHttpLoading = (options = {}) => {
    */
   const hideLoadingImmediate = () => {
     loadingCount = Math.max(0, loadingCount - 1);
-
     if (loadingCount === 0) {
       const elapsedTime = Date.now() - loadingStartTime;
       const remainTime = Math.max(0, config.minTime - elapsedTime);
@@ -55,11 +53,9 @@ const useHttpLoading = (options = {}) => {
     }
   };
 
-  const hideLoading = useDebounceFn(hideLoadingImmediate, config.debounceTime);
-
   return {
     showLoading,
-    hideLoading
+    hideLoading: hideLoadingImmediate
   };
 };
 

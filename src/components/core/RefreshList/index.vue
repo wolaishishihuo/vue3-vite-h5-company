@@ -31,7 +31,7 @@
       @load="onLoad"
     >
       <template #default>
-        <slot :data="state.dataSource || []" />
+        <slot :data="dataSource || []" />
       </template>
       <!-- 额外的插槽 -->
       <template
@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<Props>(), {
 const slots = useSlots();
 const filteredSlots = computed(() => Object.keys(slots).filter(slot => slot !== 'default'));
 
-const { state, onRefresh, onLoad, onSearch, onReset } = useRefreshList({
+const { dataSource, state, onRefresh, onLoad, onSearch, onReset } = useRefreshList({
   api: props.apiFn,
   extraParams: props.extraParams
 });

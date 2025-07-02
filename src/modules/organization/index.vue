@@ -18,7 +18,7 @@
         :extra-params="searchState"
         @change="handleRefreshChange"
       >
-        <template #default="{ data }">
+        <template #default="{ data }: { data: PersonnelItem[] }">
           <TransitionGroup name="list" tag="div" class="pb-20px">
             <template v-for="item in data" :key="item.id">
               <!-- 组织机构项 -->
