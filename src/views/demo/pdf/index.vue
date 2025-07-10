@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <h1>PDF</h1>
+  <div class="pdf-demo-page flex-col wh-full">
+    <PdfViewer
+      pdf-src="/h5Test/test.pdf"
+    />
   </div>
 </template>
 
@@ -8,4 +10,6 @@
 
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+</style>

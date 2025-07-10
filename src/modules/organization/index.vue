@@ -20,7 +20,7 @@
       >
         <template #default="{ data }">
           <TransitionGroup name="list" tag="div" class="pb-20px">
-            <template v-for="item in data" :key="item.id">
+            <template v-for="item in (data as PersonnelItem[])" :key="item.id">
               <!-- 组织机构项 -->
               <div
                 v-if="item.isParent"
