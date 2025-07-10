@@ -84,6 +84,14 @@ const demoRoutes = [
     meta: {
       title: '图表'
     }
+  },
+  {
+    path: '/demo/pdf',
+    name: 'pdf',
+    component: () => import('@/views/demo/pdf/index.vue'),
+    meta: {
+      title: 'PDF'
+    }
   }
 ];
 

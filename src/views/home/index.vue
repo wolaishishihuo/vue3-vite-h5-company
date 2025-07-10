@@ -45,6 +45,10 @@ const list = [
   {
     title: '图表',
     path: '/demo/chart'
+  },
+  {
+    title: 'PDF',
+    path: '/demo/pdf'
   }
 ];
 </script>
