@@ -2,6 +2,10 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
+    path: '/home',
+    redirect: '/'
+  },
+  {
     path: '/',
     name: 'home',
     component: () => import('@/views/home/index.vue'),

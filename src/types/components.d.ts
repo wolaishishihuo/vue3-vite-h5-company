@@ -13,6 +13,7 @@ declare module 'vue' {
     ElTree: typeof import('element-plus/es')['ElTree']
     FaceCamera: typeof import('./../components/core/FaceCamera/index.vue')['default']
     NavBar: typeof import('./../components/base/NavBar/index.vue')['default']
+    PdfViewer: typeof import('./../components/core/PdfViewer/index.vue')['default']
     Popup: typeof import('./../components/core/Popup/index.vue')['default']
     RefreshList: typeof import('./../components/core/RefreshList/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
