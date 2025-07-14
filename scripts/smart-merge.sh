@@ -55,7 +55,9 @@ show_quick_help() {
     echo "自定义分支："
     echo "  ./smart-merge.sh --source feature --target test"
     echo ""
-    echo "输入 'h' 获取详细帮助"
+    echo "快捷操作："
+    echo "  h - 显示帮助    q - 退出脚本"
+    echo "  d - 完成选择    p - 预览修改"
 }
 
 # 显示交互模式下的键盘提示
@@ -108,18 +110,18 @@ check_environment() {
     fi
 
     # 检查源分支和目标分支是否存在
-    if ! git show-ref --verify --quiet refs/heads/$SOURCE_BRANCH; then
+    if ! git --no-pager show-ref --verify --quiet refs/heads/$SOURCE_BRANCH; then
         print_error "$SOURCE_BRANCH分支不存在"
         exit 1
     fi
 
-    if ! git show-ref --verify --quiet refs/heads/$TARGET_BRANCH; then
+    if ! git --no-pager show-ref --verify --quiet refs/heads/$TARGET_BRANCH; then
         print_error "$TARGET_BRANCH分支不存在"
         exit 1
     fi
 
     # 检查是否有未提交的更改
-    if ! git diff-index --quiet HEAD --; then
+    if ! git --no-pager diff-index --quiet HEAD --; then
         print_warning "有未提交的更改，建议先提交或暂存"
         echo "是否继续？(y/n)"
         read continue_confirm
@@ -140,10 +142,10 @@ show_status() {
     echo ""
     echo "📊 分支对比："
     echo "$SOURCE_BRANCH分支最新提交："
-    git log $SOURCE_BRANCH --oneline -1
+    git --no-pager log $SOURCE_BRANCH --oneline -1
     echo ""
     echo "$TARGET_BRANCH分支最新提交："
-    git log $TARGET_BRANCH --oneline -1
+    git --no-pager log $TARGET_BRANCH --oneline -1
 
     echo ""
     echo "🔀 分支差异统计："
@@ -154,7 +156,7 @@ show_status() {
 
     # 提示用户可以查看完整提交差异
     if [ $commits_ahead -gt 0 ]; then
-        print_tip "查看具体差异可使用: git log $TARGET_BRANCH..$SOURCE_BRANCH --oneline"
+        print_tip "查看具体差异可使用: git --no-pager log $TARGET_BRANCH..$SOURCE_BRANCH --oneline"
     fi
 }
 
@@ -164,10 +166,9 @@ preview_changes() {
 
     echo ""
     print_header "预览文件变更内容"
-    echo "按q退出预览"
-    echo ""
 
-    git show "$commit_hash" --color | less -R
+    # 使用 --no-pager 选项避免分页器产生的~符号和(END)
+    git --no-pager show "$commit_hash" --color
 }
 
 # 智能分析commit内容
@@ -175,7 +176,7 @@ analyze_commit() {
     local commit_hash="$1"
 
     # 获取涉及的文件
-    files=$(git show --name-only --format="" "$commit_hash")
+    files=$(git --no-pager show --name-only --format="" "$commit_hash")
 
     print_info "文件分析："
     echo "$files" | sed 's/^/  📄 /'
@@ -192,7 +193,7 @@ analyze_commit() {
     # 显示修改统计
     echo ""
     echo "📈 修改统计："
-    git show --stat "$commit_hash" | tail -1
+    git --no-pager show --stat "$commit_hash" | tail -1
 
     # 提供预览选项
     echo ""
@@ -207,7 +208,8 @@ analyze_commit() {
         p|P)
             echo ""
             print_header "仅显示修改内容"
-            git show "$commit_hash" --color --patch | less -R
+            # 使用 --no-pager 选项避免分页器
+            git --no-pager show "$commit_hash" --color --patch
             ;;
         n|N)
             # 跳过预览
@@ -257,7 +259,7 @@ interactive_mode() {
     echo "📋 $SOURCE_BRANCH分支最近提交："
     echo "编号 | Commit Hash | 提交信息"
     echo "---- | ----------- | --------"
-    git log $SOURCE_BRANCH --oneline -10 --decorate | nl -v0 -s" | " | sed 's/^/  /'
+    git --no-pager log $SOURCE_BRANCH --oneline -10 --decorate | nl -v0 -s" | " | sed 's/^/  /'
 
     if [ "$multi_mode" = true ]; then
         echo ""
@@ -295,7 +297,7 @@ interactive_mode() {
             for item in $input; do
                 if [[ "$item" =~ ^[0-9]+$ ]]; then
                     # 是编号，获取对应的commit hash
-                    commit_hash=$(git log $SOURCE_BRANCH --oneline -10 | sed -n "$((item + 1))p" | cut -d' ' -f1)
+                    commit_hash=$(git --no-pager log $SOURCE_BRANCH --oneline -10 | sed -n "$((item + 1))p" | cut -d' ' -f1)
                     if [ -z "$commit_hash" ]; then
                         print_error "无效的编号: $item"
                         continue
@@ -348,7 +350,7 @@ interactive_mode() {
             # 判断输入是编号还是hash
             if [[ "$input" =~ ^[0-9]$ ]]; then
                 # 是编号，获取对应的commit hash
-                commit_hash=$(git log $SOURCE_BRANCH --oneline -10 | sed -n "$((input + 1))p" | cut -d' ' -f1)
+                commit_hash=$(git --no-pager log $SOURCE_BRANCH --oneline -10 | sed -n "$((input + 1))p" | cut -d' ' -f1)
                 if [ -z "$commit_hash" ]; then
                     print_error "无效的编号"
                     continue
@@ -393,7 +395,7 @@ cherry_pick_commit() {
     # 显示commit详细信息
     echo ""
     echo "📝 提交信息："
-    git show -s --format="  作者: %an <%ae>%n  时间: %ad%n  信息: %s" "$commit_hash"
+    git --no-pager show -s --format="  作者: %an <%ae>%n  时间: %ad%n  信息: %s" "$commit_hash"
 
     # 分析commit内容
     echo ""
@@ -430,7 +432,7 @@ cherry_pick_commit() {
         # 显示合并结果
         echo ""
         echo "📊 合并结果："
-        git show --stat HEAD
+        git --no-pager show --stat HEAD
 
         # 如果是多commit模式，不每次都询问推送
         if [ "$is_multiple" != true ]; then
@@ -604,7 +606,7 @@ main() {
             ;;
         -l|--list)
             print_header "$SOURCE_BRANCH分支最近提交"
-            git log $SOURCE_BRANCH --oneline -10 --decorate --graph
+            git --no-pager log $SOURCE_BRANCH --oneline -10 --decorate --graph
             ;;
         -s|--status)
             show_status
