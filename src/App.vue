@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-col h-full">
-    <div class="flex-1 relative overflow-auto">
+  <div class="h-full flex-col">
+    <div class="relative flex-1 overflow-auto">
       <router-view v-slot="{ Component, route }">
         <keep-alive :include="routeCaches">
           <component :is="createComponentWrapper(Component, route)" :key="route.fullPath" />
