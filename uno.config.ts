@@ -1,17 +1,15 @@
 import fs from 'node:fs';
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
-import { createRemToPxProcessor } from '@unocss/preset-wind4/utils';
 
+import presetRemToPx from '@unocss/preset-rem-to-px';
 import {
   defineConfig,
   presetAttributify,
   presetIcons,
-  presetWind4,
+  presetUno,
   transformerDirectives,
   transformerVariantGroup
 } from 'unocss';
-
-const BASE_FONT_SIZE = 4;
 
 // 本地 SVG 图标存放目录
 const iconsDir = './src/assets/svgs';
@@ -64,10 +62,10 @@ export default defineConfig({
     // 图片
     ['wh-full-contain', 'wh-full object-contain'],
     ['wh-full-cover', 'wh-full object-cover'],
-    ['wh-full', 'w-full h-full']
+    ['wh-full', 'w-full h-full'],
+    ['border-b-1', 'border-b border-b-#d9d9d9 border-b-solid']
   ],
   rules: [
-    // example: p-10_20_30_40
     [
       /^([pm])-(\d+)_(\d+)(?:_(\d+))?(?:_(\d+))?(?:_(\d+))?$/,
       ([, type, top, right, bottom, left]) => {
@@ -81,7 +79,6 @@ export default defineConfig({
         };
       }
     ],
-    // example: wh-100
     [
       /^wh-(\d+)$/,
       ([, wh]) => ({
@@ -91,14 +88,11 @@ export default defineConfig({
     ]
   ],
   presets: [
-    presetWind4({
-      preflights: {
-        theme: {
-          process: createRemToPxProcessor(BASE_FONT_SIZE)
-        }
-      }
+    presetUno(),
+    // 配置rem转px，设置基准大小为4
+    presetRemToPx({
+      baseFontSize: 4
     }),
-
     presetAttributify(),
     presetIcons({
       scale: 1.2,
@@ -120,9 +114,6 @@ export default defineConfig({
         })
       }
     })
-  ],
-  postprocess: [
-    createRemToPxProcessor(BASE_FONT_SIZE)
   ],
   safelist: generateSafeList(),
   transformers: [
