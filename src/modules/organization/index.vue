@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white flex-col h-full relative">
+  <div class="relative h-full flex-col bg-white">
     <!-- 吸顶搜索区域 -->
-    <div class="p-15 top-0 sticky z-20">
+    <div class="sticky top-0 z-20 p-15">
       <Search
         v-model="searchState.xm"
         placeholder="请输入姓名"
@@ -24,11 +24,11 @@
               <!-- 组织机构项 -->
               <div
                 v-if="item.isParent"
-                class="py-15 border-b border-hex-e9e9e9 border-solid transition-all duration-300 ease-in-out active:bg-[#f5f5f5]"
+                class="border-b border-hex-e9e9e9 border-solid py-15 transition-all duration-300 ease-in-out active:bg-[#f5f5f5]"
                 @click="handleCellClick(item as PersonnelItem)"
               >
-                <div class="flex-between w-full">
-                  <div class="text-36px text-[#333] flex-between">
+                <div class="w-full flex-between">
+                  <div class="flex-between text-36px text-[#333]">
                     <img src="@/assets/images/org.png" class="mr-15px wh-48">
                     {{ item.name }}
                   </div>
@@ -37,10 +37,10 @@
               </div>
 
               <!-- 人员项 -->
-              <div v-else class="py-15 border-b border-hex-e9e9e9 border-solid transition-all duration-300 ease-in-out active:bg-[#f5f5f5]">
-                <div class="flex-between w-full">
-                  <div class="text-36px text-[#333] flex-center">
-                    <van-icon name="contact" class="text-[#666] mr-10px" />
+              <div v-else class="border-b border-hex-e9e9e9 border-solid py-15 transition-all duration-300 ease-in-out active:bg-[#f5f5f5]">
+                <div class="w-full flex-between">
+                  <div class="flex-center text-36px text-[#333]">
+                    <van-icon name="contact" class="mr-10px text-[#666]" />
                     {{ item.xm }}
                   </div>
                   <van-checkbox
@@ -56,11 +56,11 @@
     </div>
 
     <!-- 底部操作栏 -->
-    <div v-if="!!selectedCount" class="flex-x-between p-30px bg-white h-100px shadow-[0px_5px_38px_0px_rgba(4,0,0,0.1)] bottom-0 left-0 right-0 fixed z-10">
+    <div v-if="!!selectedCount" class="flex-x-between fixed bottom-0 left-0 right-0 z-10 h-100px bg-white p-30px shadow-[0px_5px_38px_0px_rgba(4,0,0,0.1)]">
       <div class="text-32px text-[#333]">
         {{ `已选择${selectedCount}人` }}
       </div>
-      <div class="flex gap-20px justify-end">
+      <div class="flex justify-end gap-20px">
         <slot name="footer-left" />
         <van-button size="small" @click="handleClear">
           清空

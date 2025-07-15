@@ -1,15 +1,15 @@
 <template>
-  <div class="face-camera-demo bg-secondary min-h-screen">
+  <div class="face-camera-demo min-h-screen bg-secondary">
     <div class="p-32px pb-80px pt-60px">
       <!-- 页面标题 -->
-      <h2 class="text-48px text-primary font-bold mb-60px text-center">
+      <h2 class="mb-60px text-center text-48px text-primary font-bold">
         人脸拍照功能
       </h2>
 
       <!-- 拍照结果预览 -->
       <div v-if="photoSrc" class="photo-result flex-col-center">
-        <div class="photo-preview max-w-690px w-full relative">
-          <img :src="photoSrc" class="rounded-16px w-full shadow-lg overflow-hidden">
+        <div class="photo-preview relative max-w-690px w-full">
+          <img :src="photoSrc" class="w-full overflow-hidden rounded-16px shadow-lg">
 
           <div class="mt-48px flex-center gap-32px">
             <van-button
@@ -17,7 +17,7 @@
               round
               plain
               size="large"
-              class="text-32px h-80px w-240px"
+              class="h-80px w-240px text-32px"
               @click="clearPhoto"
             >
               删除照片
@@ -27,7 +27,7 @@
               type="primary"
               round
               size="large"
-              class="text-32px h-80px w-240px"
+              class="h-80px w-240px text-32px"
               @click="uploadPhoto"
             >
               上传照片
@@ -39,21 +39,21 @@
       <!-- 无照片时显示拍照按钮 -->
       <template v-else>
         <div
-          class="camera-placeholder mx-auto border-4px border-gray-300 rounded-16px border-dashed bg-white flex-col-center cursor-pointer wh-300"
+          class="camera-placeholder mx-auto flex-col-center cursor-pointer border-4px border-gray-300 rounded-16px border-dashed bg-white wh-300"
           @click="openCamera"
         >
-          <i class="i-svg:camera text-80px text-gray-400 mb-32px" />
+          <i class="i-svg:camera mb-32px text-80px text-gray-400" />
           <p class="text-32px text-gray-600">
             点击拍摄照片
           </p>
         </div>
 
-        <div class="instructions mx-auto mt-64px p-40px rounded-16px bg-white max-w-690px shadow-sm">
-          <h3 class="text-36px text-primary font-bold mb-32px flex-start">
-            <i class="i-svg:info-circle text-40px mr-16px" />
+        <div class="instructions mx-auto mt-64px max-w-690px rounded-16px bg-white p-40px shadow-sm">
+          <h3 class="mb-32px flex-start text-36px text-primary font-bold">
+            <i class="i-svg:info-circle mr-16px text-40px" />
             使用说明
           </h3>
-          <ul class="text-30px text-gray-700 pl-40px">
+          <ul class="pl-40px text-30px text-gray-700">
             <li class="mb-16px">
               将面部放在取景框内，保持正面姿态
             </li>
@@ -71,7 +71,7 @@
             </li>
           </ul>
 
-          <div class="text-28px text-gray-500 mt-40px pt-32px text-center border-t-2px border-gray-100">
+          <div class="mt-40px border-t-2px border-gray-100 pt-32px text-center text-28px text-gray-500">
             如遇到问题请联系技术支持
           </div>
         </div>
@@ -87,9 +87,9 @@
 
     <!-- 上传中 -->
     <van-overlay :show="isUploading" z-index="1000">
-      <div class="flex-col-center h-full">
+      <div class="h-full flex-col-center">
         <van-loading size="72px" type="spinner" color="#1989fa" />
-        <p class="text-32px text-white mt-32px">
+        <p class="mt-32px text-32px text-white">
           上传中...
         </p>
       </div>

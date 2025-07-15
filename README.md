@@ -165,7 +165,6 @@ pnpm typecheck
 ### 支持的预设类
 
 - **容器宽高比**：
-
   - `.aspect-video` (16:9)
   - `.aspect-square` (1:1)
   - `.aspect-portrait` (9:16)

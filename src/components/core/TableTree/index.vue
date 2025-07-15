@@ -1,7 +1,7 @@
 <template>
-  <div class="rounded-8px bg-white w-full relative">
+  <div class="relative w-full rounded-8px bg-white">
     <!-- 固定表头 -->
-    <div class="text-28px text-primary leading-80px font-500 pl-42px bg-secondary flex h-80px top-0 sticky z-10" :style="headerCellStyle">
+    <div class="sticky top-0 z-10 h-80px flex bg-secondary pl-42px text-28px text-primary font-500 leading-80px" :style="headerCellStyle">
       <template v-for="column in columns" :key="column.prop">
         <div
           v-if="column.show?.() ?? true" class="flex-1" :class="[transformAlign(column.align), column.class ? column.class : '']"
@@ -21,7 +21,7 @@
         v-bind="$attrs"
       >
         <template #default="{ data: rowData }">
-          <div class="text-28px flex w-full" :style="rowCellStyle">
+          <div class="w-full flex text-28px" :style="rowCellStyle">
             <template v-for="column in columns" :key="column.prop">
               <div
                 v-if="column.show?.() ?? true" class="flex-1" :class="[transformAlign(column.align), column.class ? column.class : '']"
