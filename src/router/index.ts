@@ -2,7 +2,6 @@ import NProgress from 'nprogress';
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import { popupManager } from '@/composables/usePopup';
 import useRouteCacheStore from '@/stores/modules/routeCache';
-import useUserStore from '@/stores/modules/user';
 import routes from './staticRouter';
 import 'nprogress/nprogress.css';
 
@@ -47,10 +46,10 @@ router.beforeEach(async (to) => {
   document.title = pageTitle;
 
   // 获取用户信息和缓存路由
-  const userStore = useUserStore();
-  if (!userStore.token) {
-    await userStore.userInit();
-  }
+  // const userStore = useUserStore();
+  // if (!userStore.token) {
+  //   await userStore.userInit();
+  // }
   // 添加路由缓存
   const routeCacheStore = useRouteCacheStore();
   routeCacheStore.addRoute(to);
