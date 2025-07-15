@@ -1,6 +1,6 @@
 <template>
   <div
-    class="text-28px color-hex-34495e fw-600 px-20px rounded-20 bg-white flex-between h-80px transition-opacity-300 active-opacity-60"
+    class="h-80px flex-between rounded-20 bg-white px-20px text-28px color-hex-34495e fw-600 transition-opacity-300 active-opacity-60"
     @click="onClick"
   >
     <span>{{ title }}</span>
