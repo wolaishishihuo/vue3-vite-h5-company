@@ -1,5 +1,5 @@
 <template>
-  <div class="pdf-demo-page flex-col wh-full">
+  <div class="pdf-demo-page wh-full flex-col">
     <PdfViewer
       pdf-src="/h5Test/test.pdf"
     />

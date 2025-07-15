@@ -1,5 +1,5 @@
 <template>
-  <div class="pdf-viewer-container bg-gray-50 flex-col wh-full">
+  <div class="pdf-viewer-container wh-full flex-col bg-gray-50">
     <VuePdfEmbed
       :source="pdfSrc"
     />

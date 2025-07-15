@@ -1,13 +1,13 @@
 <template>
-  <div class="face-recognition p-20px bg-gray-50 flex-col h-full items-center">
+  <div class="face-recognition h-full flex-col items-center bg-gray-50 p-20px">
     <!-- 标题 -->
-    <h1 class="text-28px text-primary font-bold mb-40px">
+    <h1 class="mb-40px text-28px text-primary font-bold">
       人脸识别
     </h1>
 
     <!-- 摄像头区域 - 圆形设计 -->
-    <div class="camera-container mb-40px rounded-full relative overflow-hidden wh-360">
-      <div class="camera-placeholder bg-gray-100 flex-center abs-full">
+    <div class="camera-container relative mb-40px overflow-hidden rounded-full wh-360">
+      <div class="camera-placeholder abs-full flex-center bg-gray-100">
         <video
           ref="videoRef"
           class="wh-full object-cover"
@@ -23,7 +23,7 @@
 
       <!-- 人脸识别扫描圆环 -->
       <div
-        class="scan-frame border-2px border-primary rounded-full border-dashed abs-full"
+        class="scan-frame abs-full border-2px border-primary rounded-full border-dashed"
         :class="recognitionStatus === RecognitionStatus.SCANNING ? 'scan-active' : ''"
       />
     </div>
@@ -46,7 +46,7 @@
 
       <!-- 提示信息 -->
       <div class="tips-container text-center">
-        <p class="text-28px text-gray-600 mb-15px">
+        <p class="mb-15px text-28px text-gray-600">
           {{ tipMessage }}
         </p>
         <p class="text-28px text-gray-400">
@@ -59,7 +59,7 @@
     <van-button
       v-if="recognitionStatus === RecognitionStatus.FAILED"
       type="primary"
-      class="text-32px rounded-12px h-88px w-80%"
+      class="h-88px w-80% rounded-12px text-32px"
       @click="retry"
     >
       重新尝试

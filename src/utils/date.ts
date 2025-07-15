@@ -74,10 +74,10 @@ export function parseDateToObject(
   dateInput: string | number,
   inputFormat?: string
 ): {
-    year: number;
-    month: number;
-    day: number;
-  } {
+  year: number;
+  month: number;
+  day: number;
+} {
   let date: dayjs.Dayjs;
 
   if (typeof dateInput === 'number') {

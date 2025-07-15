@@ -1,14 +1,14 @@
 <template>
-  <div class="text-white bg-black flex-col bottom-0 left-0 right-0 top-0 fixed z-100">
+  <div class="fixed bottom-0 left-0 right-0 top-0 z-100 flex-col bg-black text-white">
     <!-- 标题 -->
-    <div class="flex-center h-100px">
+    <div class="h-100px flex-center">
       <div class="text-32px font-medium">
         人脸采集
       </div>
     </div>
 
     <!-- 主要内容区 -->
-    <div class="flex-1 relative overflow-hidden">
+    <div class="relative flex-1 overflow-hidden">
       <!-- 相机画面 -->
       <div class="abs-full">
         <!-- 视频元素 -->
@@ -25,9 +25,9 @@
         />
 
         <!-- 取景框遮罩层 - 使用纯CSS实现 -->
-        <div v-if="!imageSrc" class="camera-overlay bg-black/30 flex-col-center abs-full">
+        <div v-if="!imageSrc" class="camera-overlay abs-full flex-col-center bg-black/30">
           <!-- 透明的取景区域 -->
-          <div class="viewfinder-container mb-120px relative">
+          <div class="viewfinder-container relative mb-120px">
             <!-- 辅助线 -->
             <div class="viewfinder-border">
               <div class="corner-tl" />
@@ -38,7 +38,7 @@
           </div>
 
           <!-- 提示文字 -->
-          <div class="text-28px px-40px text-center bottom-160px left-0 right-0 absolute">
+          <div class="absolute bottom-160px left-0 right-0 px-40px text-center text-28px">
             {{ promptText }}
           </div>
         </div>
@@ -53,15 +53,15 @@
       </div>
 
       <!-- 加载提示 -->
-      <div v-if="isLoading" class="bg-black/70 flex-col-center abs-full z-10">
+      <div v-if="isLoading" class="abs-full z-10 flex-col-center bg-black/70">
         <van-loading color="#ffffff" size="48px" />
-        <span class="text-28px mt-16px">相机初始化中...</span>
+        <span class="mt-16px text-28px">相机初始化中...</span>
       </div>
 
       <!-- 错误提示 -->
-      <div v-if="hasError" class="bg-black/70 flex-col-center abs-full z-10">
-        <i class="i-svg:error text-64px mb-16px" />
-        <span class="text-28px mx-40px text-center">{{ errorMessage }}</span>
+      <div v-if="hasError" class="abs-full z-10 flex-col-center bg-black/70">
+        <i class="i-svg:error mb-16px text-64px" />
+        <span class="mx-40px text-center text-28px">{{ errorMessage }}</span>
         <van-button class="mt-32px" round size="large" type="primary" @click="retryCamera">
           重新尝试
         </van-button>
@@ -69,17 +69,17 @@
     </div>
 
     <!-- 底部控制区 -->
-    <div class="flex-center h-240px relative">
+    <div class="relative h-240px flex-center">
       <template v-if="!imageSrc">
-        <div class="px-64px flex-between w-full">
+        <div class="w-full flex-between px-64px">
           <!-- 取消按钮 -->
-          <div class="text-30px font-medium flex-center cursor-pointer" @click="cancel">
+          <div class="flex-center cursor-pointer text-30px font-medium" @click="cancel">
             取消
           </div>
 
           <!-- 拍照按钮 -->
-          <div class="p-6px rounded-full bg-white/30 flex-center h-140px w-140px cursor-pointer" @click="takePhoto">
-            <div class="rounded-full bg-white wh-full shadow-lg" />
+          <div class="h-140px w-140px flex-center cursor-pointer rounded-full bg-white/30 p-6px" @click="takePhoto">
+            <div class="wh-full rounded-full bg-white shadow-lg" />
           </div>
 
           <!-- 空白占位 -->
@@ -89,11 +89,11 @@
 
       <template v-else>
         <!-- 拍照后的操作按钮 -->
-        <div class="px-64px flex-between w-full">
-          <van-button round type="default" size="large" class="text-28px w-240px" @click="retakePhoto">
+        <div class="w-full flex-between px-64px">
+          <van-button round type="default" size="large" class="w-240px text-28px" @click="retakePhoto">
             重拍
           </van-button>
-          <van-button round type="primary" size="large" class="text-28px w-240px" @click="confirmPhoto">
+          <van-button round type="primary" size="large" class="w-240px text-28px" @click="confirmPhoto">
             确认
           </van-button>
         </div>

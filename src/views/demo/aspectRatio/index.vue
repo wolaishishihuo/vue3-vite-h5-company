@@ -9,7 +9,7 @@
       <div class="demo-item">
         <h4>视频宽高比 (16:9)</h4>
         <div class="aspect-video">
-          <div class="text-white bg-primary flex-center">
+          <div class="flex-center bg-primary text-white">
             <span>16:9 视频容器</span>
           </div>
         </div>
@@ -19,7 +19,7 @@
       <div class="demo-item">
         <h4>正方形 (1:1)</h4>
         <div class="aspect-square">
-          <div class="bg-secondary flex-center">
+          <div class="flex-center bg-secondary">
             <span>1:1 正方形</span>
           </div>
         </div>
@@ -29,7 +29,7 @@
       <div class="demo-item">
         <h4>竖向比例 (9:16)</h4>
         <div class="aspect-portrait">
-          <div class="text-white bg-primary flex-center">
+          <div class="flex-center bg-primary text-white">
             <span>9:16 竖向容器</span>
           </div>
         </div>
@@ -43,7 +43,7 @@
       <div class="demo-item">
         <h4>传统屏幕 (4:3)</h4>
         <div class="aspect-4-3">
-          <div class="bg-secondary flex-center">
+          <div class="flex-center bg-secondary">
             <span>4:3 比例</span>
           </div>
         </div>
@@ -53,7 +53,7 @@
       <div class="demo-item">
         <h4>照片比例 (3:2)</h4>
         <div class="aspect-3-2">
-          <div class="text-white bg-primary flex-center">
+          <div class="flex-center bg-primary text-white">
             <span>3:2 比例</span>
           </div>
         </div>
@@ -63,7 +63,7 @@
       <div class="demo-item">
         <h4>宽屏比例 (2:1)</h4>
         <div class="aspect-2-1">
-          <div class="text-white bg-primary flex-center">
+          <div class="flex-center bg-primary text-white">
             <span>2:1 比例</span>
           </div>
         </div>
@@ -73,7 +73,7 @@
       <div class="demo-item">
         <h4>iPhone X (375:812)</h4>
         <div class="aspect-iphoneX">
-          <div class="bg-secondary flex-center">
+          <div class="flex-center bg-secondary">
             <span>iPhone X 比例</span>
           </div>
         </div>
@@ -87,7 +87,7 @@
       <div class="demo-item">
         <h4>自定义比例 (5:4)</h4>
         <div class="custom-aspect-5-4">
-          <div class="text-white bg-primary flex-center">
+          <div class="flex-center bg-primary text-white">
             <span>5:4 自定义比例</span>
           </div>
         </div>
