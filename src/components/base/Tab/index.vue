@@ -1,16 +1,16 @@
 <template>
-  <div class="py-16px flex gap-20 w-full whitespace-nowrap items-center justify-around overflow-x-auto">
+  <div class="w-full flex items-center justify-around gap-20 overflow-x-auto whitespace-nowrap py-16px">
     <div
       v-for="item in tabs"
       :key="item.value"
-      class="text-[28px] text-[#999] pb-8px cursor-pointer transition-all duration-300 ease-in-out relative"
+      class="relative cursor-pointer pb-8px text-[28px] text-[#999] transition-all duration-300 ease-in-out"
       :class="[{ 'text-[#333]! text-[30px] font-500': modelValue === item.value }]"
       @click="handleClick(item.value)"
     >
       {{ item.text }}
       <span v-if="!!item.count" class="ml-4px">({{ item.count }})</span>
       <div
-        class="rounded-7px bg-[#3875c6] opacity-0 h-13px w-full transition-all duration-300 ease-in-out bottom-10px left-0 right-0 absolute"
+        class="absolute bottom-10px left-0 right-0 h-13px w-full rounded-7px bg-[#3875c6] opacity-0 transition-all duration-300 ease-in-out"
         :class="{ 'opacity-23': modelValue === item.value }"
       />
     </div>
