@@ -7,16 +7,24 @@
     :closeable="closeable"
     :close-icon="closeIcon"
     :close-on-click-overlay="closeOnClickOverlay"
+    teleport="body"
     @close="handleClose"
   >
-    <slot>
-      <template v-if="typeof props.content === 'string'">
-        <p>{{ props.content }}</p>
-      </template>
-      <template v-if="typeof props.content === 'function'">
-        <component :is="props?.content?.()" />
-      </template>
-    </slot>
+    <div class="popup-content p-30">
+      <div class="popup-content-title text-28px color-hex-34495e fw-600">
+        <slot name="title">
+          <p>{{ title }}</p>
+        </slot>
+      </div>
+      <slot>
+        <template v-if="typeof props.content === 'string'">
+          <p>{{ props.content }}</p>
+        </template>
+        <template v-if="typeof props.content === 'function'">
+          <component :is="props?.content?.()" />
+        </template>
+      </slot>
+    </div>
   </van-popup>
 </template>
 
@@ -28,6 +36,7 @@ import { computed } from 'vue';
 interface Props extends Partial<PopupProps> {
   content?: string | (() => VNode);
   onCancel?: () => void;
+  title?: string;
 }
 
 defineOptions({ name: 'CecwPopup' });

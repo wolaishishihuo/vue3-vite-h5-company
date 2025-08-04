@@ -5,15 +5,20 @@
     </h1>
 
     <template v-for="item in list" :key="item.path">
-      <Cell :title="item.title" :path="item.path" />
+      <Cell v-if="item.path" :title="item.title" :path="item.path" />
+      <Cell v-else :title="item.title" @click="handleClick" />
     </template>
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang='tsx'>
+import { popupManager } from '@/composables/usePopup';
 import Cell from './components/Cell.vue';
 
 const list = [
+  {
+    title: '弹窗'
+  },
   {
     title: '宽高比示例',
     path: '/demo/aspectRatio'
@@ -51,4 +56,15 @@ const list = [
     path: '/demo/pdf'
   }
 ];
+
+const handleClick = () => {
+  popupManager.create({
+    title: '标题',
+    content: () => (
+      <div>
+        <p>内容</p>
+      </div>
+    )
+  });
+};
 </script>

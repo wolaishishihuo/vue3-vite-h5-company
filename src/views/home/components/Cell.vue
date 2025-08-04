@@ -11,13 +11,21 @@
 <script setup lang="ts">
 interface Props {
   title: string;
-  path: string;
+  path?: string;
 }
 
 const props = defineProps<Props>();
 
+const emit = defineEmits<{
+  (e: 'click'): void;
+}>();
+
 const router = useRouter();
 const onClick = () => {
-  router.push(props.path);
+  if (props.path) {
+    router.push(props.path);
+  } else {
+    emit('click');
+  }
 };
 </script>
