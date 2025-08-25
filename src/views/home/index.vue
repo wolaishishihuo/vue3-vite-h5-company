@@ -54,6 +54,10 @@ const list = [
   {
     title: 'PDF',
     path: '/demo/pdf'
+  },
+  {
+    title: '文章卡片',
+    path: '/demo/articleCard'
   }
 ];
 

@@ -9,6 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     '[...all]': typeof import('./../components/[...all].vue')['default']
+    ArticleCard: typeof import('./../components/core/ArticleCard/index.vue')['default']
     Chart: typeof import('./../components/core/Chart/index.vue')['default']
     ElTree: typeof import('element-plus/es')['ElTree']
     FaceCamera: typeof import('./../components/core/FaceCamera/index.vue')['default']
@@ -25,8 +26,10 @@ declare module 'vue' {
     TableTree: typeof import('./../components/core/TableTree/index.vue')['default']
     Upload: typeof import('./../components/core/Upload/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
+    VanCell: typeof import('vant/es')['Cell']
     VanCheckbox: typeof import('vant/es')['Checkbox']
     VanIcon: typeof import('vant/es')['Icon']
+    VanImage: typeof import('vant/es')['Image']
     VanList: typeof import('vant/es')['List']
     VanLoading: typeof import('vant/es')['Loading']
     VanNavBar: typeof import('vant/es')['NavBar']
@@ -35,6 +38,7 @@ declare module 'vue' {
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
+    VanTag: typeof import('vant/es')['Tag']
     Waterfull: typeof import('./../components/core/Waterfull/index.vue')['default']
   }
 }
