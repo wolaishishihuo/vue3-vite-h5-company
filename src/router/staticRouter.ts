@@ -96,6 +96,14 @@ const demoRoutes = [
     meta: {
       title: 'PDF'
     }
+  },
+  {
+    path: '/demo/articleCard',
+    name: 'articleCard',
+    component: () => import('@/views/demo/articleCard/index.vue'),
+    meta: {
+      title: '文章卡片'
+    }
   }
 ];
 
