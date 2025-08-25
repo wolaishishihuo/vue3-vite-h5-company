@@ -1,7 +1,6 @@
 <template>
   <div
     class="article-item border-b-1 p-16"
-    :class="{ 'cursor-pointer active:bg-gray-50': clickable }"
     @click="handleClick"
   >
     <!-- 主要内容区域 -->
@@ -80,8 +79,7 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<ArticleCardProps>(), {
-  mode: undefined,
-  clickable: true
+  mode: undefined
 });
 
 const emit = defineEmits<{
@@ -111,8 +109,6 @@ const getTagClass = (type: string) => {
 };
 
 const handleClick = () => {
-  if (props.clickable) {
-    emit('click', props.article);
-  }
+  emit('click', props.article);
 };
 </script>
