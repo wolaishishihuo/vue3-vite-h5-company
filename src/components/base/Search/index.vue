@@ -13,18 +13,20 @@
         @blur="handleBlur"
       >
       <van-icon
-        v-if="searchValue"
+        v-if="showClear && searchValue"
         name="clear"
         class="clear-icon"
         @click="handleClear"
       />
       <van-icon
+        v-if="showSearch"
         name="search"
         class="search-icon-inner"
         @click="handleInnerSearch"
       />
     </div>
     <van-icon
+      v-if="showSearch"
       name="search"
       class="search-icon-outer"
       @click="handleSearch"
@@ -45,6 +47,14 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: '请输入进行搜索!'
+  },
+  showClear: {
+    type: Boolean,
+    default: true
+  },
+  showSearch: {
+    type: Boolean,
+    default: true
   }
 });
 
