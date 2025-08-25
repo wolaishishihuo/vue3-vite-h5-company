@@ -38,9 +38,7 @@
           </div>
         </div>
         <!-- 多图模式的底部元信息 -->
-        <div class="mt-12 flex-between color-gray-400">
-          <span class="text-24">{{ formatTime(article.publishTime) }}</span>
-
+        <div class="mt-12 flex-between">
           <div
             v-if="article.status"
             class="inline-flex items-center justify-center rounded-18 px-25 py-8 text-20"
@@ -48,6 +46,10 @@
           >
             {{ article.status.text }}
           </div>
+          <span class="flex-center gap-8 text-24 color-#999">
+            <van-icon name="clock-o" size="16" />
+            {{ formatTime(article.publishTime) }}
+          </span>
         </div>
       </div>
 
