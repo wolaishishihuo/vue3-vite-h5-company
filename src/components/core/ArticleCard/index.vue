@@ -25,28 +25,28 @@
           v-if="computedMode === 'multi-image' && article.images?.length"
           class="mt-12"
         >
-          <div class="flex gap-8">
+          <div class="flex gap-30">
             <van-image
               v-for="(image, index) in article.images.slice(0, 3)"
               :key="index"
               :src="image"
               fit="cover"
               lazy-load
-              class="h-146 w-210 flex-1 rounded-10"
+              radius="10"
+              class="h-146 w-210 flex-1"
             />
           </div>
+        </div>
+        <!-- 多图模式的底部元信息 -->
+        <div class="mt-12 flex-between color-gray-400">
+          <span class="text-24">{{ formatTime(article.publishTime) }}</span>
 
-          <!-- 多图模式的底部元信息 -->
-          <div class="mt-12 flex-between color-gray-400">
-            <span class="text-24">{{ formatTime(article.publishTime) }}</span>
-
-            <div
-              v-if="article.status"
-              class="inline-flex items-center justify-center rounded-18 px-12 py-6 text-20"
-              :class="getTagClass(article.status.type)"
-            >
-              {{ article.status.text }}
-            </div>
+          <div
+            v-if="article.status"
+            class="inline-flex items-center justify-center rounded-18 px-25 py-8 text-20"
+            :class="getTagClass(article.status.type)"
+          >
+            {{ article.status.text }}
           </div>
         </div>
       </div>
@@ -60,6 +60,7 @@
           :src="article.images[0]"
           fit="cover"
           lazy-load
+          radius="10"
           class="rounded-10"
         />
       </div>
@@ -100,9 +101,9 @@ const formatTime = (time: string) => {
 
 const getTagClass = (type: string) => {
   const classMap = {
-    pending: 'bg-orange-50 color-orange-500 border border-orange-200',
-    processed: 'bg-blue-50 color-blue-500 border border-blue-200',
-    default: 'bg-gray-50 color-gray-500 border border-gray-200'
+    pending: 'bg-#FF891F color-#fff border border-#FF891F',
+    processed: 'bg-#3975C6 color-#fff border border-#3975C6',
+    default: 'bg-#F5F5F5 color-#999 border border-#F5F5F5'
   };
   return classMap[type as keyof typeof classMap] || classMap.default;
 };
