@@ -4,7 +4,10 @@ import App from '@/App.vue';
 import directives from '@/directives/index';
 import registerPlugins from '@/plugins/index';
 import router from '@/router';
+
 import pinia from '@/stores';
+import '@jname/vue-mobile-components/lib/style.css';
+
 import 'virtual:uno.css';
 import '@/styles/app.less';
 import '@/styles/var.less';

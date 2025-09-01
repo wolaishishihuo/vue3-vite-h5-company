@@ -19,6 +19,7 @@
     "preinstall": "node ./scripts/preinstall.js"
   },
   "dependencies": {
+    "@jname/vue-mobile-components": "^1.0.9",
     "@vant/touch-emulator": "^1.4.0",
     "@vant/use": "^1.6.0",
     "@vueuse/core": "^13.5.0",
