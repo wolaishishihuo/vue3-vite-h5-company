@@ -16,7 +16,14 @@ export default {
     // https://github.com/wswmsword/postcss-mobile-forever
     'postcss-mobile-forever': {
       // UI 设计稿宽度
-      viewportWidth: (file: string) => file.includes('vant') ? 375 : 750,
+      viewportWidth: (file) => {
+        // 组件库和 vant 都按 375px 基准转换
+        if (file.includes('vant') || file.includes('@jname/vue-mobile-components')) {
+          return 375;
+        }
+        // 项目自己的代码按实际设计稿基准
+        return 750; // 根据你的设计稿调整
+      },
       // 限制视图的最大宽度
       maxDisplayWidth: 750,
       // 页面最外层选择器

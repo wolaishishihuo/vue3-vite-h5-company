@@ -75,7 +75,7 @@ src/
 │  └─ iconfont/         # 字体图标
 ├─ components/           # 组件库
 │  ├─ base/             # 基础UI组件 (NavBar、TabBar等)
-│  └─ core/             # 核心业务组件 (Upload、Chart等)
+│  └─ core/             # 核心业务组件 (Chart等)
 ├─ composables/          # 组合式函数
 ├─ config/              # 配置文件
 ├─ constants/           # 常量定义
@@ -141,13 +141,8 @@ src/
 核心组合式函数位于 `src/composables/`：
 
 - `usePopup.ts` - 弹窗管理器，支持程序化创建和管理
-- `useCamera.ts` - 相机功能封装
 - `useHttpLoading.ts` - HTTP 请求加载状态
-- `useImageCompress.ts` - 图片压缩处理
-- `useRefreshList.ts` - 下拉刷新列表
 - `useTouchFeedback.ts` - 触摸反馈
-- `useWechat.ts` - 微信 SDK 集成
-- `map/` - 腾讯地图相关功能
 
 #### 样式系统
 
@@ -186,20 +181,9 @@ type: message
 - chore: 琐事（更新依赖、修改配置等）
 ```
 
-## 业务模块说明
-
-### 忽略的特定业务模块
-
-以下模块为特定业务功能，在通用模板使用中应当忽略：
-
-- `src/modules/faceRecognition/` - 人脸识别业务模块
-- `src/modules/organization/` - 组织架构业务模块
-- `src/api/modules/organization/` 和 `src/api/modules/user/` - 特定业务 API
-- `src/stores/modules/organization.ts` 和 `src/stores/modules/user.ts` - 业务状态管理
-
 ### 保留的通用功能
 
-- 基础组件库 (NavBar, TabBar, Popup, Upload, Chart等)
+- 基础组件库 (Popup, Chart等)
 - 工具函数和 Composables
 - 演示页面 (图表、PDF、宽高比、定位等通用功能)
 - 移动端适配方案
