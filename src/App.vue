@@ -1,14 +1,13 @@
 <template>
-  <div class="h-full flex-col">
-    <div class="relative flex-1 overflow-auto">
-      <router-view v-slot="{ Component, route }">
+  <van-config-provider theme="light">
+    <router-view v-slot="{ Component, route }">
+      <section class="app-wrapper">
         <keep-alive :include="routeCaches">
           <component :is="createComponentWrapper(Component, route)" :key="route.fullPath" />
         </keep-alive>
-      </router-view>
-    </div>
-    <tab-bar />
-  </div>
+      </section>
+    </router-view>
+  </van-config-provider>
 </template>
 
 <script setup lang="ts">
@@ -30,3 +29,18 @@ function createComponentWrapper(component, route) {
   return h(wrapper);
 }
 </script>
+
+<style scoped>
+.app-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  > div {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+</style>

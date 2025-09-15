@@ -4,69 +4,43 @@
   box-sizing: border-box;
 }
 
-* {
-  /* iOS滚动条隐藏 */
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Firefox */
-}
-
-/* 隐藏滚动条 */
-*::-webkit-scrollbar {
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-  display: none !important;
-}
-
-:root {
-  overflow: hidden;
-}
-
 html {
-  background: var(--van-gray-1);
   font-size: var(--van-font-size-lg);
   color-scheme: light;
-  overflow: hidden;
-  height: 100%;
+  font-family: Source Han Sans CN;
+}
+
+html.dark {
+  background: #222;
+  color-scheme: dark;
 }
 
 #app {
-  height: 100% !important;
+  min-height: 100vh;
   position: relative;
   overflow-x: hidden;
 }
 
-body {
-  height: 100%;
-  -webkit-overflow-scrolling: touch; /* 提高滚动性能 */
-  font-size: 1rem;
-  line-height: 1.5;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
+/* 隐藏滚动条 - Webkit浏览器 */
+::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent !important;
 }
 
-/* 处理触摸事件 */
-a,
-button {
-  -webkit-tap-highlight-color: transparent;
+* {
+  scrollbar-width: none;
 }
 
-:focus {
-  /* 防止在获得焦点时出现边框 */
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* 表单元素样式 */
-input[type='submit'],
-input[type='reset'],
-input[type='button'],
+// input 初始化
 input {
   border: none;
   outline: none;
-  resize: none;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 30px;
+  &::placeholder {
+    color: #999;
+  }
 }
