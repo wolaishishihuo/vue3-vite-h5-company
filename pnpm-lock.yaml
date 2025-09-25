@@ -11,9 +11,6 @@ importers:
 
   .:
     dependencies:
-      '@jname/vue-mobile-components':
-        specifier: ^1.0.9
-        version: 1.0.9(@vueuse/core@13.8.0(vue@3.5.20(typescript@5.9.2)))(vant@4.9.21(vue@3.5.20(typescript@5.9.2)))(vue@3.5.20(typescript@5.9.2))
       '@vant/touch-emulator':
         specifier: ^1.4.0
         version: 1.4.0
@@ -1109,14 +1106,6 @@ packages:
 
   '@iconify/utils@2.3.0':
     resolution: {integrity: sha512-GmQ78prtwYW6EtzXRU1rY+KwOKfz32PD7iJh6Iyqw68GiKuoZ2A6pRtzWONz5VQJbp50mEjXh/7NkumtrAgRKA==}
-
-  '@jname/vue-mobile-components@1.0.9':
-    resolution: {integrity: sha512-OE5tO3n1XntqTbgQCg4F4bgCY7Z2rrOryGEhgvRmNedhQJMeBEVN2MmrAQyJezyTMb6gRyFSnON93Fs4RBNnAg==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@vueuse/core': ^13.0.0
-      vant: ^4.0.0
-      vue: ^3.3.0
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -4889,12 +4878,6 @@ snapshots:
       mlly: 1.8.0
     transitivePeerDependencies:
       - supports-color
-
-  '@jname/vue-mobile-components@1.0.9(@vueuse/core@13.8.0(vue@3.5.20(typescript@5.9.2)))(vant@4.9.21(vue@3.5.20(typescript@5.9.2)))(vue@3.5.20(typescript@5.9.2))':
-    dependencies:
-      '@vueuse/core': 13.8.0(vue@3.5.20(typescript@5.9.2))
-      vant: 4.9.21(vue@3.5.20(typescript@5.9.2))
-      vue: 3.5.20(typescript@5.9.2)
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:

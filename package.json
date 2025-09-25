@@ -2,7 +2,7 @@
   "name": "vue3-vant-mobile",
   "type": "module",
   "version": "4.0.0",
-  "packageManager": "pnpm@10.10.0+sha256.fa0f513aa8191764d2b6b432420788c270f07b4f999099b65bb2010eec702a30",
+  "packageManager": "pnpm@10.17.1",
   "description": "An mobile web apps template based on the Vue 3 ecosystem",
   "license": "MIT",
   "scripts": {
@@ -19,7 +19,6 @@
     "preinstall": "node ./scripts/preinstall.js"
   },
   "dependencies": {
-    "@jname/vue-mobile-components": "^1.0.9",
     "@vant/touch-emulator": "^1.4.0",
     "@vant/use": "^1.6.0",
     "@vueuse/core": "^13.5.0",
