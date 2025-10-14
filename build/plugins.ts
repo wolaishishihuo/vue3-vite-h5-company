@@ -8,54 +8,17 @@ import AutoImport from 'unplugin-auto-import/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
 import viteCompression from 'vite-plugin-compression';
-import vitePluginImp from 'vite-plugin-imp';
 import { createViteVConsole } from './vconsole';
 
 export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
   return [
     vue(),
     vueJsx(),
-    vitePluginImp({
-      libList: [
-        {
-          libName: 'vant',
-          replaceOldImport: false,
-          style: (name) => {
-            if (name.includes('toast')) {
-              return 'vant/es/toast/style/index';
-            }
-
-            if (name.includes('dialog')) {
-              return 'vant/es/dialog/style/index';
-            }
-
-            if (name.includes('image-preview')) {
-              return 'vant/es/image-preview/style/index';
-            }
-
-            if (name.includes('notify')) {
-              return 'vant/es/notify/style/index';
-            }
-
-            return `vant/es/${name}/style/index`;
-          }
-        },
-        // element-plus
-        {
-          libName: 'element-plus',
-          replaceOldImport: false,
-          style: (name) => {
-            if (['el-config-provider', 'effect'].includes(name)) return false;
-            return `element-plus/es/components/${name.replace('el-', '')}/style/css`;
-          }
-        }
-      ]
-    }),
     // https://github.com/antfu/unplugin-vue-components
     Components({
       extensions: ['tsx', 'vue'],
       // resolvers: [VantResolver(), ElementPlusResolver()],
-      resolvers: [VantResolver(), ElementPlusResolver()],
+      resolvers: [VantResolver({ importStyle: false }), ElementPlusResolver()],
       include: [/\.vue$/, /\.vue\?vue/, /\.tsx$/],
       dts: 'src/types/components.d.ts'
     }),
@@ -70,13 +33,12 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
       imports: [
         'vue',
         '@vueuse/core',
-        {
-          'vue-router': ['useRouter', 'useRoute']
-        }
+        'vue-router',
+        'pinia'
       ],
       dts: 'src/types/auto-imports.d.ts',
       // resolvers: [VantResolver(), ElementPlusResolver()]
-      resolvers: [VantResolver(), ElementPlusResolver()]
+      resolvers: [VantResolver({ importStyle: false }), ElementPlusResolver()]
     }),
 
     legacy({

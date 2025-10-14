@@ -18,7 +18,7 @@ export default {
       // UI 设计稿宽度
       viewportWidth: (file) => {
         // 组件库和 vant 都按 375px 基准转换
-        if (file.includes('vant') || file.includes('@jname/vue-mobile-components')) {
+        if (file.includes('vant') || file.includes('@jname')) {
           return 375;
         }
         // 项目自己的代码按实际设计稿基准

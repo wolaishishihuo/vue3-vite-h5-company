@@ -11,6 +11,18 @@ importers:
 
   .:
     dependencies:
+      '@jname/business':
+        specifier: ^1.0.1
+        version: 1.0.1(compressorjs@1.2.1)(vant@4.9.21(vue@3.5.20(typescript@5.9.2)))(vue@3.5.20(typescript@5.9.2))
+      '@jname/components':
+        specifier: ^1.0.1
+        version: 1.0.1(vue@3.5.20(typescript@5.9.2))
+      '@jname/core':
+        specifier: ^1.0.0
+        version: 1.0.0(vue@3.5.20(typescript@5.9.2))
+      '@jname/themes':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@vant/touch-emulator':
         specifier: ^1.4.0
         version: 1.4.0
@@ -1106,6 +1118,26 @@ packages:
 
   '@iconify/utils@2.3.0':
     resolution: {integrity: sha512-GmQ78prtwYW6EtzXRU1rY+KwOKfz32PD7iJh6Iyqw68GiKuoZ2A6pRtzWONz5VQJbp50mEjXh/7NkumtrAgRKA==}
+
+  '@jname/business@1.0.1':
+    resolution: {integrity: sha512-dQaD0ak8r51U17gla56p0b8T89q2OfILOM/68oP6z6XjxNO9hlJax81teQDEdLEGnGlt5dMFNMbkx+jjzIXrrw==}
+    peerDependencies:
+      compressorjs: ^1.2.1
+      vant: ^4.0.0
+      vue: ^3.3.0
+
+  '@jname/components@1.0.1':
+    resolution: {integrity: sha512-Ti6qi74o4U3C24uzZeMnwIQz0QuLK6bBSk/CmeyZzm+r00v06sIcc/kGTTpVu1xrmuduOvXUUL35zQgbIJfynw==}
+    peerDependencies:
+      vue: ^3.3.0
+
+  '@jname/core@1.0.0':
+    resolution: {integrity: sha512-iAwkfivDTGgeiwgtw+xbhshhpGHsYbk0G36usNrsaQNX/Mm0CdM6kOx8Txg7y06qFcmCEk0SRO6xeB3xmoOZsA==}
+    peerDependencies:
+      vue: ^3.3.0
+
+  '@jname/themes@1.0.0':
+    resolution: {integrity: sha512-y1PZdpUe0x8DQnWe60y+/xBMJO+7go6bQxKujhQb4oGL9I2dKfgFxzhe1y+uTJINe32oZPds3WDX0EqPQao1rw==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -4878,6 +4910,25 @@ snapshots:
       mlly: 1.8.0
     transitivePeerDependencies:
       - supports-color
+
+  '@jname/business@1.0.1(compressorjs@1.2.1)(vant@4.9.21(vue@3.5.20(typescript@5.9.2)))(vue@3.5.20(typescript@5.9.2))':
+    dependencies:
+      '@jname/components': 1.0.1(vue@3.5.20(typescript@5.9.2))
+      '@jname/core': 1.0.0(vue@3.5.20(typescript@5.9.2))
+      compressorjs: 1.2.1
+      vant: 4.9.21(vue@3.5.20(typescript@5.9.2))
+      vue: 3.5.20(typescript@5.9.2)
+
+  '@jname/components@1.0.1(vue@3.5.20(typescript@5.9.2))':
+    dependencies:
+      '@jname/core': 1.0.0(vue@3.5.20(typescript@5.9.2))
+      vue: 3.5.20(typescript@5.9.2)
+
+  '@jname/core@1.0.0(vue@3.5.20(typescript@5.9.2))':
+    dependencies:
+      vue: 3.5.20(typescript@5.9.2)
+
+  '@jname/themes@1.0.0': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:

@@ -1,24 +1,43 @@
 <template>
   <div class="flex-col gap-20px p-20px">
-    <h1 class="text-center">
-      <JStepsCard>
-        <!-- <template #header>
-          <div class="step-header">
-            <span class="step-title">第一步</span>
-            <span class="step-time">2024-01-15 09:00</span>
-          </div>
-        </template> -->
-        <div class="step-content">
-          订单已创建，等待付款确认
-        </div>
-      </JStepsCard>
-    </h1>
-    <JButton type="primary">
-      主要按钮
+    <JTabs v-model="activeTab" :tab-options="tabs" />
+
+    <JButton @click="showPopup = true">
+      选择组织架构
     </JButton>
+    <JOrganization
+      v-model="showPopup"
+      :api-config="apiConfig"
+      :multiple="isMultiSelect"
+      :popup-title="popupTitle"
+      @confirm="handleConfirm"
+      @cancel="handleCancel"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { JButton, JStepsCard } from '@jname/vue-mobile-components';
+import type { OrganizationApiConfig, OrganizationPersonnelItem } from '@jname/business';
+import { JOrganization } from '@jname/business';
+import { JTabs } from '@jname/components';
+
+const activeTab = ref('1');
+const tabs = ref([
+  {
+    label: '标签1',
+    value: '1'
+  }
+]);
+const showPopup = ref(false);
+const popupTitle = ref('选择组织架构');
+const isMultiSelect = ref(false);
+const apiConfig = ref<OrganizationApiConfig>({
+
+});
+const handleConfirm = (data: OrganizationPersonnelItem[]) => {
+  console.log(data);
+};
+const handleCancel = () => {
+  showPopup.value = false;
+};
 </script>

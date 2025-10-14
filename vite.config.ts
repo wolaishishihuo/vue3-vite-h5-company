@@ -41,14 +41,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         '~root': path.join(__dirname, '.')
       }
     },
-    css: {
-      preprocessorOptions: {
-        less: {
-          additionalData: '@import "@/styles/aspect-ratio.less";', // 全局导入
-          javascriptEnabled: true
-        }
-      }
-    },
     esbuild: {
       drop: viteEnv.VITE_DROP_CONSOLE ? ['console', 'debugger'] : []
     },

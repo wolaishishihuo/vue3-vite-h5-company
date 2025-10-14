@@ -19,6 +19,10 @@
     "preinstall": "node ./scripts/preinstall.js"
   },
   "dependencies": {
+    "@jname/business": "^1.0.1",
+    "@jname/components": "^1.0.1",
+    "@jname/core": "^1.0.0",
+    "@jname/themes": "^1.0.0",
     "@vant/touch-emulator": "^1.4.0",
     "@vant/use": "^1.6.0",
     "@vueuse/core": "^13.5.0",

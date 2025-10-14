@@ -1,6 +1,6 @@
+// 数组相关工具
 export * from './array/sort';
 export * from './array/tree';
-// 数组相关工具
 export * from './array/unique';
 
 // 浏览器相关工具

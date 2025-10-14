@@ -6,7 +6,11 @@ import registerPlugins from '@/plugins/index';
 import router from '@/router';
 
 import pinia from '@/stores';
-import '@jname/vue-mobile-components/lib/style.css';
+
+import 'vant/lib/index.css';
+import '@jname/themes/variables';
+import '@jname/components/style.css';
+import '@jname/business/style.css';
 
 import 'virtual:uno.css';
 import '@/styles/app.less';
