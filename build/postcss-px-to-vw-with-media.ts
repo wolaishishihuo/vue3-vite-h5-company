@@ -49,9 +49,10 @@ const postcssPluginPxToVwWithMedia = (options: PluginOptions = {}): Plugin => {
         return;
       }
 
-      // 获取当前文件的 viewportWidth
+      // 获取当前文件的 viewportWidth（标准化路径以兼容跨平台）
+      const normalizedFile = file.replace(/\\/g, '/');
       const currentViewportWidth = typeof viewportWidth === 'function'
-        ? viewportWidth(file)
+        ? viewportWidth(normalizedFile)
         : viewportWidth;
 
       // 创建移动端媒体查询（转换为 vw）
@@ -62,13 +63,18 @@ const postcssPluginPxToVwWithMedia = (options: PluginOptions = {}): Plugin => {
 
       // 遍历顶层规则，克隆到移动端媒体查询并转换 px 为 vw
       root.walkRules((rule) => {
-        // ⚠️ 跳过已有媒体查询内的规则（如 UnoCSS 的 md:、lg: 等）
-        if (rule.parent?.type === 'atrule') {
+        // ⚠️ 只跳过媒体查询内的规则（如 UnoCSS 的 md:、lg: 等），保留 @keyframes、@supports 等
+        if (rule.parent?.type === 'atrule' && rule.parent.name === 'media') {
           return;
         }
 
         // 检查选择器是否在黑名单中
         const isBlacklisted = selectorBlackList.some((blackItem) => {
+          if (blackItem.startsWith('.') || blackItem.startsWith('#')) {
+            // 类名/ID 精确匹配（避免误匹配如 .element 包含 'el-'）
+            return rule.selector.split(/[\s,>+~[\]()]/).some(s => s.trim() === blackItem);
+          }
+          // 其他情况使用 includes（如前缀匹配）
           return rule.selector.includes(blackItem);
         });
 
@@ -93,17 +99,29 @@ const postcssPluginPxToVwWithMedia = (options: PluginOptions = {}): Plugin => {
         const clonedRule = rule.clone();
 
         clonedRule.walkDecls((decl: Declaration) => {
+          // 跳过 CSS 变量声明（如 --spacing: 20px）
+          if (decl.prop.startsWith('--')) {
+            return;
+          }
+
           if (decl.value.includes('px')) {
             decl.value = decl.value.replace(
-              /(\d+(\.\d+)?)px/g,
+              /(-?\d+(\.\d+)?)px/g, // 支持负数（如 -20px）
               (match, number) => {
                 // 检查是否在黑名单中
                 if (valueBlackList.includes(match)) {
                   return match;
                 }
 
+                const numValue = Number.parseFloat(number);
+
+                // 优化：0px 直接返回 0
+                if (numValue === 0) {
+                  return '0';
+                }
+
                 // px 转 vw
-                const convertedValue = (Number.parseFloat(number) / currentViewportWidth) * 100;
+                const convertedValue = (numValue / currentViewportWidth) * 100;
                 return `${convertedValue.toFixed(unitPrecision)}vw`;
               }
             );
@@ -116,12 +134,20 @@ const postcssPluginPxToVwWithMedia = (options: PluginOptions = {}): Plugin => {
 
       // 为移动端 fixed 定位元素添加特殊处理（防止 vw 布局中定位错乱）
       if (rootContainingBlockSelectorList.length > 0 && appSelector) {
-        // 创建移动端专用的 app 根元素 transform 规则
-        const mobileAppRule = postcss.rule({ selector: appSelector });
-        mobileAppRule.append(postcss.decl({
+        // 创建移动端专用的 app 根元素 transform 规则（传递 source 以符合 PostCSS 最佳实践）
+        const mobileAppRule = postcss.rule({
+          selector: appSelector,
+          source: root.source
+        });
+        const transformDecl = postcss.decl({
           prop: 'transform',
           value: 'translateZ(0)'
-        }));
+        });
+        // 手动设置 source（DeclarationProps 不接受 source 参数）
+        if (root.source) {
+          transformDecl.source = root.source;
+        }
+        mobileAppRule.append(transformDecl);
         mobileMediaQuery.append(mobileAppRule);
       }
 
